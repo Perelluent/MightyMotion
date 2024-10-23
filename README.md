@@ -1,1 +1,2 @@
 # MightyMotion
+Pere Garcias Ferrer
