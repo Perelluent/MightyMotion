@@ -2,5 +2,6 @@
 Pere Garcias Ferrer
 
 SKETCH APP: 
-![Main Screen] (https://drive.google.com/file/d/1qZt34rlnH-IAxsPuUoRBGJ2_sqmhA4cr/view?usp=sharing)
+![Main Screen] (https://drive.google.com/uc?export=view&id=145OvRFkZQ02JkOGLG01W4rADweM4cw-G)
+
 
