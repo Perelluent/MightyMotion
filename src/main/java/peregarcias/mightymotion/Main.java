@@ -60,6 +60,11 @@ public class Main extends javax.swing.JFrame {
         jButtonAltaUsuarios.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         jButtonAltaUsuarios.setForeground(new java.awt.Color(0, 44, 58));
         jButtonAltaUsuarios.setText("ALTA USUARIOS");
+        jButtonAltaUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAltaUsuariosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -110,6 +115,11 @@ public class Main extends javax.swing.JFrame {
         IniciarSesion iniciarSesion = new IniciarSesion (this,true);
         iniciarSesion.setVisible(true);
     }//GEN-LAST:event_jButtonLoginActionPerformed
+
+    private void jButtonAltaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaUsuariosActionPerformed
+        CrearUsuario altaUsuarios = new CrearUsuario (this,true);
+        altaUsuarios.setVisible(true);
+    }//GEN-LAST:event_jButtonAltaUsuariosActionPerformed
 
     /**
      * @param args the command line arguments

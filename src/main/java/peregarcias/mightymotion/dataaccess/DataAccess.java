@@ -6,9 +6,11 @@ package peregarcias.mightymotion.dataaccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import peregarcias.mightymotion.dto.Usuario;
 
 /**
  *
@@ -16,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class DataAccess {
     
-    private Connection getConnection() {
+    private Connection getConnection() throws SQLException {
     
         Connection connection = null;
     
@@ -27,7 +29,34 @@ public class DataAccess {
         } catch (SQLException ex) {
             Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
         return connection;
     }
+    
+    public int registrarUsuario(Usuario u) throws SQLException {
+        
+        int nuevoUsuarioId = 0;
+        Connection connection = getConnection();
+        String sql = "INSERT INTO Usuaris (Nom, Email, PasswordHash, IsInstructor)"
+                + "VALUES (?,?,?,?)"
+                + "SELECT CAST(SCOPE_IDENTITY() AS INT)";
+        try {
+        PreparedStatement insertStatement = connection.prepareStatement(sql);
+        insertStatement.setString(1,u.getNom());
+        insertStatement.setString(2,u.getEmail());
+        insertStatement.setString(3,u.getPasswordHash());
+        insertStatement.setBoolean(4,u.isInstructor());
+        nuevoUsuarioId = insertStatement.executeUpdate();
+        
+        insertStatement.close();
+        connection.close();
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    return nuevoUsuarioId;
+               
+    }
 }
+
+

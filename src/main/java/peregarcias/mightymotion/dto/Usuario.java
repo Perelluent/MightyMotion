@@ -28,6 +28,10 @@ public class Usuario {
         this.AssignedInstructor = AssignedInstructor;
     }
 
+    public Usuario() {
+        
+    }
+
     public int getId() {
         return Id;
     }
@@ -56,7 +60,7 @@ public class Usuario {
         return PasswordHash;
     }
 
-    public void setPasswordHash(String PasswordHash) {
+    public void setPasswordHash(String Password) {
         this.PasswordHash = PasswordHash;
     }
 
