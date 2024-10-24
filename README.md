@@ -6,8 +6,15 @@ SKETCH APP:
 
 
 Pantalla Inicio:
-![Pantalla Inicio](https://drive.google.com/uc?export=view&id=19mS1nyPKgVPLv7QFAq8rmi_H3Dd7XVOs)
+![Pantalla Inicio]![Pantalla Inicio](https://github.com/user-attachments/assets/584c36a2-4916-4486-a8e3-9c16dcf9ce48)
+
 
 Login: 
-![Login](https://drive.google.com/uc?export=view&id=1xGz_5wXOG_7cAIBLd1HH-EPVS9qV8i6j)
+![Login]![Login](https://github.com/user-attachments/assets/51633747-de2d-48b7-9ea9-889fc5fec785)
+
+
+Registrar Usuario: (No me puedo conectar a la BBDD)
+![registrarUsuario](https://github.com/user-attachments/assets/fbe3935f-a5d3-42e8-832e-4043c4855538)
+
+
 
