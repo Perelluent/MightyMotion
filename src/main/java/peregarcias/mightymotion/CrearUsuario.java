@@ -88,32 +88,31 @@ public class CrearUsuario extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addComponent(jButtonAltaUsuario))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(19, 19, 19)
-                        .addComponent(jLabelMensaje)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                        .addComponent(jLabelMensaje))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(128, 128, 128)
+                        .addComponent(jButtonAltaUsuario)))
+                .addContainerGap(150, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(12, 12, 12)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabelNombre)
-                            .addComponent(jLabelEmail)
-                            .addComponent(jTextFieldEmail)
-                            .addComponent(jTextFieldNombre)
-                            .addComponent(jLabelContrasena)
-                            .addComponent(jTextFieldContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jCheckBoxInstructor))
-                    .addContainerGap(12, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabelNombre)
+                        .addComponent(jLabelEmail)
+                        .addComponent(jLabelContrasena)
+                        .addComponent(jCheckBoxInstructor)
+                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                        .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                        .addComponent(jTextFieldContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
+                    .addContainerGap(24, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(282, Short.MAX_VALUE)
+                .addContainerGap(245, Short.MAX_VALUE)
                 .addComponent(jButtonAltaUsuario)
-                .addGap(38, 38, 38)
+                .addGap(75, 75, 75)
                 .addComponent(jLabelMensaje)
                 .addGap(37, 37, 37))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,19 +158,19 @@ public class CrearUsuario extends javax.swing.JDialog {
 
     private void jButtonAltaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaUsuarioActionPerformed
     Usuario nuevoUsuario = new Usuario();
-    nuevoUsuario.setNom(jLabelNombre.getText());
-    nuevoUsuario.setEmail(jLabelEmail.getText());
-    nuevoUsuario.setPasswordHash(jLabelContrasena.getText());
+    nuevoUsuario.setNom(jTextFieldNombre.getText());
+    nuevoUsuario.setEmail(jTextFieldEmail.getText());
+    nuevoUsuario.setPasswordHash(jTextFieldContrasena.getText());
     nuevoUsuario.setInstructor(jCheckBoxInstructor.isSelected());
     
     DataAccess da = new DataAccess();
     int nuevoUsuarioId=0;
         try {
-            nuevoUsuarioId = da.registrarUsuario(nuevoUsuario);
+            nuevoUsuarioId = da.getUltimoIdRegistrado();
         } catch (SQLException ex) {
             Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
-    nuevoUsuario.setId(nuevoUsuarioId);
+    
     jLabelMensaje.setText("Usuario registrado correctamente con el ID = " + nuevoUsuarioId);
     
     

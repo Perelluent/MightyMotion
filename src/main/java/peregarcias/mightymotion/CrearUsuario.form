@@ -45,32 +45,30 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
-                          <Component id="jButtonAltaUsuario" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           <Component id="jLabelMensaje" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
+                          <Component id="jButtonAltaUsuario" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="65" max="32767" attributes="0"/>
+                  <EmptySpace pref="150" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabelNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabelEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldEmail" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldNombre" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jLabelContrasena" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextFieldContrasena" alignment="0" min="-2" pref="236" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jLabelNombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelContrasena" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jCheckBoxInstructor" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldNombre" pref="371" max="32767" attributes="0"/>
+                          <Component id="jTextFieldEmail" alignment="0" pref="371" max="32767" attributes="0"/>
+                          <Component id="jTextFieldContrasena" alignment="0" pref="371" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="12" max="32767" attributes="0"/>
+                      <EmptySpace pref="24" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -78,9 +76,9 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="282" max="32767" attributes="0"/>
+                  <EmptySpace pref="245" max="32767" attributes="0"/>
                   <Component id="jButtonAltaUsuario" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                   <Component id="jLabelMensaje" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
