@@ -53,19 +53,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPasswordFieldContrasena" min="-2" pref="229" max="-2" attributes="0"/>
-                              <Component id="jTextFieldUsuario" min="-2" pref="229" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="jLabelContrasena" alignment="0" min="-2" pref="229" max="-2" attributes="0"/>
                               <Component id="jLabelUsuario" alignment="0" min="-2" pref="229" max="-2" attributes="0"/>
+                              <Component id="txtEmailLogin" alignment="0" pref="248" max="32767" attributes="0"/>
+                              <Component id="txtPasswordLogin" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                          <Component id="jButtonEntrar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="103" max="-2" attributes="0"/>
+                          <Component id="btnEntrar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="51" max="32767" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -75,22 +75,22 @@
                   <EmptySpace min="-2" pref="84" max="-2" attributes="0"/>
                   <Component id="jLabelUsuario" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jTextFieldUsuario" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtEmailLogin" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jLabelContrasena" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPasswordFieldContrasena" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                  <Component id="jButtonEntrar" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="132" max="32767" attributes="0"/>
+                  <Component id="txtPasswordLogin" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                  <Component id="btnEntrar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="134" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jTextFieldUsuario">
+        <Component class="javax.swing.JTextField" name="txtEmailLogin">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldUsuarioActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailLoginActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelUsuario">
@@ -117,12 +117,12 @@
             <Property name="text" type="java.lang.String" value="Contrase&#xf1;a"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="jPasswordFieldContrasena">
+        <Component class="javax.swing.JPasswordField" name="txtPasswordLogin">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordFieldContrasenaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPasswordLoginActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonEntrar">
+        <Component class="javax.swing.JButton" name="btnEntrar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Modern M" size="18" style="0"/>
@@ -133,6 +133,9 @@
             <Property name="text" type="java.lang.String" value="ENTRAR"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEntrarActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

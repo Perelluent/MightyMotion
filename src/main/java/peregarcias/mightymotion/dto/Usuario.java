@@ -60,7 +60,7 @@ public class Usuario {
         return PasswordHash;
     }
 
-    public void setPasswordHash(String Password) {
+    public void setPasswordHash(String PasswordHash) {
         this.PasswordHash = PasswordHash;
     }
 

@@ -7,6 +7,7 @@ peregarcias\mightymotion\Main.class
 peregarcias\mightymotion\CrearUsuario$2.class
 peregarcias\mightymotion\dto\Usuario.class
 peregarcias\mightymotion\IniciarSesion$2.class
+peregarcias\mightymotion\IniciarSesion$4$1.class
 peregarcias\mightymotion\CrearUsuario$1.class
 peregarcias\mightymotion\Main$1.class
 peregarcias\mightymotion\IniciarSesion.class
@@ -17,4 +18,4 @@ peregarcias\mightymotion\CrearUsuario.class
 peregarcias\mightymotion\CrearUsuario$3.class
 peregarcias\mightymotion\dataaccess\DataAccess.class
 peregarcias\mightymotion\Main$2.class
-peregarcias\mightymotion\IniciarSesion$3$1.class
+peregarcias\mightymotion\IniciarSesion$4.class

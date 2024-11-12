@@ -13,7 +13,7 @@ Login:
 ![Login]![Login](https://github.com/user-attachments/assets/51633747-de2d-48b7-9ea9-889fc5fec785)
 
 
-Registrar Usuario: (No me puedo conectar a la BBDD)
+Registrar Usuario:
 ![registrarUsuario](https://github.com/user-attachments/assets/fbe3935f-a5d3-42e8-832e-4043c4855538)
 
 

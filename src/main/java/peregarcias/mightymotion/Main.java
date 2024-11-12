@@ -17,6 +17,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        setSize(300, 400);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,6 +37,7 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(185, 208, 214));
         setSize(new java.awt.Dimension(50, 75));
+        getContentPane().setLayout(null);
 
         jPanel2.setBackground(new java.awt.Color(185, 208, 214));
 
@@ -97,16 +99,8 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(jPanel2);
+        jPanel2.setBounds(0, 0, 278, 391);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

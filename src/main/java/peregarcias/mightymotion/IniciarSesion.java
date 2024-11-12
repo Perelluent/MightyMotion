@@ -4,11 +4,18 @@
  */
 package peregarcias.mightymotion;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import javax.swing.JOptionPane;
+import peregarcias.mightymotion.dataaccess.DataAccess;
+import peregarcias.mightymotion.dto.Usuario;
+
 /**
  *
  * @author morda
  */
 public class IniciarSesion extends javax.swing.JDialog {
+    
+    private DataAccess da = new DataAccess();
 
     /**
      * Creates new form IniciarSesion
@@ -28,11 +35,11 @@ public class IniciarSesion extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextFieldUsuario = new javax.swing.JTextField();
+        txtEmailLogin = new javax.swing.JTextField();
         jLabelUsuario = new javax.swing.JLabel();
         jLabelContrasena = new javax.swing.JLabel();
-        jPasswordFieldContrasena = new javax.swing.JPasswordField();
-        jButtonEntrar = new javax.swing.JButton();
+        txtPasswordLogin = new javax.swing.JPasswordField();
+        btnEntrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(301, 391));
@@ -40,9 +47,9 @@ public class IniciarSesion extends javax.swing.JDialog {
 
         jPanel1.setBackground(new java.awt.Color(185, 208, 214));
 
-        jTextFieldUsuario.addActionListener(new java.awt.event.ActionListener() {
+        txtEmailLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldUsuarioActionPerformed(evt);
+                txtEmailLoginActionPerformed(evt);
             }
         });
 
@@ -56,16 +63,21 @@ public class IniciarSesion extends javax.swing.JDialog {
         jLabelContrasena.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelContrasena.setText("Contraseña");
 
-        jPasswordFieldContrasena.addActionListener(new java.awt.event.ActionListener() {
+        txtPasswordLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordFieldContrasenaActionPerformed(evt);
+                txtPasswordLoginActionPerformed(evt);
             }
         });
 
-        jButtonEntrar.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
-        jButtonEntrar.setForeground(new java.awt.Color(0, 44, 58));
-        jButtonEntrar.setText("ENTRAR");
-        jButtonEntrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEntrar.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
+        btnEntrar.setForeground(new java.awt.Color(0, 44, 58));
+        btnEntrar.setText("ENTRAR");
+        btnEntrar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -75,15 +87,15 @@ public class IniciarSesion extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPasswordFieldContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabelUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmailLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                            .addComponent(txtPasswordLogin)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(88, 88, 88)
-                        .addComponent(jButtonEntrar)))
-                .addContainerGap(51, Short.MAX_VALUE))
+                        .addGap(103, 103, 103)
+                        .addComponent(btnEntrar)))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -91,14 +103,14 @@ public class IniciarSesion extends javax.swing.JDialog {
                 .addGap(84, 84, 84)
                 .addComponent(jLabelUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEmailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabelContrasena)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordFieldContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(45, 45, 45)
-                .addComponent(jButtonEntrar)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addComponent(txtPasswordLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(btnEntrar)
+                .addContainerGap(134, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -115,13 +127,31 @@ public class IniciarSesion extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldUsuarioActionPerformed
+    private void txtEmailLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldUsuarioActionPerformed
+    }//GEN-LAST:event_txtEmailLoginActionPerformed
 
-    private void jPasswordFieldContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldContrasenaActionPerformed
+    private void txtPasswordLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordLoginActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordFieldContrasenaActionPerformed
+    }//GEN-LAST:event_txtPasswordLoginActionPerformed
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+
+        Usuario usuario = da.getUsuario(txtEmailLogin.getText());
+        if (usuario != null) {
+            char[] passwordToVerify = txtPasswordLogin.getPassword();
+            String userPasswordHashInDatabase = usuario.getPasswordHash();
+            var result = BCrypt.verifyer().verify(passwordToVerify, userPasswordHashInDatabase);
+            if (result.verified) {
+                JOptionPane.showMessageDialog(this, "Login Succesful. Welcome " + usuario.getNom());
+            }
+            else {
+                JOptionPane.showMessageDialog(this, "Error. Invalid Password");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: user not found");
+        }
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,11 +196,11 @@ public class IniciarSesion extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonEntrar;
+    private javax.swing.JButton btnEntrar;
     private javax.swing.JLabel jLabelContrasena;
     private javax.swing.JLabel jLabelUsuario;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordFieldContrasena;
-    private javax.swing.JTextField jTextFieldUsuario;
+    private javax.swing.JTextField txtEmailLogin;
+    private javax.swing.JPasswordField txtPasswordLogin;
     // End of variables declaration//GEN-END:variables
 }

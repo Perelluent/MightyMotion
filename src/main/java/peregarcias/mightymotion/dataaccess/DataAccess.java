@@ -20,7 +20,7 @@ import peregarcias.mightymotion.dto.Usuario;
  */
 public class DataAccess {
     
-    private Connection getConnection() throws SQLException {
+    private Connection getConnection(){
     
         Connection connection = null;
     
@@ -58,7 +58,32 @@ public class DataAccess {
         return usuarios;
     }
     
-    public int registrarUsuario(Usuario u) throws SQLException {
+     public Usuario getUsuario(String email){
+        Usuario user = null;
+        String sql = "SELECT * FROM Usuaris WHERE Email=?";
+        
+        Connection connection = getConnection();
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            selectStatement.setString(1, email);
+            ResultSet resultset = selectStatement.executeQuery();
+            while (resultset.next()){
+                user = new Usuario();
+                user.setId(resultset.getInt("Id"));
+                user.setNom(resultset.getString("Nom"));
+                user.setEmail(resultset.getString("Email"));
+                user.setPasswordHash(resultset.getString("PasswordHash"));
+                user.setInstructor(resultset.getBoolean("Instructor"));
+            }
+            selectStatement.close();
+            connection.close();
+        }catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+    
+    public int registrarUsuario(Usuario u) {
         
         int nuevoUsuarioId = 0;
         Connection connection = getConnection();
@@ -83,24 +108,23 @@ public class DataAccess {
                
     }
     
-    public int getUltimoIdRegistrado() throws SQLException {
-        String sql = "SELECT MAX(Id) FROM Usuaris";
-        int userId = 0;
-        
+    public int getUltimoIdRegistrado() {
+        String sql = "SELECT * FROM Usuaris";
+        int usuarioId=0;
         Connection connection = getConnection();
         try {
             PreparedStatement selectStatement = connection.prepareStatement(sql);
             ResultSet resultset = selectStatement.executeQuery();
             while (resultset.next()){
-                userId = resultset.getInt(1);
-               
+                usuarioId = resultset.getInt(1);
             }
             selectStatement.close();
             connection.close();
         }catch (SQLException ex) {
             Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+       
         }
-        return userId;
+        return usuarioId;
     }
 }
     

@@ -4,6 +4,7 @@
  */
 package peregarcias.mightymotion;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,50 +35,50 @@ public class CrearUsuario extends javax.swing.JDialog {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabelNombre = new javax.swing.JLabel();
-        jTextFieldNombre = new javax.swing.JTextField();
-        jLabelEmail = new javax.swing.JLabel();
-        jTextFieldEmail = new javax.swing.JTextField();
-        jLabelContrasena = new javax.swing.JLabel();
-        jTextFieldContrasena = new javax.swing.JTextField();
-        jCheckBoxInstructor = new javax.swing.JCheckBox();
-        jButtonAltaUsuario = new javax.swing.JButton();
-        jLabelMensaje = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblEmail = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        lblPassword = new javax.swing.JLabel();
+        chkIsInstructor = new javax.swing.JCheckBox();
+        btnAltaUsuario = new javax.swing.JButton();
+        lblMensaje = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(185, 208, 214));
 
-        jLabelNombre.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
-        jLabelNombre.setText("Nombre:");
+        lblNombre.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        lblNombre.setText("Nombre:");
 
-        jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreActionPerformed(evt);
+                txtNombreActionPerformed(evt);
             }
         });
 
-        jLabelEmail.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
-        jLabelEmail.setText("E-mail:");
+        lblEmail.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        lblEmail.setText("E-mail:");
 
-        jLabelContrasena.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
-        jLabelContrasena.setText("Contraseña:");
+        lblPassword.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        lblPassword.setText("Contraseña:");
 
-        jCheckBoxInstructor.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
-        jCheckBoxInstructor.setText("Soy Instructor");
-        jCheckBoxInstructor.addActionListener(new java.awt.event.ActionListener() {
+        chkIsInstructor.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        chkIsInstructor.setText("Soy Instructor");
+        chkIsInstructor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxInstructorActionPerformed(evt);
+                chkIsInstructorActionPerformed(evt);
             }
         });
 
-        jButtonAltaUsuario.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
-        jButtonAltaUsuario.setForeground(new java.awt.Color(0, 44, 58));
-        jButtonAltaUsuario.setText("REGISTRARSE");
-        jButtonAltaUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonAltaUsuario.addActionListener(new java.awt.event.ActionListener() {
+        btnAltaUsuario.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
+        btnAltaUsuario.setForeground(new java.awt.Color(0, 44, 58));
+        btnAltaUsuario.setText("REGISTRARSE");
+        btnAltaUsuario.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAltaUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAltaUsuarioActionPerformed(evt);
+                btnAltaUsuarioActionPerformed(evt);
             }
         });
 
@@ -88,50 +89,53 @@ public class CrearUsuario extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabelMensaje))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(128, 128, 128)
-                        .addComponent(jButtonAltaUsuario)))
-                .addContainerGap(150, Short.MAX_VALUE))
+                        .addComponent(btnAltaUsuario))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkIsInstructor)
+                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPassword)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(25, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(12, 12, 12)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabelNombre)
-                        .addComponent(jLabelEmail)
-                        .addComponent(jLabelContrasena)
-                        .addComponent(jCheckBoxInstructor)
-                        .addComponent(jTextFieldNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
-                        .addComponent(jTextFieldEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
-                        .addComponent(jTextFieldContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
+                        .addComponent(lblNombre)
+                        .addComponent(lblEmail)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE)
+                        .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 371, Short.MAX_VALUE))
                     .addContainerGap(24, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(245, Short.MAX_VALUE)
-                .addComponent(jButtonAltaUsuario)
-                .addGap(75, 75, 75)
-                .addComponent(jLabelMensaje)
+                .addContainerGap(161, Short.MAX_VALUE)
+                .addComponent(lblPassword)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(chkIsInstructor)
+                .addGap(27, 27, 27)
+                .addComponent(btnAltaUsuario)
+                .addGap(37, 37, 37)
+                .addComponent(lblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(56, 56, 56)
-                    .addComponent(jLabelNombre)
+                    .addComponent(lblNombre)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabelEmail)
+                    .addComponent(lblEmail)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jLabelContrasena)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jTextFieldContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jCheckBoxInstructor)
-                    .addContainerGap(170, Short.MAX_VALUE)))
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(241, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -148,35 +152,29 @@ public class CrearUsuario extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreActionPerformed
+    }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void jCheckBoxInstructorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxInstructorActionPerformed
+    private void chkIsInstructorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkIsInstructorActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBoxInstructorActionPerformed
+    }//GEN-LAST:event_chkIsInstructorActionPerformed
 
-    private void jButtonAltaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaUsuarioActionPerformed
+    private void btnAltaUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAltaUsuarioActionPerformed
     Usuario nuevoUsuario = new Usuario();
-    nuevoUsuario.setNom(jTextFieldNombre.getText());
-    nuevoUsuario.setEmail(jTextFieldEmail.getText());
-    nuevoUsuario.setPasswordHash(jTextFieldContrasena.getText());
-    nuevoUsuario.setInstructor(jCheckBoxInstructor.isSelected());
+    nuevoUsuario.setNom(txtNombre.getText());
+    nuevoUsuario.setEmail(txtEmail.getText());
+    String passwordHash = BCrypt.withDefaults().hashToString(12, txtPassword.getPassword());
+    nuevoUsuario.setPasswordHash(passwordHash);
+    nuevoUsuario.setInstructor(chkIsInstructor.isSelected());
     
     DataAccess da = new DataAccess();
-    int nuevoUsuarioId=0;
-        try {
-            nuevoUsuarioId = da.getUltimoIdRegistrado();
-        } catch (SQLException ex) {
-            Logger.getLogger(CrearUsuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    int nuevoUsuarioId = da.registrarUsuario(nuevoUsuario);
+    nuevoUsuarioId = da.getUltimoIdRegistrado();
+    nuevoUsuario.setId(nuevoUsuarioId);
     
-    jLabelMensaje.setText("Usuario registrado correctamente con el ID = " + nuevoUsuarioId);
-    
-    
-    
-    
-    }//GEN-LAST:event_jButtonAltaUsuarioActionPerformed
+    lblMensaje.setText("Usuario registrado correctamente con el ID = " + nuevoUsuarioId);
+    }//GEN-LAST:event_btnAltaUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,15 +219,15 @@ public class CrearUsuario extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAltaUsuario;
-    private javax.swing.JCheckBox jCheckBoxInstructor;
-    private javax.swing.JLabel jLabelContrasena;
-    private javax.swing.JLabel jLabelEmail;
-    private javax.swing.JLabel jLabelMensaje;
-    private javax.swing.JLabel jLabelNombre;
+    private javax.swing.JButton btnAltaUsuario;
+    private javax.swing.JCheckBox chkIsInstructor;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextFieldContrasena;
-    private javax.swing.JTextField jTextFieldEmail;
-    private javax.swing.JTextField jTextFieldNombre;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblMensaje;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }

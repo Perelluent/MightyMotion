@@ -45,28 +45,33 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                          <Component id="jLabelMensaje" min="-2" max="-2" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
-                          <Component id="jButtonAltaUsuario" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAltaUsuario" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="chkIsInstructor" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtPassword" alignment="0" min="-2" pref="368" max="-2" attributes="0"/>
+                              <Component id="lblPassword" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                          <Component id="lblMensaje" min="-2" pref="27" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="150" max="32767" attributes="0"/>
+                  <EmptySpace pref="25" max="32767" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jLabelNombre" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelEmail" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelContrasena" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBoxInstructor" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextFieldNombre" pref="371" max="32767" attributes="0"/>
-                          <Component id="jTextFieldEmail" alignment="0" pref="371" max="32767" attributes="0"/>
-                          <Component id="jTextFieldContrasena" alignment="0" pref="371" max="32767" attributes="0"/>
+                          <Component id="lblNombre" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblEmail" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtNombre" pref="371" max="32767" attributes="0"/>
+                          <Component id="txtEmail" alignment="0" pref="371" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="24" max="32767" attributes="0"/>
                   </Group>
@@ -76,36 +81,36 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="245" max="32767" attributes="0"/>
-                  <Component id="jButtonAltaUsuario" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                  <Component id="jLabelMensaje" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="161" max="32767" attributes="0"/>
+                  <Component id="lblPassword" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="txtPassword" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="chkIsInstructor" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                  <Component id="btnAltaUsuario" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                  <Component id="lblMensaje" min="-2" pref="12" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                      <Component id="jLabelNombre" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblNombre" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldNombre" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtNombre" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelEmail" min="-2" max="-2" attributes="0"/>
+                      <Component id="lblEmail" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldEmail" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jLabelContrasena" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextFieldContrasena" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jCheckBoxInstructor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="170" max="32767" attributes="0"/>
+                      <Component id="txtEmail" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="241" max="32767" attributes="0"/>
                   </Group>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabelNombre">
+        <Component class="javax.swing.JLabel" name="lblNombre">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Modern M" size="12" style="0"/>
@@ -113,12 +118,12 @@
             <Property name="text" type="java.lang.String" value="Nombre:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldNombre">
+        <Component class="javax.swing.JTextField" name="txtNombre">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNombreActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNombreActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelEmail">
+        <Component class="javax.swing.JLabel" name="lblEmail">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Modern M" size="12" style="0"/>
@@ -126,9 +131,9 @@
             <Property name="text" type="java.lang.String" value="E-mail:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldEmail">
+        <Component class="javax.swing.JTextField" name="txtEmail">
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelContrasena">
+        <Component class="javax.swing.JLabel" name="lblPassword">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Modern M" size="12" style="0"/>
@@ -136,9 +141,7 @@
             <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldContrasena">
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBoxInstructor">
+        <Component class="javax.swing.JCheckBox" name="chkIsInstructor">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Modern M" size="12" style="0"/>
@@ -146,10 +149,10 @@
             <Property name="text" type="java.lang.String" value="Soy Instructor"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxInstructorActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkIsInstructorActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButtonAltaUsuario">
+        <Component class="javax.swing.JButton" name="btnAltaUsuario">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Modern M" size="18" style="0"/>
@@ -161,10 +164,12 @@
             <Property name="horizontalTextPosition" type="int" value="0"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAltaUsuarioActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAltaUsuarioActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabelMensaje">
+        <Component class="javax.swing.JLabel" name="lblMensaje">
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="txtPassword">
         </Component>
       </SubComponents>
     </Container>
