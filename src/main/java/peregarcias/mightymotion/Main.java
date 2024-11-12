@@ -4,7 +4,9 @@
  */
 package peregarcias.mightymotion;
 
-import javax.swing.JFrame;
+
+import java.awt.Color;
+import peregarcias.mightymotion.dto.Usuario;
 
 /**
  *
@@ -12,12 +14,52 @@ import javax.swing.JFrame;
  */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main
-     */
+    private JPanelIniciarSesion iniciarSesion;
+    private JPanelCrearUsuario crearUsuario;
+    private JPanelPantallaPrincipal pantallaPrincipal;
+    private Usuario usuario;
+    
+    
     public Main() {
         initComponents();
-        setSize(300, 400);
+        pack();
+        setBounds(0, 0, 500, 600);
+        setLocationRelativeTo(null);
+        getContentPane().setBackground(new Color(185,208,214));
+        
+        iniciarSesion = new JPanelIniciarSesion(this);
+        this.add(iniciarSesion);
+        iniciarSesion.setBounds(0, 0, 490, 590);
+        iniciarSesion.setVisible(false);
+        getContentPane().add(iniciarSesion);
+        
+        crearUsuario = new JPanelCrearUsuario(this);
+        crearUsuario.setBounds(0, 0, 490, 590);
+        crearUsuario.setVisible(false);
+        getContentPane().add(crearUsuario);
+
+    }
+    public void mostrarJpanelIniciarSesion(){
+        iniciarSesion.setVisible(true);
+        Main.setVisible(false);
+    }
+    
+    public void mostrarJpanelCrearUsuario(){
+        crearUsuario.setVisible(true);
+        Main.setVisible(false);
+    }
+    public void mostrarJpanelPantallaPrincipal(Usuario usuario) {
+        this.usuario = usuario;
+        pantallaPrincipal = new JPanelPantallaPrincipal(this, usuario);
+        pantallaPrincipal.setVisible(true);
+        iniciarSesion.setVisible(false);
+    }
+    
+    public void mostrarMain(){
+       crearUsuario.setVisible(false);
+       iniciarSesion.setVisible(false);
+       pantallaPrincipal.setVisible(false);
+       Main.setVisible(true);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,7 +70,7 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
+        Main = new javax.swing.JPanel();
         jLabelLogo = new javax.swing.JLabel();
         jLabelTitle = new javax.swing.JLabel();
         jButtonLogin = new javax.swing.JButton();
@@ -36,10 +78,13 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(185, 208, 214));
+        setPreferredSize(new java.awt.Dimension(600, 600));
         setSize(new java.awt.Dimension(50, 75));
         getContentPane().setLayout(null);
 
-        jPanel2.setBackground(new java.awt.Color(185, 208, 214));
+        Main.setBackground(new java.awt.Color(185, 208, 214));
+        Main.setMinimumSize(new java.awt.Dimension(500, 600));
+        Main.setPreferredSize(new java.awt.Dimension(500, 600));
 
         jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM.jpg"))); // NOI18N
         jLabelLogo.setText("jLabel1");
@@ -68,52 +113,55 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 52, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout MainLayout = new javax.swing.GroupLayout(Main);
+        Main.setLayout(MainLayout);
+        MainLayout.setHorizontalGroup(
+            MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainLayout.createSequentialGroup()
+                .addGap(155, 155, 155)
+                .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(55, 55, 55))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(80, 80, 80)))))
+                    .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(MainLayout.createSequentialGroup()
+                            .addGap(21, 21, 21)
+                            .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        MainLayout.setVerticalGroup(
+            MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(MainLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelTitle)
-                .addGap(62, 62, 62)
+                .addGap(69, 69, 69)
                 .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36)
+                .addGap(28, 28, 28)
                 .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(276, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2);
-        jPanel2.setBounds(0, 0, 278, 391);
+        getContentPane().add(Main);
+        Main.setBounds(0, 0, 500, 600);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
-        IniciarSesion iniciarSesion = new IniciarSesion (this,true);
-        iniciarSesion.setVisible(true);
-    }//GEN-LAST:event_jButtonLoginActionPerformed
-
     private void jButtonAltaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAltaUsuariosActionPerformed
-        CrearUsuario altaUsuarios = new CrearUsuario (this,true);
-        altaUsuarios.setVisible(true);
+        Main.setVisible(false);
+        crearUsuario.setVisible(true);
+        getContentPane().revalidate();
+        getContentPane().repaint();
     }//GEN-LAST:event_jButtonAltaUsuariosActionPerformed
+
+    private void jButtonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLoginActionPerformed
+        Main.setVisible(false);
+        iniciarSesion.setVisible(true);
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }//GEN-LAST:event_jButtonLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,10 +200,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Main;
     private javax.swing.JButton jButtonAltaUsuarios;
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelTitle;
-    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 }
