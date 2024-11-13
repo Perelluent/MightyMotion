@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import peregarcias.mightymotion.dto.Usuario;
+import peregarcias.mightymotion.dto.Workouts;
 
 /**
  *
@@ -125,6 +126,30 @@ public class DataAccess {
        
         }
         return usuarioId;
+    }
+    
+    public ArrayList<Workouts> getWorkouts() throws SQLException{
+        ArrayList<Workouts> workouts = new ArrayList<>();
+        String sql = "SELECT * FROM Workouts";
+        
+        Connection connection = getConnection();
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            ResultSet resultset = selectStatement.executeQuery();
+            while (resultset.next()){
+                Workouts workout = new Workouts();
+                workout.setId(resultset.getInt("Id"));
+                workout.setForDate(resultset.getDate("forDate").toLocalDate());
+                workout.setUserId(resultset.getInt("UserId"));
+                workout.setComments(resultset.getString("Comments"));
+                workouts.add(workout);
+            }
+            selectStatement.close();
+            connection.close();
+        }catch (SQLException ex) {
+            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return workouts;
     }
 }
     

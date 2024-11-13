@@ -6,6 +6,7 @@ package peregarcias.mightymotion;
 
 
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import peregarcias.mightymotion.dto.Usuario;
 
 /**
@@ -37,6 +38,11 @@ public class Main extends javax.swing.JFrame {
         crearUsuario.setBounds(0, 0, 490, 590);
         crearUsuario.setVisible(false);
         getContentPane().add(crearUsuario);
+        
+        pantallaPrincipal = new JPanelPantallaPrincipal(this, usuario);
+        pantallaPrincipal.setBounds(0, 0, 490, 590);
+        pantallaPrincipal.setVisible(false);
+        getContentPane().add(pantallaPrincipal);
 
     }
     public void mostrarJpanelIniciarSesion(){
@@ -49,10 +55,11 @@ public class Main extends javax.swing.JFrame {
         Main.setVisible(false);
     }
     public void mostrarJpanelPantallaPrincipal(Usuario usuario) {
-        this.usuario = usuario;
-        pantallaPrincipal = new JPanelPantallaPrincipal(this, usuario);
-        pantallaPrincipal.setVisible(true);
         iniciarSesion.setVisible(false);
+        crearUsuario.setVisible(false);
+        pantallaPrincipal.setVisible(true);
+        
+
     }
     
     public void mostrarMain(){
@@ -75,6 +82,15 @@ public class Main extends javax.swing.JFrame {
         jLabelTitle = new javax.swing.JLabel();
         jButtonLogin = new javax.swing.JButton();
         jButtonAltaUsuarios = new javax.swing.JButton();
+        lblWeb = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        mnuFile = new javax.swing.JMenu();
+        mniIniciarSesion = new javax.swing.JMenuItem();
+        mniAltaUsuarios = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        mniCerrar = new javax.swing.JMenuItem();
+        mnuHelp = new javax.swing.JMenu();
+        mniAbout = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(185, 208, 214));
@@ -113,21 +129,31 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        lblWeb.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
+        lblWeb.setForeground(new java.awt.Color(0, 44, 58));
+        lblWeb.setText("www.mightymotion.com");
+        lblWeb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout MainLayout = new javax.swing.GroupLayout(Main);
         Main.setLayout(MainLayout);
         MainLayout.setHorizontalGroup(
             MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainLayout.createSequentialGroup()
-                .addGap(155, 155, 155)
-                .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(MainLayout.createSequentialGroup()
-                            .addGap(21, 21, 21)
-                            .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(174, Short.MAX_VALUE))
+                .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MainLayout.createSequentialGroup()
+                        .addGap(155, 155, 155)
+                        .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(MainLayout.createSequentialGroup()
+                                    .addGap(21, 21, 21)
+                                    .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(MainLayout.createSequentialGroup()
+                        .addGap(147, 147, 147)
+                        .addComponent(lblWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         MainLayout.setVerticalGroup(
             MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,11 +166,56 @@ public class Main extends javax.swing.JFrame {
                 .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(276, Short.MAX_VALUE))
+                .addGap(95, 95, 95)
+                .addComponent(lblWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(153, Short.MAX_VALUE))
         );
 
         getContentPane().add(Main);
         Main.setBounds(0, 0, 500, 600);
+
+        mnuFile.setText("File");
+
+        mniIniciarSesion.setText("Iniciar Sesión");
+        mniIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniIniciarSesionActionPerformed(evt);
+            }
+        });
+        mnuFile.add(mniIniciarSesion);
+
+        mniAltaUsuarios.setText("Alta Usuarios");
+        mniAltaUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniAltaUsuariosActionPerformed(evt);
+            }
+        });
+        mnuFile.add(mniAltaUsuarios);
+        mnuFile.add(jSeparator1);
+
+        mniCerrar.setText("Cerrar");
+        mniCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniCerrarActionPerformed(evt);
+            }
+        });
+        mnuFile.add(mniCerrar);
+
+        jMenuBar1.add(mnuFile);
+
+        mnuHelp.setText("Help");
+
+        mniAbout.setText("About");
+        mniAbout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mniAboutActionPerformed(evt);
+            }
+        });
+        mnuHelp.add(mniAbout);
+
+        jMenuBar1.add(mnuHelp);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -162,6 +233,28 @@ public class Main extends javax.swing.JFrame {
         getContentPane().revalidate();
         getContentPane().repaint();
     }//GEN-LAST:event_jButtonLoginActionPerformed
+
+    private void mniIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniIniciarSesionActionPerformed
+        Main.setVisible(false);
+        iniciarSesion.setVisible(true);
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }//GEN-LAST:event_mniIniciarSesionActionPerformed
+
+    private void mniAltaUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAltaUsuariosActionPerformed
+        Main.setVisible(false);
+        crearUsuario.setVisible(true);
+        getContentPane().revalidate();
+        getContentPane().repaint();
+    }//GEN-LAST:event_mniAltaUsuariosActionPerformed
+
+    private void mniAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniAboutActionPerformed
+        JOptionPane.showMessageDialog(this, "Pere Garcias\nDesarrollo de interfaces. DAM.");
+    }//GEN-LAST:event_mniAboutActionPerformed
+
+    private void mniCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniCerrarActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mniCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,5 +298,14 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton jButtonLogin;
     private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelTitle;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel lblWeb;
+    private javax.swing.JMenuItem mniAbout;
+    private javax.swing.JMenuItem mniAltaUsuarios;
+    private javax.swing.JMenuItem mniCerrar;
+    private javax.swing.JMenuItem mniIniciarSesion;
+    private javax.swing.JMenu mnuFile;
+    private javax.swing.JMenu mnuHelp;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,6 +18,11 @@ public class Usuario {
     private boolean Instructor;
     private String AssignedInstructor;
 
+    @Override
+    public String toString() {
+        return Nom + "//" + Email + ", Instructor=" + Instructor + ", AssignedInstructor=" + AssignedInstructor + '}';
+    }
+
     public Usuario(int Id, String Nom, String Email, String PasswordHash, byte Foto, boolean Instructor, String AssignedInstructor) {
         this.Id = Id;
         this.Nom = Nom;
