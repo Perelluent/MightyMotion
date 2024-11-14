@@ -20,22 +20,18 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return Nom + "//" + Email + ", Instructor=" + Instructor + ", AssignedInstructor=" + AssignedInstructor + '}';
+        return Nom; //+ "//" + Email + ", Instructor=" + Instructor + ", AssignedInstructor=" + AssignedInstructor + '}';
     }
 
-    public Usuario(int Id, String Nom, String Email, String PasswordHash, byte Foto, boolean Instructor, String AssignedInstructor) {
-        this.Id = Id;
-        this.Nom = Nom;
-        this.Email = Email;
-        this.PasswordHash = PasswordHash;
-        this.Foto = Foto;
-        this.Instructor = Instructor;
-        this.AssignedInstructor = AssignedInstructor;
-    }
-
-    public Usuario() {
-        
-    }
+//    public Usuario(int Id, String Nom, String Email, String PasswordHash, byte Foto, boolean Instructor, String AssignedInstructor) {
+//        this.Id = Id;
+//        this.Nom = Nom;
+//        this.Email = Email;
+//        this.PasswordHash = PasswordHash;
+//        this.Foto = Foto;
+//        this.Instructor = Instructor;
+//        this.AssignedInstructor = AssignedInstructor;
+//    }
 
     public int getId() {
         return Id;

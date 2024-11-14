@@ -21,7 +21,6 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
     public JPanelIniciarSesion(Main jFrameMain) {
         initComponents();
         this.jFrameMain = jFrameMain;
-
     }
 
     /**
@@ -59,7 +58,7 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
         add(jLabelLogo);
         jLabelLogo.setBounds(180, 30, 124, 108);
 
-        txtEmailLogin.setText("instructor@mm.com");
+        txtEmailLogin.setText("x@fmail.com");
         txtEmailLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailLoginActionPerformed(evt);
@@ -82,7 +81,7 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
         add(jLabelContrasena);
         jLabelContrasena.setBounds(130, 260, 57, 12);
 
-        txtPasswordLogin.setText("12345678");
+        txtPasswordLogin.setText("1234");
         txtPasswordLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordLoginActionPerformed(evt);
@@ -136,6 +135,7 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
             String userPasswordHashInDatabase = usuario.getPasswordHash();
             var result = BCrypt.verifyer().verify(passwordToVerify, userPasswordHashInDatabase);
             if (result.verified) {
+                System.out.println("Usuario logueado: " + usuario.getNom());
                 jFrameMain.mostrarJpanelPantallaPrincipal(usuario);
             }
             else {

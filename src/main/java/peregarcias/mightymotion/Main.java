@@ -55,11 +55,15 @@ public class Main extends javax.swing.JFrame {
         Main.setVisible(false);
     }
     public void mostrarJpanelPantallaPrincipal(Usuario usuario) {
+        System.out.println("Mostrando pantalla principal con usuario: " + (usuario != null ? usuario.getNom() : "null"));
+        JPanelPantallaPrincipal pantallaPrincipal = new JPanelPantallaPrincipal(this, usuario);
+        setContentPane(pantallaPrincipal);
+        pantallaPrincipal.setUsuarioLogueado(usuario);
+        revalidate();
+        repaint();
         iniciarSesion.setVisible(false);
         crearUsuario.setVisible(false);
         pantallaPrincipal.setVisible(true);
-        
-
     }
     
     public void mostrarMain(){

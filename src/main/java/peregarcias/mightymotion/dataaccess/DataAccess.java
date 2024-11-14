@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import peregarcias.mightymotion.dto.Exercicis;
 import peregarcias.mightymotion.dto.Usuario;
 import peregarcias.mightymotion.dto.Workouts;
 
@@ -30,7 +31,7 @@ public class DataAccess {
         try {
             connection = DriverManager.getConnection(connectionString);
         } catch (SQLException ex) {
-            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return connection;
     }
@@ -54,35 +55,32 @@ public class DataAccess {
             selectStatement.close();
             connection.close();
         }catch (SQLException ex) {
-            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return usuarios;
     }
     
      public Usuario getUsuario(String email){
         Usuario user = null;
-        String sql = "SELECT * FROM Usuaris WHERE Email=?";
-        
-        Connection connection = getConnection();
-        try {
-            PreparedStatement selectStatement = connection.prepareStatement(sql);
+        String sql = "SELECT * FROM Usuaris WHERE Email = ?";
+        try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
             selectStatement.setString(1, email);
-            ResultSet resultset = selectStatement.executeQuery();
-            while (resultset.next()){
-                user = new Usuario();
-                user.setId(resultset.getInt("Id"));
-                user.setNom(resultset.getString("Nom"));
-                user.setEmail(resultset.getString("Email"));
-                user.setPasswordHash(resultset.getString("PasswordHash"));
-                user.setInstructor(resultset.getBoolean("Instructor"));
+            ResultSet resultSet = selectStatement.executeQuery();
+            user = new Usuario();
+            while (resultSet.next()) {
+                user.setId(resultSet.getInt("Id"));
+                user.setNom(resultSet.getString("Nom"));
+                user.setEmail(resultSet.getString("Email"));
+                user.setPasswordHash(resultSet.getString("PasswordHash"));
+                user.setInstructor(resultSet.getBoolean("Instructor"));
             }
-            selectStatement.close();
-            connection.close();
-        }catch (SQLException ex) {
-            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return user;
     }
+    
+    
     
     public int registrarUsuario(Usuario u) {
         
@@ -102,7 +100,7 @@ public class DataAccess {
         connection.close();
         
         } catch (SQLException ex) {
-            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         
     return nuevoUsuarioId;
@@ -122,7 +120,7 @@ public class DataAccess {
             selectStatement.close();
             connection.close();
         }catch (SQLException ex) {
-            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
        
         }
         return usuarioId;
@@ -147,12 +145,105 @@ public class DataAccess {
             selectStatement.close();
             connection.close();
         }catch (SQLException ex) {
-            Logger.getLogger(DataAccess.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         return workouts;
     }
-}
+    public  ArrayList<Usuario> getUsuariosByInstructor(int idInstructor) {
+         ArrayList<Usuario> usuaris = new ArrayList<>();
+        String sql = "SELECT * FROM Usuaris WHERE AssignedInstructor=?";
+        try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
+            selectStatement.setInt(1, idInstructor);
+            ResultSet resultSet = selectStatement.executeQuery();
+            
+             if (!resultSet.next()) {
+            System.out.println("No se encontraron alumnos para el instructor con ID: " + idInstructor);
+        }
+            while (resultSet.next()) {
+                Usuario user = new Usuario();
+                user.setId(resultSet.getInt("Id"));
+                user.setNom(resultSet.getString("Nom"));
+                user.setEmail(resultSet.getString("Email"));
+                user.setPasswordHash(resultSet.getString("PasswordHash"));
+                user.setInstructor(resultSet.getBoolean("Instructor"));
+                usuaris.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return usuaris;
+    }
     
+    public ArrayList<Workouts> getWorkoutsByUser(Usuario user) {
+        ArrayList<Workouts> workouts = new ArrayList<>();
+        String sql = "SELECT Workouts.Id, Workouts.ForDate, Workouts.UserId, Workouts.Comments"
+                + " FROM Workouts"
+                + " WHERE Workouts.UserId=?"
+                + " ORDER BY Workouts.ForDate";
+        Connection connection = getConnection();
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            ResultSet resultset = selectStatement.executeQuery();
+            while (resultset.next()){
+                Workouts workout = new Workouts();
+                workout.setId(resultset.getInt("Id"));
+                workout.setForDate(resultset.getDate("forDate").toLocalDate());
+                workout.setUserId(resultset.getInt("UserId"));
+                workout.setComments(resultset.getString("Comments"));
+                workouts.add(workout);
+            }
+            selectStatement.close();
+            connection.close();
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return workouts;
+    }
+    
+    public ArrayList<Exercicis> getExercicis() {
+        ArrayList<Exercicis> exercicis = new ArrayList<>();
+        String sql = "SELECT Id, Exercicis.NomExercici, Exercicis.Descripcio, Exercicis.DemoFoto"
+                + " FROM Exercicis";
+        try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
 
+            ResultSet resultSet = selectStatement.executeQuery();
 
+            while (resultSet.next()) {
+                Exercicis exercici = new Exercicis();
+                exercici.setExerciciId(resultSet.getInt("Id"));
+                exercici.setNomExercici(resultSet.getString("NomExercici"));
+                exercici.setDescripcio(resultSet.getString("Descripcio"));
 
+                exercicis.add(exercici);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exercicis;
+    }
+    
+    public ArrayList<Exercicis> getExercicisByWorkout (Workouts workout) {
+        ArrayList<Exercicis> exercicis = new ArrayList<>();
+        String sql = "SELECT ExercicisWorkouts.IdExercici,"
+                + "Exercicis.NomExercici, Exercicis.Descripcio"
+                + "FROM ExercicisWorkouts INNER JOIN Exercicis ON ExercicisWorkouts.idExercici=Exercicis.Id"
+                + "WHERE ExercicisWorkouts.IdWorkout=?";
+        Connection connection = getConnection();
+        try {
+            PreparedStatement selectStatement = connection.prepareStatement(sql);
+            selectStatement.setInt(1,workout.getId());
+            ResultSet resultset = selectStatement.executeQuery();
+            while (resultset.next()) {
+                Exercicis exercici = new Exercicis();
+                exercici.setExerciciId(resultset.getInt("IdExercici"));
+                exercici.setNomExercici(resultset.getString("NomExercici"));
+                exercici.setDescripcio(resultset.getString("Descripcio"));
+                exercicis.add(exercici);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exercicis;
+    }
+}
+        

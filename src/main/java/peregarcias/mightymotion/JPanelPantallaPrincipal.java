@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.plaf.metal.MetalIconFactory;
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Usuario;
+import peregarcias.mightymotion.Main;
 
 /**
  *
@@ -21,17 +21,27 @@ import peregarcias.mightymotion.dto.Usuario;
 public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     
     DataAccess da = new DataAccess();
+    private Usuario usuarioLogueado;
         
-    public JPanelPantallaPrincipal(Main jFrameMain, Usuario usuario) {
+    public JPanelPantallaPrincipal(Main jFrameMain, Usuario user) {
         initComponents();
         setSize(500, 600);
         setBounds(0, 0, 490, 590);
         setBackground(new Color(185,208,214));
-        if (usuario != null) {
-            lblBienvenida.setText("Bienvenido " + usuario.getNom());
+        if (user != null) {
+            this.usuarioLogueado = user;
+            lblBienvenida.setText("Bienvenido " + user.getNom() + "!");
         } else {
-            lblBienvenida.setText("Bienvenido usuario desconocido");
+            lblBienvenida.setText("Bienvenido");
         }
+    }
+    
+    public void setUsuarioLogueado (Usuario usuario){
+        this.usuarioLogueado = usuario;
+    }
+    
+    public Usuario getUsuarioLogueado() {
+        return usuarioLogueado;
     }
 
     /**
@@ -46,9 +56,9 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         lblBienvenida = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUsuarios = new javax.swing.JList<>();
-        btnMostrarUsuarios = new javax.swing.JButton();
+        btnAlumnos = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jListUsuarios1 = new javax.swing.JList<>();
+        jListWorkouts = new javax.swing.JList<>();
         lblWorkouts = new javax.swing.JLabel();
 
         setLayout(null);
@@ -58,23 +68,28 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         add(lblBienvenida);
         lblBienvenida.setBounds(10, 50, 500, 21);
 
+        jListUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListUsuariosValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jListUsuarios);
 
         add(jScrollPane1);
         jScrollPane1.setBounds(30, 130, 190, 320);
 
-        btnMostrarUsuarios.setFont(new java.awt.Font("Modern M", 0, 14)); // NOI18N
-        btnMostrarUsuarios.setForeground(new java.awt.Color(0, 44, 58));
-        btnMostrarUsuarios.setText("MOSTRAR USUARIOS");
-        btnMostrarUsuarios.addActionListener(new java.awt.event.ActionListener() {
+        btnAlumnos.setFont(new java.awt.Font("Modern M", 0, 14)); // NOI18N
+        btnAlumnos.setForeground(new java.awt.Color(0, 44, 58));
+        btnAlumnos.setText("ALUMNOS");
+        btnAlumnos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMostrarUsuariosActionPerformed(evt);
+                btnAlumnosActionPerformed(evt);
             }
         });
-        add(btnMostrarUsuarios);
-        btnMostrarUsuarios.setBounds(30, 90, 190, 22);
+        add(btnAlumnos);
+        btnAlumnos.setBounds(30, 90, 190, 22);
 
-        jScrollPane2.setViewportView(jListUsuarios1);
+        jScrollPane2.setViewportView(jListWorkouts);
 
         add(jScrollPane2);
         jScrollPane2.setBounds(270, 130, 190, 320);
@@ -87,24 +102,30 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         lblWorkouts.setBounds(310, 90, 90, 19);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnMostrarUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarUsuariosActionPerformed
+    private void btnAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlumnosActionPerformed
+        
+        Usuario user = this.getUsuarioLogueado();
+        ArrayList<Usuario> usuarios = new ArrayList<>();
         try {
-            ArrayList<Usuario> usuarios = da.getUsuarios();
-            DefaultListModel<String> dfm = new DefaultListModel<>();
-            for (Usuario u: usuarios) {
-                dfm.addElement(u.toString());
-            }
-            jListUsuarios.setModel(dfm);
+            usuarios = da.getUsuarios();
         } catch (SQLException ex) {
             Logger.getLogger(JPanelPantallaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnMostrarUsuariosActionPerformed
+        DefaultListModel<String> dfm = new DefaultListModel<>();
+        for (Usuario u: usuarios) {
+            dfm.addElement(u.toString());
+        }
+        jListUsuarios.setModel(dfm);
+    }//GEN-LAST:event_btnAlumnosActionPerformed
 
+    private void jListUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListUsuariosValueChanged
+
+    }//GEN-LAST:event_jListUsuariosValueChanged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnMostrarUsuarios;
+    private javax.swing.JButton btnAlumnos;
     private javax.swing.JList<String> jListUsuarios;
-    private javax.swing.JList<String> jListUsuarios1;
+    private javax.swing.JList<String> jListWorkouts;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblBienvenida;
