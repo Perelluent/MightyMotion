@@ -18,31 +18,36 @@ public class Main extends javax.swing.JFrame {
     private JPanelIniciarSesion iniciarSesion;
     private JPanelCrearUsuario crearUsuario;
     private JPanelPantallaPrincipal pantallaPrincipal;
+
     private Usuario usuario;
     
     
     public Main() {
         initComponents();
         pack();
-        setBounds(0, 0, 500, 600);
+        setBounds(0, 0, 1000, 900);
         setLocationRelativeTo(null);
         getContentPane().setBackground(new Color(185,208,214));
         
         iniciarSesion = new JPanelIniciarSesion(this);
         this.add(iniciarSesion);
-        iniciarSesion.setBounds(0, 0, 490, 590);
+        iniciarSesion.setBounds(0, 0, 1000, 900);
         iniciarSesion.setVisible(false);
         getContentPane().add(iniciarSesion);
         
         crearUsuario = new JPanelCrearUsuario(this);
-        crearUsuario.setBounds(0, 0, 490, 590);
+        crearUsuario.setBounds(0, 0, 1000, 900);
         crearUsuario.setVisible(false);
         getContentPane().add(crearUsuario);
         
         pantallaPrincipal = new JPanelPantallaPrincipal(this, usuario);
-        pantallaPrincipal.setBounds(0, 0, 490, 590);
+        pantallaPrincipal.setBounds(0, 0, 1000, 9000);
         pantallaPrincipal.setVisible(false);
         getContentPane().add(pantallaPrincipal);
+        
+
+        
+        
 
     }
     public void mostrarJpanelIniciarSesion(){
@@ -82,11 +87,11 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         Main = new javax.swing.JPanel();
-        jLabelLogo = new javax.swing.JLabel();
         jLabelTitle = new javax.swing.JLabel();
         jButtonLogin = new javax.swing.JButton();
         jButtonAltaUsuarios = new javax.swing.JButton();
         lblWeb = new javax.swing.JLabel();
+        lblLogo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuFile = new javax.swing.JMenu();
         mniIniciarSesion = new javax.swing.JMenuItem();
@@ -98,18 +103,16 @@ public class Main extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(185, 208, 214));
-        setPreferredSize(new java.awt.Dimension(600, 600));
-        setSize(new java.awt.Dimension(50, 75));
+        setPreferredSize(new java.awt.Dimension(1000, 900));
+        setResizable(false);
+        setSize(new java.awt.Dimension(1000, 900));
         getContentPane().setLayout(null);
 
         Main.setBackground(new java.awt.Color(185, 208, 214));
         Main.setMinimumSize(new java.awt.Dimension(500, 600));
         Main.setPreferredSize(new java.awt.Dimension(500, 600));
 
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM.jpg"))); // NOI18N
-        jLabelLogo.setText("jLabel1");
-
-        jLabelTitle.setFont(new java.awt.Font("Modern M", 1, 24)); // NOI18N
+        jLabelTitle.setFont(new java.awt.Font("Modern M", 1, 48)); // NOI18N
         jLabelTitle.setForeground(new java.awt.Color(0, 44, 58));
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitle.setText("Mighty Motion");
@@ -138,6 +141,9 @@ public class Main extends javax.swing.JFrame {
         lblWeb.setText("www.mightymotion.com");
         lblWeb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM512.jpg"))); // NOI18N
+
         javax.swing.GroupLayout MainLayout = new javax.swing.GroupLayout(Main);
         Main.setLayout(MainLayout);
         MainLayout.setHorizontalGroup(
@@ -145,38 +151,40 @@ public class Main extends javax.swing.JFrame {
             .addGroup(MainLayout.createSequentialGroup()
                 .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(MainLayout.createSequentialGroup()
-                        .addGap(155, 155, 155)
-                        .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(MainLayout.createSequentialGroup()
-                                    .addGap(21, 21, 21)
-                                    .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(402, 402, 402)
+                        .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(MainLayout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(MainLayout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(lblWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(151, Short.MAX_VALUE))
+                        .addGap(302, 302, 302)
+                        .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(MainLayout.createSequentialGroup()
+                        .addGap(249, 249, 249)
+                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(325, Short.MAX_VALUE))
         );
         MainLayout.setVerticalGroup(
             MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jLabelLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(73, 73, 73)
+                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56)
                 .addComponent(jLabelTitle)
-                .addGap(69, 69, 69)
+                .addGap(31, 31, 31)
                 .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(95, 95, 95)
+                .addGap(61, 61, 61)
                 .addComponent(lblWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(153, Short.MAX_VALUE))
+                .addContainerGap(185, Short.MAX_VALUE))
         );
 
         getContentPane().add(Main);
-        Main.setBounds(0, 0, 500, 600);
+        Main.setBounds(0, 0, 1040, 880);
 
         mnuFile.setText("File");
 
@@ -300,10 +308,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel Main;
     private javax.swing.JButton jButtonAltaUsuarios;
     private javax.swing.JButton jButtonLogin;
-    private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel lblLogo;
     private javax.swing.JLabel lblWeb;
     private javax.swing.JMenuItem mniAbout;
     private javax.swing.JMenuItem mniAltaUsuarios;

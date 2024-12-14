@@ -20,7 +20,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return Nom; //+ "//" + Email + ", Instructor=" + Instructor + ", AssignedInstructor=" + AssignedInstructor + '}';
+        return this.Nom; //+ "//" + Email + ", Instructor=" + Instructor + ", AssignedInstructor=" + AssignedInstructor + '}';
     }
 
 //    public Usuario(int Id, String Nom, String Email, String PasswordHash, byte Foto, boolean Instructor, String AssignedInstructor) {

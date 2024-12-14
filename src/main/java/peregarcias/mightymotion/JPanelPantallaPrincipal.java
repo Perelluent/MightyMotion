@@ -5,14 +5,16 @@
 package peregarcias.mightymotion;
 
 import java.awt.Color;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import peregarcias.mightymotion.dataaccess.DataAccess;
+import peregarcias.mightymotion.dto.Exercicis;
 import peregarcias.mightymotion.dto.Usuario;
-import peregarcias.mightymotion.Main;
+import peregarcias.mightymotion.dto.Workouts;
 
 /**
  *
@@ -22,9 +24,18 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     
     DataAccess da = new DataAccess();
     private Usuario usuarioLogueado;
+    private Map<String, Usuario> mapUsuarios = new HashMap<>();
+    private Map<String, Workouts> mapWorkouts = new HashMap<>();
+    private JPanelAddWorkout addWorkout;
         
     public JPanelPantallaPrincipal(Main jFrameMain, Usuario user) {
         initComponents();
+        addWorkout = new JPanelAddWorkout(user,da);
+        add(btnAddWorkout);
+        add(btnDeleteWorkout);
+        jListUsuarios.setModel(new DefaultListModel<>());
+        jListWorkouts.setModel(new DefaultListModel<>());
+        jListExercicis.setModel(new DefaultListModel<>());
         setSize(500, 600);
         setBounds(0, 0, 490, 590);
         setBackground(new Color(185,208,214));
@@ -34,7 +45,16 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         } else {
             lblBienvenida.setText("Bienvenido");
         }
+        jListUsuarios.addListSelectionListener(new ListSelectionListener() {
+              
+          @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                 jListUsuariosValueChanged(evt);
+            }
+        });
+
     }
+    
     
     public void setUsuarioLogueado (Usuario usuario){
         this.usuarioLogueado = usuario;
@@ -43,6 +63,47 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     public Usuario getUsuarioLogueado() {
         return usuarioLogueado;
     }
+    
+    private void cargarUsuariosParaInstructor(Usuario instructor) {
+    List<Usuario> usuarios = da.getUsuariosByInstructor(instructor.getId());
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    mapUsuarios.clear(); // Limpia el mapa antes de añadir nuevos datos
+
+    for (Usuario usuario : usuarios) {
+        String nombreUsuario = usuario.getNom(); // O cualquier representación en String
+        mapUsuarios.put(nombreUsuario, usuario); // Mapea el nombre con el objeto Usuario
+        listModel.addElement(nombreUsuario);     // Añade el nombre al modelo
+    }
+    jListUsuarios.setModel(listModel);
+    }
+
+    // Método para cargar workouts asociados a un usuario en la tabla
+    private void cargarWorkoutsParaUsuario(Usuario usuario) {
+    List<Workouts> workouts = da.getWorkoutsByUser(usuario.getId());
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    mapWorkouts.clear(); // Limpia el mapa antes de añadir nuevos datos
+
+    for (Workouts workout : workouts) {
+        String nombreWorkout = workout.toString();
+        mapWorkouts.put(nombreWorkout, workout);  
+        listModel.addElement(nombreWorkout);     
+    }
+    jListWorkouts.setModel(listModel);
+    }
+
+    // Método para cargar ejercicios asociados a un workout en la tabla
+    private void cargarEjerciciosParaWorkout(Workouts workout) {
+    List<Exercicis> ejercicios = da.getExercicisByWorkout(workout.getId()); // Llama al método en DataAccess
+    DefaultListModel model = (DefaultListModel) jListExercicis.getModel();
+
+
+    for (Exercicis ejercicio : ejercicios) {
+        model.addElement(new Object[]{
+            ejercicio.getExerciciId(), 
+            ejercicio.getNomExercici(), 
+            ejercicio.getDescripcio()});
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,29 +115,26 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     private void initComponents() {
 
         lblBienvenida = new javax.swing.JLabel();
+        btnAlumnos = new javax.swing.JButton();
+        lblWorkouts = new javax.swing.JLabel();
+        lblWarning = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUsuarios = new javax.swing.JList<>();
-        btnAlumnos = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListWorkouts = new javax.swing.JList<>();
-        lblWorkouts = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jListExercicis = new javax.swing.JList<>();
+        lblWorkouts1 = new javax.swing.JLabel();
+        btnDeleteWorkout = new javax.swing.JButton();
+        btnAddWorkout = new javax.swing.JButton();
+        lblWarning2 = new javax.swing.JLabel();
 
         setLayout(null);
 
-        lblBienvenida.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        lblBienvenida.setFont(new java.awt.Font("Modern M", 0, 24)); // NOI18N
         lblBienvenida.setForeground(new java.awt.Color(0, 44, 58));
         add(lblBienvenida);
-        lblBienvenida.setBounds(10, 50, 500, 21);
-
-        jListUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
-            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                jListUsuariosValueChanged(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jListUsuarios);
-
-        add(jScrollPane1);
-        jScrollPane1.setBounds(30, 130, 190, 320);
+        lblBienvenida.setBounds(10, 10, 320, 50);
 
         btnAlumnos.setFont(new java.awt.Font("Modern M", 0, 14)); // NOI18N
         btnAlumnos.setForeground(new java.awt.Color(0, 44, 58));
@@ -87,48 +145,129 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
             }
         });
         add(btnAlumnos);
-        btnAlumnos.setBounds(30, 90, 190, 22);
+        btnAlumnos.setBounds(30, 70, 190, 50);
+
+        lblWorkouts.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
+        lblWorkouts.setForeground(new java.awt.Color(0, 44, 58));
+        lblWorkouts.setText("EXERCICIS");
+        lblWorkouts.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(lblWorkouts);
+        lblWorkouts.setBounds(850, 90, 90, 19);
+        add(lblWarning);
+        lblWarning.setBounds(30, 130, 190, 30);
+
+        jListUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jListUsuariosValueChanged(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jListUsuarios);
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(30, 170, 190, 410);
 
         jScrollPane2.setViewportView(jListWorkouts);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(270, 130, 190, 320);
+        jScrollPane2.setBounds(260, 170, 310, 410);
 
-        lblWorkouts.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
-        lblWorkouts.setForeground(new java.awt.Color(0, 44, 58));
-        lblWorkouts.setText("WORKOUTS");
-        lblWorkouts.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(lblWorkouts);
-        lblWorkouts.setBounds(310, 90, 90, 19);
+        jScrollPane3.setViewportView(jListExercicis);
+
+        add(jScrollPane3);
+        jScrollPane3.setBounds(810, 180, 180, 410);
+
+        lblWorkouts1.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
+        lblWorkouts1.setForeground(new java.awt.Color(0, 44, 58));
+        lblWorkouts1.setText("WORKOUTS");
+        lblWorkouts1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(lblWorkouts1);
+        lblWorkouts1.setBounds(300, 90, 90, 19);
+
+        btnDeleteWorkout.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        btnDeleteWorkout.setForeground(new java.awt.Color(0, 44, 58));
+        btnDeleteWorkout.setText("ELIMINAR WORKOUT");
+        btnDeleteWorkout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteWorkoutActionPerformed(evt);
+            }
+        });
+        add(btnDeleteWorkout);
+        btnDeleteWorkout.setBounds(420, 590, 150, 30);
+
+        btnAddWorkout.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        btnAddWorkout.setForeground(new java.awt.Color(0, 44, 58));
+        btnAddWorkout.setText("AÑADIR WORKOUT");
+        btnAddWorkout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddWorkoutActionPerformed(evt);
+            }
+        });
+        add(btnAddWorkout);
+        btnAddWorkout.setBounds(260, 590, 160, 30);
+        add(lblWarning2);
+        lblWarning2.setBounds(270, 630, 300, 40);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlumnosActionPerformed
         
-        Usuario user = this.getUsuarioLogueado();
-        ArrayList<Usuario> usuarios = new ArrayList<>();
-        try {
-            usuarios = da.getUsuarios();
-        } catch (SQLException ex) {
-            Logger.getLogger(JPanelPantallaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        DefaultListModel<String> dfm = new DefaultListModel<>();
-        for (Usuario u: usuarios) {
-            dfm.addElement(u.toString());
-        }
-        jListUsuarios.setModel(dfm);
+        // Comprueba que el usuario logueado es un instructor
+    if (usuarioLogueado != null && usuarioLogueado.isInstructor()) {
+        cargarUsuariosParaInstructor(usuarioLogueado);
+    } else {
+        // Mensaje de error si no es instructor
+        lblWarning.setText("Aún no tienes alumnos.");
+    }
     }//GEN-LAST:event_btnAlumnosActionPerformed
 
     private void jListUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jListUsuariosValueChanged
-
+        if (!jListUsuarios.isSelectionEmpty()) {
+        String nombreSeleccionado = jListUsuarios.getSelectedValue(); // Obtener el nombre
+        Usuario alumnoSeleccionado = mapUsuarios.get(nombreSeleccionado); // Recuperar el objeto Usuario
+        cargarWorkoutsParaUsuario(alumnoSeleccionado);
+        }
     }//GEN-LAST:event_jListUsuariosValueChanged
 
+    private void btnAddWorkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWorkoutActionPerformed
+        if (!jListUsuarios.isSelectionEmpty()) {
+        String nombreUsuario = jListUsuarios.getSelectedValue();
+        Usuario usuarioSeleccionado = mapUsuarios.get(nombreUsuario);
+
+        // Crear el nuevo JPanelAddWorkout
+        addWorkout = new JPanelAddWorkout(usuarioSeleccionado, da);
+        cargarWorkoutsParaUsuario(usuarioSeleccionado);
+
+        // Eliminar el contenido anterior y añadir el nuevo panel
+        removeAll();
+        add(addWorkout);
+
+        // Actualizar la interfaz
+        revalidate();
+        repaint();
+    } else {
+        lblWarning2.setText("Por favor, selecciona un usuario primero.");
+        }
+
+    }//GEN-LAST:event_btnAddWorkoutActionPerformed
+
+    private void btnDeleteWorkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteWorkoutActionPerformed
+        
+    }//GEN-LAST:event_btnDeleteWorkoutActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddWorkout;
     private javax.swing.JButton btnAlumnos;
+    private javax.swing.JButton btnDeleteWorkout;
+    private javax.swing.JList<String> jListExercicis;
     private javax.swing.JList<String> jListUsuarios;
     private javax.swing.JList<String> jListWorkouts;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblBienvenida;
+    private javax.swing.JLabel lblWarning;
+    private javax.swing.JLabel lblWarning2;
     private javax.swing.JLabel lblWorkouts;
+    private javax.swing.JLabel lblWorkouts1;
     // End of variables declaration//GEN-END:variables
+
 }

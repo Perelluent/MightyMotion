@@ -60,6 +60,8 @@ public class Workouts {
     public void setComments(String comments) {
         this.comments = comments;
     }
-    
-    
+    @Override
+    public String toString() {
+    return this.getForDate() + " - " + this.getComments();
+    } 
 }

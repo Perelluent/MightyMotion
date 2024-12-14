@@ -10,8 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import peregarcias.mightymotion.dto.Exercicis;
 import peregarcias.mightymotion.dto.Usuario;
 import peregarcias.mightymotion.dto.Workouts;
@@ -66,14 +64,18 @@ public class DataAccess {
         try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
             selectStatement.setString(1, email);
             ResultSet resultSet = selectStatement.executeQuery();
+            
+            if (resultSet.next()){
             user = new Usuario();
-            while (resultSet.next()) {
-                user.setId(resultSet.getInt("Id"));
-                user.setNom(resultSet.getString("Nom"));
-                user.setEmail(resultSet.getString("Email"));
-                user.setPasswordHash(resultSet.getString("PasswordHash"));
-                user.setInstructor(resultSet.getBoolean("Instructor"));
+            user.setId(resultSet.getInt("Id"));
+            user.setNom(resultSet.getString("Nom"));
+            user.setEmail(resultSet.getString("Email"));
+            user.setPasswordHash(resultSet.getString("PasswordHash"));
+            user.setInstructor(resultSet.getBoolean("Instructor"));
+            } else {
+                System.out.println("No se encontró el usuario");
             }
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -165,7 +167,9 @@ public class DataAccess {
                 user.setNom(resultSet.getString("Nom"));
                 user.setEmail(resultSet.getString("Email"));
                 user.setPasswordHash(resultSet.getString("PasswordHash"));
+                //user.setFoto(resultSet.getByte("Foto"));
                 user.setInstructor(resultSet.getBoolean("Instructor"));
+                user.setAssignedInstructor(resultSet.getString("AssignedInstructor"));
                 usuaris.add(user);
             }
         } catch (SQLException e) {
@@ -174,15 +178,13 @@ public class DataAccess {
         return usuaris;
     }
     
-    public ArrayList<Workouts> getWorkoutsByUser(Usuario user) {
+    public ArrayList<Workouts> getWorkoutsByUser(int userId) {
         ArrayList<Workouts> workouts = new ArrayList<>();
-        String sql = "SELECT Workouts.Id, Workouts.ForDate, Workouts.UserId, Workouts.Comments"
-                + " FROM Workouts"
-                + " WHERE Workouts.UserId=?"
-                + " ORDER BY Workouts.ForDate";
+        String sql = "SELECT * FROM Workouts WHERE userId = ?";
         Connection connection = getConnection();
         try {
             PreparedStatement selectStatement = connection.prepareStatement(sql);
+            selectStatement.setInt(1, userId);
             ResultSet resultset = selectStatement.executeQuery();
             while (resultset.next()){
                 Workouts workout = new Workouts();
@@ -222,7 +224,7 @@ public class DataAccess {
         return exercicis;
     }
     
-    public ArrayList<Exercicis> getExercicisByWorkout (Workouts workout) {
+    public ArrayList<Exercicis> getExercicisByWorkout (int workoutId) {
         ArrayList<Exercicis> exercicis = new ArrayList<>();
         String sql = "SELECT ExercicisWorkouts.IdExercici,"
                 + "Exercicis.NomExercici, Exercicis.Descripcio"
@@ -231,7 +233,7 @@ public class DataAccess {
         Connection connection = getConnection();
         try {
             PreparedStatement selectStatement = connection.prepareStatement(sql);
-            selectStatement.setInt(1,workout.getId());
+            selectStatement.setInt(1,workoutId);
             ResultSet resultset = selectStatement.executeQuery();
             while (resultset.next()) {
                 Exercicis exercici = new Exercicis();

@@ -5,7 +5,7 @@
 package peregarcias.mightymotion;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import javax.swing.JOptionPane;
+
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Usuario;
 
@@ -20,6 +20,7 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
     
     public JPanelIniciarSesion(Main jFrameMain) {
         initComponents();
+        this.lblError = lblError;
         this.jFrameMain = jFrameMain;
     }
 
@@ -33,62 +34,58 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabelTitle = new javax.swing.JLabel();
-        jLabelLogo = new javax.swing.JLabel();
         txtEmailLogin = new javax.swing.JTextField();
         jLabelUsuario = new javax.swing.JLabel();
         jLabelContrasena = new javax.swing.JLabel();
         txtPasswordLogin = new javax.swing.JPasswordField();
         btnVolver = new javax.swing.JButton();
         btnEntrar1 = new javax.swing.JButton();
+        lblError = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(185, 208, 214));
         setMinimumSize(new java.awt.Dimension(500, 600));
         setPreferredSize(new java.awt.Dimension(500, 600));
         setLayout(null);
 
-        jLabelTitle.setFont(new java.awt.Font("Modern M", 1, 24)); // NOI18N
+        jLabelTitle.setFont(new java.awt.Font("Modern M", 1, 48)); // NOI18N
         jLabelTitle.setForeground(new java.awt.Color(0, 44, 58));
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitle.setText("Mighty Motion");
         add(jLabelTitle);
-        jLabelTitle.setBounds(160, 140, 171, 24);
+        jLabelTitle.setBounds(290, 390, 410, 60);
 
-        jLabelLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM.jpg"))); // NOI18N
-        jLabelLogo.setText("jLabel1");
-        add(jLabelLogo);
-        jLabelLogo.setBounds(180, 30, 124, 108);
-
-        txtEmailLogin.setText("x@fmail.com");
+        txtEmailLogin.setText("a@b.c");
         txtEmailLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtEmailLoginActionPerformed(evt);
             }
         });
         add(txtEmailLogin);
-        txtEmailLogin.setBounds(118, 221, 248, 30);
+        txtEmailLogin.setBounds(370, 480, 250, 30);
 
         jLabelUsuario.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
         jLabelUsuario.setForeground(new java.awt.Color(0, 44, 58));
         jLabelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelUsuario.setText("Usuario");
         add(jLabelUsuario);
-        jLabelUsuario.setBounds(130, 200, 38, 12);
+        jLabelUsuario.setBounds(380, 460, 38, 12);
 
         jLabelContrasena.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
         jLabelContrasena.setForeground(new java.awt.Color(0, 44, 58));
         jLabelContrasena.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelContrasena.setText("Contraseña");
         add(jLabelContrasena);
-        jLabelContrasena.setBounds(130, 260, 57, 12);
+        jLabelContrasena.setBounds(380, 520, 57, 12);
 
-        txtPasswordLogin.setText("1234");
+        txtPasswordLogin.setText("string");
         txtPasswordLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPasswordLoginActionPerformed(evt);
             }
         });
         add(txtPasswordLogin);
-        txtPasswordLogin.setBounds(120, 280, 248, 30);
+        txtPasswordLogin.setBounds(370, 540, 250, 30);
 
         btnVolver.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         btnVolver.setForeground(new java.awt.Color(0, 44, 58));
@@ -100,7 +97,7 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
             }
         });
         add(btnVolver);
-        btnVolver.setBounds(200, 420, 90, 26);
+        btnVolver.setBounds(440, 630, 90, 26);
 
         btnEntrar1.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         btnEntrar1.setForeground(new java.awt.Color(0, 44, 58));
@@ -112,7 +109,15 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
             }
         });
         add(btnEntrar1);
-        btnEntrar1.setBounds(200, 350, 90, 26);
+        btnEntrar1.setBounds(440, 590, 90, 26);
+
+        lblError.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
+        add(lblError);
+        lblError.setBounds(120, 320, 250, 40);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM512.jpg"))); // NOI18N
+        add(jLabel1);
+        jLabel1.setBounds(230, 50, 540, 301);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmailLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailLoginActionPerformed
@@ -130,30 +135,50 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
 
     private void btnEntrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrar1ActionPerformed
         Usuario usuario = da.getUsuario(txtEmailLogin.getText());
-        if (usuario != null) {
-            char[] passwordToVerify = txtPasswordLogin.getPassword();
-            String userPasswordHashInDatabase = usuario.getPasswordHash();
-            var result = BCrypt.verifyer().verify(passwordToVerify, userPasswordHashInDatabase);
-            if (result.verified) {
-                System.out.println("Usuario logueado: " + usuario.getNom());
-                jFrameMain.mostrarJpanelPantallaPrincipal(usuario);
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "El usuario o la contraseña no son válidos");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Error: Usuario no encontrado");
-        }
+
+    // Comprobar si el usuario es nulo (correo no encontrado)
+    if (usuario == null) {
+        lblError.setText("El usuario o la contraseña no son válidos");
+        lblError.setVisible(true);  // Asegurarse de que lblError esté visible
+        lblError.repaint();
+        return;  // Detener el flujo si el correo no es válido
+    }
+
+    // Comprobar si el usuario es instructor
+    if (!usuario.isInstructor()) {
+        lblError.setText("Solo los instructores pueden iniciar sesión.");
+        lblError.setVisible(true);  // Asegurarse de que lblError esté visible
+        lblError.repaint();
+        System.out.println("usuario no es instructor");
+        return;  // Si no es instructor, no se permite el login
+    }
+
+    // Comprobación de la contraseña
+    char[] passwordToVerify = txtPasswordLogin.getPassword();
+    String userPasswordHashInDatabase = usuario.getPasswordHash();
+    var result = BCrypt.verifyer().verify(passwordToVerify, userPasswordHashInDatabase);
+
+    if (result.verified) {
+        System.out.println("Usuario logueado: " + usuario.getNom());
+        // Mostrar pantalla principal
+        jFrameMain.mostrarJpanelPantallaPrincipal(usuario);
+    } else {
+        // Si la contraseña es incorrecta
+        lblError.setText("El usuario o la contraseña no son válidos");
+        lblError.setVisible(true);  // Asegurarse de que lblError esté visible
+        lblError.repaint();
+    }
     }//GEN-LAST:event_btnEntrar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrar1;
     private javax.swing.JButton btnVolver;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelContrasena;
-    private javax.swing.JLabel jLabelLogo;
     private javax.swing.JLabel jLabelTitle;
     private javax.swing.JLabel jLabelUsuario;
+    private javax.swing.JLabel lblError;
     private javax.swing.JTextField txtEmailLogin;
     private javax.swing.JPasswordField txtPasswordLogin;
     // End of variables declaration//GEN-END:variables
