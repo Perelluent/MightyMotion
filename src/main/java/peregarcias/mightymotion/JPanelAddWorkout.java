@@ -1,8 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package peregarcias.mightymotion;
+
+
 
 import java.awt.Color;
 import java.sql.SQLException;
@@ -11,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
+import javax.swing.SwingUtilities;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Exercicis;
 import peregarcias.mightymotion.dto.Usuario;
@@ -29,44 +30,56 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
     private JList<String> listWorkouts; // Lista para mostrar workouts
     private JList<String> listEjercicios; // Lista para mostrar ejercicios
    
-    public JPanelAddWorkout(Usuario usuario, DataAccess da) {
+    public JPanelAddWorkout(JPanelPantallaPrincipal pantallaPrincipal, Usuario usuario, DataAccess da) {
         initComponents();
         setBounds(0, 0, 1000, 900);
         setBackground(new Color(185,208,214));
+        this.pantallaPrincipal = pantallaPrincipal;
+        this.da = da;
+        lstWorkouts.setModel(new DefaultListModel<>());
+        lstExercicis.setModel(new DefaultListModel<>());
+        
+        lstWorkouts.addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    cargarEjerciciosParaWorkout();
+                }
+            }
+            
+        });
+        try {
+            cargarWorkouts();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
     }
     
     private void cargarWorkouts() throws SQLException {
         // Obtener todos los workouts desde la base de datos
         List<Workouts> workouts = da.getWorkouts();
-        DefaultListModel<String> model = (DefaultListModel<String>) listWorkouts.getModel();
-        model.clear();
-        mapWorkouts.clear(); // Limpia el mapa anterior
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        mapWorkouts.clear(); // Limpia el mapa antes de añadir nuevos datos
 
-        for (Workouts workout : workouts) {
-            String nombreWorkout = workout.toString(); // Ajusta según tu implementación de `toString`
-            mapWorkouts.put(nombreWorkout, workout); // Relaciona el nombre con el objeto Workout
-            model.addElement(nombreWorkout); // Añade el nombre al modelo de la lista
-        }
+    for (Workouts workout : workouts) {
+        String nombreWorkout = workout.toString();
+        mapWorkouts.put(nombreWorkout, workout);  
+        listModel.addElement(nombreWorkout);     
+    }
+        lstWorkouts.setModel(listModel);
     }
     private void cargarEjerciciosParaWorkout() {
-        String nombreSeleccionado = listWorkouts.getSelectedValue();
-        if (nombreSeleccionado != null) {
-            Workouts workoutSeleccionado = mapWorkouts.get(nombreSeleccionado);
-            if (workoutSeleccionado != null) {
-                List<Exercicis> ejercicios = da.getExercicisByWorkout(workoutSeleccionado.getId());
-                DefaultListModel<String> model = (DefaultListModel<String>) listEjercicios.getModel();
-                model.clear();
-                mapEjercicios.clear(); // Limpia el mapa anterior
+        List<Exercicis> ejercicios = da.getExercicisByWorkout(1); 
+        DefaultListModel model = (DefaultListModel) lstExercicis.getModel();
 
-                for (Exercicis ejercicio : ejercicios) {
-                    String nombreEjercicio = ejercicio.toString(); // Ajusta según tu implementación de `toString`
-                    mapEjercicios.put(nombreEjercicio, ejercicio); // Relaciona el nombre con el objeto Ejercicio
-                    model.addElement(nombreEjercicio); // Añade el nombre al modelo de la lista
-                }
-            }
-        }
+
+    for (Exercicis ejercicio : ejercicios) {
+        model.addElement(ejercicio.getDescripcio());
     }
+    lstExercicis.setModel(model);
+}
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,10 +93,10 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lstWorkouts = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        lstExercicis = new javax.swing.JList<>();
+        btnvolver = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -99,43 +112,45 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
         add(jLabel2);
         jLabel2.setBounds(20, 20, 180, 40);
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lstWorkouts);
 
         add(jScrollPane1);
         jScrollPane1.setBounds(20, 60, 200, 380);
 
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(lstExercicis);
 
         add(jScrollPane2);
         jScrollPane2.setBounds(290, 60, 220, 380);
 
-        jButton1.setFont(new java.awt.Font("Modern M", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(0, 44, 58));
-        jButton1.setText("VOLVER");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnvolver.setFont(new java.awt.Font("Modern M", 0, 14)); // NOI18N
+        btnvolver.setForeground(new java.awt.Color(0, 44, 58));
+        btnvolver.setText("VOLVER");
+        btnvolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnvolverActionPerformed(evt);
             }
         });
-        add(jButton1);
-        jButton1.setBounds(395, 460, 110, 22);
+        add(btnvolver);
+        btnvolver.setBounds(395, 460, 110, 22);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        pantallaPrincipal.removeAll();
-        pantallaPrincipal.add(this);
-        pantallaPrincipal.revalidate();
-        pantallaPrincipal.repaint();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
+        
+        Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this);
+        mainFrame.setContentPane(pantallaPrincipal);
+        mainFrame.revalidate();
+        mainFrame.repaint();
+       
+    }//GEN-LAST:event_btnvolverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnvolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> lstExercicis;
+    private javax.swing.JList<String> lstWorkouts;
     // End of variables declaration//GEN-END:variables
 }

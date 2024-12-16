@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package peregarcias.mightymotion;
 
 import java.awt.Color;
@@ -9,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.swing.DefaultListModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import peregarcias.mightymotion.dataaccess.DataAccess;
@@ -26,19 +24,20 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     private Usuario usuarioLogueado;
     private Map<String, Usuario> mapUsuarios = new HashMap<>();
     private Map<String, Workouts> mapWorkouts = new HashMap<>();
-    private JPanelAddWorkout addWorkout;
+    private final JPanelAddWorkout addWorkout;
         
     public JPanelPantallaPrincipal(Main jFrameMain, Usuario user) {
         initComponents();
-        addWorkout = new JPanelAddWorkout(user,da);
+        addWorkout = new JPanelAddWorkout(this,user,da);
         add(btnAddWorkout);
         add(btnDeleteWorkout);
         jListUsuarios.setModel(new DefaultListModel<>());
         jListWorkouts.setModel(new DefaultListModel<>());
         jListExercicis.setModel(new DefaultListModel<>());
+        setBackground(new Color(185,208,214));
         setSize(500, 600);
         setBounds(0, 0, 490, 590);
-        setBackground(new Color(185,208,214));
+
         if (user != null) {
             this.usuarioLogueado = user;
             lblBienvenida.setText("Bienvenido " + user.getNom() + "!");
@@ -104,6 +103,21 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
             ejercicio.getDescripcio()});
     }
 }
+    private void mostrarJpanelAddWorkout (Usuario user, DataAccess da) {
+        if (!jListUsuarios.isSelectionEmpty()) {
+        String nombreUsuario = jListUsuarios.getSelectedValue();
+        Usuario usuarioSeleccionado = mapUsuarios.get(nombreUsuario);
+        JPanelAddWorkout addworkout = new JPanelAddWorkout(this, user, da);
+        
+        revalidate();
+        repaint();
+        
+        cargarWorkoutsParaUsuario(usuarioSeleccionado);
+
+    } else {
+        lblWarning2.setText("Por favor, selecciona un usuario primero.");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -228,24 +242,11 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     }//GEN-LAST:event_jListUsuariosValueChanged
 
     private void btnAddWorkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWorkoutActionPerformed
-        if (!jListUsuarios.isSelectionEmpty()) {
-        String nombreUsuario = jListUsuarios.getSelectedValue();
-        Usuario usuarioSeleccionado = mapUsuarios.get(nombreUsuario);
-
-        // Crear el nuevo JPanelAddWorkout
-        addWorkout = new JPanelAddWorkout(usuarioSeleccionado, da);
-        cargarWorkoutsParaUsuario(usuarioSeleccionado);
-
-        // Eliminar el contenido anterior y añadir el nuevo panel
-        removeAll();
-        add(addWorkout);
-
-        // Actualizar la interfaz
-        revalidate();
-        repaint();
-    } else {
-        lblWarning2.setText("Por favor, selecciona un usuario primero.");
-        }
+        
+        Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this);
+        mainFrame.setContentPane(addWorkout);
+        mainFrame.revalidate();
+        mainFrame.repaint();
 
     }//GEN-LAST:event_btnAddWorkoutActionPerformed
 

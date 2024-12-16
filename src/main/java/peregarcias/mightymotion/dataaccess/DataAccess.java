@@ -226,10 +226,10 @@ public class DataAccess {
     
     public ArrayList<Exercicis> getExercicisByWorkout (int workoutId) {
         ArrayList<Exercicis> exercicis = new ArrayList<>();
-        String sql = "SELECT ExercicisWorkouts.IdExercici,"
-                + "Exercicis.NomExercici, Exercicis.Descripcio"
-                + "FROM ExercicisWorkouts INNER JOIN Exercicis ON ExercicisWorkouts.idExercici=Exercicis.Id"
-                + "WHERE ExercicisWorkouts.IdWorkout=?";
+        String sql = "SELECT ExercicisWorkouts.IdExercici, Exercicis.NomExercici, Exercicis.Descripcio\n" +
+        "FROM ExercicisWorkouts \n" +
+        "LEFT JOIN Exercicis ON ExercicisWorkouts.idExercici = Exercicis.Id\n" +
+        "WHERE ExercicisWorkouts.IdWorkout = ?;";
         Connection connection = getConnection();
         try {
             PreparedStatement selectStatement = connection.prepareStatement(sql);
