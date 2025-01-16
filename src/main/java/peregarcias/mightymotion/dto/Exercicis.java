@@ -13,16 +13,19 @@ public class Exercicis {
     private int exerciciId;
     private String nomExercici;
     private String descripcio;
+    private String demoFoto;
 
     public Exercicis(int exerciciId, String nomExercici, String descripcio) {
         this.exerciciId = exerciciId;
         this.nomExercici = nomExercici;
         this.descripcio = descripcio;
+        this.demoFoto = demoFoto;
     }
     public Exercicis (){
         this.exerciciId = exerciciId;
         this.nomExercici = nomExercici;
         this.descripcio = descripcio;
+        this.demoFoto = demoFoto;
     }
 
     public int getExerciciId() {
@@ -48,5 +51,19 @@ public class Exercicis {
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     }
+
+    public String getDemoFoto() {
+        return demoFoto;
+    }
+
+    public void setDemoFoto(String demoFoto) {
+        this.demoFoto = demoFoto;
+    }
+
+    @Override
+    public String toString() {
+        return descripcio;
+    }
+    
     
 }

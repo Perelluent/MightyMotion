@@ -6,6 +6,8 @@ package peregarcias.mightymotion;
 
 
 import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import javax.swing.JOptionPane;
 import peregarcias.mightymotion.dto.Usuario;
 
@@ -24,6 +26,10 @@ public class Main extends javax.swing.JFrame {
     
     public Main() {
         initComponents();
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        
         pack();
         setBounds(0, 0, 1000, 900);
         setLocationRelativeTo(null);
@@ -44,10 +50,6 @@ public class Main extends javax.swing.JFrame {
         pantallaPrincipal.setBounds(0, 0, 1000, 9000);
         pantallaPrincipal.setVisible(false);
         getContentPane().add(pantallaPrincipal);
-        
-
-        
-        
 
     }
     public void mostrarJpanelIniciarSesion(){
@@ -85,13 +87,14 @@ public class Main extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         Main = new javax.swing.JPanel();
+        lblLogo = new javax.swing.JLabel();
         jLabelTitle = new javax.swing.JLabel();
         jButtonLogin = new javax.swing.JButton();
         jButtonAltaUsuarios = new javax.swing.JButton();
         lblWeb = new javax.swing.JLabel();
-        lblLogo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         mnuFile = new javax.swing.JMenu();
         mniIniciarSesion = new javax.swing.JMenuItem();
@@ -104,18 +107,34 @@ public class Main extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(185, 208, 214));
         setPreferredSize(new java.awt.Dimension(1000, 900));
-        setResizable(false);
         setSize(new java.awt.Dimension(1000, 900));
-        getContentPane().setLayout(null);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
 
         Main.setBackground(new java.awt.Color(185, 208, 214));
-        Main.setMinimumSize(new java.awt.Dimension(500, 600));
-        Main.setPreferredSize(new java.awt.Dimension(500, 600));
+        Main.setMinimumSize(new java.awt.Dimension(1000, 900));
+        Main.setPreferredSize(new java.awt.Dimension(1000, 900));
+        Main.setLayout(new java.awt.GridBagLayout());
+
+        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM512.jpg"))); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.insets = new java.awt.Insets(-300, 0, 0, 0);
+        Main.add(lblLogo, gridBagConstraints);
 
         jLabelTitle.setFont(new java.awt.Font("Modern M", 1, 48)); // NOI18N
         jLabelTitle.setForeground(new java.awt.Color(0, 44, 58));
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitle.setText("Mighty Motion");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.insets = new java.awt.Insets(300, 10, 10, 10);
+        Main.add(jLabelTitle, gridBagConstraints);
 
         jButtonLogin.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         jButtonLogin.setForeground(new java.awt.Color(0, 44, 58));
@@ -126,6 +145,13 @@ public class Main extends javax.swing.JFrame {
                 jButtonLoginActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.ipadx = 16;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(500, 10, 15, 0);
+        Main.add(jButtonLogin, gridBagConstraints);
 
         jButtonAltaUsuarios.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         jButtonAltaUsuarios.setForeground(new java.awt.Color(0, 44, 58));
@@ -135,56 +161,30 @@ public class Main extends javax.swing.JFrame {
                 jButtonAltaUsuariosActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.ipadx = 22;
+        gridBagConstraints.ipady = 7;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        Main.add(jButtonAltaUsuarios, gridBagConstraints);
 
         lblWeb.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         lblWeb.setForeground(new java.awt.Color(0, 44, 58));
         lblWeb.setText("www.mightymotion.com");
         lblWeb.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.ipadx = 17;
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 0, 0);
+        Main.add(lblWeb, gridBagConstraints);
 
-        lblLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM512.jpg"))); // NOI18N
-
-        javax.swing.GroupLayout MainLayout = new javax.swing.GroupLayout(Main);
-        Main.setLayout(MainLayout);
-        MainLayout.setHorizontalGroup(
-            MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainLayout.createSequentialGroup()
-                .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainLayout.createSequentialGroup()
-                        .addGap(402, 402, 402)
-                        .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(MainLayout.createSequentialGroup()
-                                .addGap(8, 8, 8)
-                                .addGroup(MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(lblWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(MainLayout.createSequentialGroup()
-                        .addGap(302, 302, 302)
-                        .addComponent(jLabelTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(MainLayout.createSequentialGroup()
-                        .addGap(249, 249, 249)
-                        .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(325, Short.MAX_VALUE))
-        );
-        MainLayout.setVerticalGroup(
-            MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MainLayout.createSequentialGroup()
-                .addGap(73, 73, 73)
-                .addComponent(lblLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(jLabelTitle)
-                .addGap(31, 31, 31)
-                .addComponent(jButtonLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jButtonAltaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(lblWeb, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(185, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(Main);
-        Main.setBounds(0, 0, 1040, 880);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.REMAINDER;
+        getContentPane().add(Main, gridBagConstraints);
 
         mnuFile.setText("File");
 
@@ -274,27 +274,8 @@ public class Main extends javax.swing.JFrame {
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+         
+       
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

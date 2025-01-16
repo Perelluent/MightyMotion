@@ -1,11 +1,26 @@
 
 package peregarcias.mightymotion;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobServiceClient;
+import com.azure.storage.blob.BlobServiceClientBuilder;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -24,6 +39,8 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     private Usuario usuarioLogueado;
     private Map<String, Usuario> mapUsuarios = new HashMap<>();
     private Map<String, Workouts> mapWorkouts = new HashMap<>();
+    private Map<String, Exercicis> mapExercicis = new HashMap<>();
+    private Map<String, String> ejercicioBlobMap = new HashMap<>();
     private final JPanelAddWorkout addWorkout;
         
     public JPanelPantallaPrincipal(Main jFrameMain, Usuario user) {
@@ -32,8 +49,8 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         add(btnAddWorkout);
         add(btnDeleteWorkout);
         jListUsuarios.setModel(new DefaultListModel<>());
-        jListWorkouts.setModel(new DefaultListModel<>());
-        jListExercicis.setModel(new DefaultListModel<>());
+        jListWorkouts.setModel(new DefaultListModel<Workouts>());
+        jListExercicis.setModel(new DefaultListModel<Exercicis>());
         setBackground(new Color(185,208,214));
         setSize(500, 600);
         setBounds(0, 0, 490, 590);
@@ -51,7 +68,35 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
                  jListUsuariosValueChanged(evt);
             }
         });
-
+        jListWorkouts.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    Workouts selectedWorkout = jListWorkouts.getSelectedValue();
+                    if (selectedWorkout != null) {
+                        cargarEjerciciosParaWorkout(selectedWorkout);
+                    }
+                }
+            }
+            
+        });
+        jListExercicis.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent evt) {
+                if (!evt.getValueIsAdjusting()) {
+                    Exercicis selectedExercise = jListExercicis.getSelectedValue();
+                    if (selectedExercise != null) {
+                        try {
+                            mostrarImagenEjercicio(selectedExercise.getDemoFoto());
+                        } catch (IOException ex) {
+                            Logger.getLogger(JPanelPantallaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+            
+        });
+        definirMapaEjercicioBlob();
     }
     
     
@@ -79,29 +124,27 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     // Método para cargar workouts asociados a un usuario en la tabla
     private void cargarWorkoutsParaUsuario(Usuario usuario) {
     List<Workouts> workouts = da.getWorkoutsByUser(usuario.getId());
-    DefaultListModel<String> listModel = new DefaultListModel<>();
+    DefaultListModel<Workouts> listModel = new DefaultListModel<>();
     mapWorkouts.clear(); // Limpia el mapa antes de añadir nuevos datos
 
     for (Workouts workout : workouts) {
-        String nombreWorkout = workout.toString();
-        mapWorkouts.put(nombreWorkout, workout);  
-        listModel.addElement(nombreWorkout);     
+        mapWorkouts.put(workout.toString(), workout);  
+        listModel.addElement(workout);     
     }
     jListWorkouts.setModel(listModel);
     }
 
     // Método para cargar ejercicios asociados a un workout en la tabla
-    private void cargarEjerciciosParaWorkout(Workouts workout) {
+    void cargarEjerciciosParaWorkout(Workouts workout) {
     List<Exercicis> ejercicios = da.getExercicisByWorkout(workout.getId()); // Llama al método en DataAccess
-    DefaultListModel model = (DefaultListModel) jListExercicis.getModel();
-
+    DefaultListModel<Exercicis> model = new DefaultListModel<>();
+    mapExercicis.clear();
 
     for (Exercicis ejercicio : ejercicios) {
-        model.addElement(new Object[]{
-            ejercicio.getExerciciId(), 
-            ejercicio.getNomExercici(), 
-            ejercicio.getDescripcio()});
+        model.addElement(ejercicio);
+        mapExercicis.put(ejercicio.getNomExercici(), ejercicio);
     }
+    jListExercicis.setModel(model);
 }
     private void mostrarJpanelAddWorkout (Usuario user, DataAccess da) {
         if (!jListUsuarios.isSelectionEmpty()) {
@@ -118,6 +161,63 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         lblWarning2.setText("Por favor, selecciona un usuario primero.");
         }
     }
+    public void addWorkoutToUser(Workouts workout) {
+        DefaultListModel<Workouts> model = (DefaultListModel<Workouts>) jListWorkouts.getModel();
+        model.addElement(workout);
+        mapWorkouts.put(workout.toString(), workout);
+    }
+    public void eliminarWorkoutYExercicis() {
+        int selectedIndex = jListWorkouts.getSelectedIndex();
+        if(selectedIndex != -1) {
+            Workouts selectedWorkout = jListWorkouts.getSelectedValue();
+            ((DefaultListModel<Workouts>) jListWorkouts.getModel()).removeElementAt(selectedIndex);
+            ((DefaultListModel<Exercicis>) jListExercicis.getModel()).clear();
+        }
+    }
+    
+    private void mostrarImagenEjercicio (String ejercicioNombre) throws IOException {
+        String conexion = "DefaultEndpointsProtocol=https;AccountName=lluentserver;AccountKey=kHji7NlQiOz6P6BVNSFRLSgKTk1DimN0kE72W3UP84qwMM2y2yyGkHNCsn3fOVX7jY88SCi9f1Yh+AStLlewcw==;EndpointSuffix=core.windows.net";
+        String containerName = "lluentfotos";
+        String blobName = ejercicioBlobMap.get(ejercicioNombre);
+        
+        if (blobName == null || blobName.isEmpty()) {
+            System.out.println("blob name is null or empty");
+            lblimg.setIcon(null);
+            lblimg.setText("Imagen no disponible");
+            return;
+        }
+        blobName = URLEncoder.encode(blobName, StandardCharsets.UTF_8.toString());
+        
+        BlobServiceClient bsc = new BlobServiceClientBuilder().connectionString(conexion).buildClient();
+        BlobContainerClient bcc = bsc.getBlobContainerClient(containerName);
+        BlobClient bc = bcc.getBlobClient(blobName);
+        
+        try (InputStream blobInputStream = bc.openInputStream();
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
+            
+            byte[] data = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = blobInputStream.read(data, 0, data.length)) != -1) {
+                buffer.write(data, 0, bytesRead);
+            }
+            
+            ByteArrayInputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
+            BufferedImage img = ImageIO.read(inputStream);
+            ImageIcon icon = new ImageIcon(img);
+            lblimg.setIcon(icon);
+            
+        } catch (IOException e) {
+            lblimg.setIcon(null);
+            lblimg.setText("Imagen no disponible");
+        }
+    }
+    private void definirMapaEjercicioBlob() {
+        ejercicioBlobMap.put("Exercici 1", "Legs.jpg"); 
+        ejercicioBlobMap.put("Exercici 2", "Foto 3.png");
+        ejercicioBlobMap.put("Exercici 3", "Foto 1.png"); 
+        ejercicioBlobMap.put("Exercici 4", "Img situps.png"); 
+        ejercicioBlobMap.put("Exercici 5", "Srpint.png"); 
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,7 +230,7 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
 
         lblBienvenida = new javax.swing.JLabel();
         btnAlumnos = new javax.swing.JButton();
-        lblWorkouts = new javax.swing.JLabel();
+        lblExercicis = new javax.swing.JLabel();
         lblWarning = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListUsuarios = new javax.swing.JList<>();
@@ -138,11 +238,13 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         jListWorkouts = new javax.swing.JList<>();
         jScrollPane3 = new javax.swing.JScrollPane();
         jListExercicis = new javax.swing.JList<>();
-        lblWorkouts1 = new javax.swing.JLabel();
+        lblWorkouts = new javax.swing.JLabel();
         btnDeleteWorkout = new javax.swing.JButton();
         btnAddWorkout = new javax.swing.JButton();
         lblWarning2 = new javax.swing.JLabel();
+        lblimg = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(185, 208, 214));
         setLayout(null);
 
         lblBienvenida.setFont(new java.awt.Font("Modern M", 0, 24)); // NOI18N
@@ -161,12 +263,12 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         add(btnAlumnos);
         btnAlumnos.setBounds(30, 70, 190, 50);
 
-        lblWorkouts.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
-        lblWorkouts.setForeground(new java.awt.Color(0, 44, 58));
-        lblWorkouts.setText("EXERCICIS");
-        lblWorkouts.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(lblWorkouts);
-        lblWorkouts.setBounds(850, 90, 90, 19);
+        lblExercicis.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
+        lblExercicis.setForeground(new java.awt.Color(0, 44, 58));
+        lblExercicis.setText("EXERCICIS");
+        lblExercicis.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(lblExercicis);
+        lblExercicis.setBounds(650, 130, 90, 19);
         add(lblWarning);
         lblWarning.setBounds(30, 130, 190, 30);
 
@@ -188,14 +290,14 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         jScrollPane3.setViewportView(jListExercicis);
 
         add(jScrollPane3);
-        jScrollPane3.setBounds(810, 180, 180, 410);
+        jScrollPane3.setBounds(600, 170, 180, 410);
 
-        lblWorkouts1.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
-        lblWorkouts1.setForeground(new java.awt.Color(0, 44, 58));
-        lblWorkouts1.setText("WORKOUTS");
-        lblWorkouts1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        add(lblWorkouts1);
-        lblWorkouts1.setBounds(300, 90, 90, 19);
+        lblWorkouts.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
+        lblWorkouts.setForeground(new java.awt.Color(0, 44, 58));
+        lblWorkouts.setText("WORKOUTS");
+        lblWorkouts.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(lblWorkouts);
+        lblWorkouts.setBounds(360, 130, 90, 19);
 
         btnDeleteWorkout.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
         btnDeleteWorkout.setForeground(new java.awt.Color(0, 44, 58));
@@ -220,6 +322,10 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
         btnAddWorkout.setBounds(260, 590, 160, 30);
         add(lblWarning2);
         lblWarning2.setBounds(270, 630, 300, 40);
+
+        lblimg.setText("imagen");
+        add(lblimg);
+        lblimg.setBounds(810, 180, 310, 300);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlumnosActionPerformed
@@ -251,24 +357,26 @@ public class JPanelPantallaPrincipal extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAddWorkoutActionPerformed
 
     private void btnDeleteWorkoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteWorkoutActionPerformed
-        
+        eliminarWorkoutYExercicis();
     }//GEN-LAST:event_btnDeleteWorkoutActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddWorkout;
     private javax.swing.JButton btnAlumnos;
     private javax.swing.JButton btnDeleteWorkout;
-    private javax.swing.JList<String> jListExercicis;
+    private javax.swing.JList<Exercicis> jListExercicis;
     private javax.swing.JList<String> jListUsuarios;
-    private javax.swing.JList<String> jListWorkouts;
+    private javax.swing.JList<Workouts> jListWorkouts;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblBienvenida;
+    private javax.swing.JLabel lblExercicis;
     private javax.swing.JLabel lblWarning;
     private javax.swing.JLabel lblWarning2;
     private javax.swing.JLabel lblWorkouts;
-    private javax.swing.JLabel lblWorkouts1;
+    private javax.swing.JLabel lblimg;
     // End of variables declaration//GEN-END:variables
+
 
 }

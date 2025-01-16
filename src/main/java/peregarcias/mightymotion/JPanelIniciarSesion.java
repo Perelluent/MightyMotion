@@ -32,6 +32,7 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabelTitle = new javax.swing.JLabel();
         txtEmailLogin = new javax.swing.JTextField();
@@ -44,16 +45,22 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(185, 208, 214));
-        setMinimumSize(new java.awt.Dimension(500, 600));
-        setPreferredSize(new java.awt.Dimension(500, 600));
-        setLayout(null);
+        setMinimumSize(new java.awt.Dimension(1000, 900));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(1000, 900));
+        setLayout(new java.awt.GridBagLayout());
 
         jLabelTitle.setFont(new java.awt.Font("Modern M", 1, 48)); // NOI18N
         jLabelTitle.setForeground(new java.awt.Color(0, 44, 58));
         jLabelTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelTitle.setText("Mighty Motion");
-        add(jLabelTitle);
-        jLabelTitle.setBounds(290, 390, 410, 60);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.insets = new java.awt.Insets(300, 0, 0, 0);
+        add(jLabelTitle, gridBagConstraints);
 
         txtEmailLogin.setText("a@b.c");
         txtEmailLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -61,22 +68,41 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
                 txtEmailLoginActionPerformed(evt);
             }
         });
-        add(txtEmailLogin);
-        txtEmailLogin.setBounds(370, 480, 250, 30);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(100, 0, 0, 0);
+        add(txtEmailLogin, gridBagConstraints);
 
         jLabelUsuario.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
         jLabelUsuario.setForeground(new java.awt.Color(0, 44, 58));
         jLabelUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelUsuario.setText("Usuario");
-        add(jLabelUsuario);
-        jLabelUsuario.setBounds(380, 460, 38, 12);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BELOW_BASELINE;
+        gridBagConstraints.weightx = 10.0;
+        gridBagConstraints.insets = new java.awt.Insets(50, 0, 10, 0);
+        add(jLabelUsuario, gridBagConstraints);
 
         jLabelContrasena.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
         jLabelContrasena.setForeground(new java.awt.Color(0, 44, 58));
         jLabelContrasena.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelContrasena.setText("Contraseña");
-        add(jLabelContrasena);
-        jLabelContrasena.setBounds(380, 520, 57, 12);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.insets = new java.awt.Insets(170, 0, 0, 0);
+        add(jLabelContrasena, gridBagConstraints);
 
         txtPasswordLogin.setText("string");
         txtPasswordLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -84,8 +110,15 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
                 txtPasswordLoginActionPerformed(evt);
             }
         });
-        add(txtPasswordLogin);
-        txtPasswordLogin.setBounds(370, 540, 250, 30);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.ipadx = 200;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(230, 0, 0, 0);
+        add(txtPasswordLogin, gridBagConstraints);
 
         btnVolver.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         btnVolver.setForeground(new java.awt.Color(0, 44, 58));
@@ -96,8 +129,15 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
                 btnVolverActionPerformed(evt);
             }
         });
-        add(btnVolver);
-        btnVolver.setBounds(440, 630, 90, 26);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 200, 0);
+        add(btnVolver, gridBagConstraints);
 
         btnEntrar1.setFont(new java.awt.Font("Modern M", 0, 18)); // NOI18N
         btnEntrar1.setForeground(new java.awt.Color(0, 44, 58));
@@ -108,16 +148,37 @@ public class JPanelIniciarSesion extends javax.swing.JPanel {
                 btnEntrar1ActionPerformed(evt);
             }
         });
-        add(btnEntrar1);
-        btnEntrar1.setBounds(440, 590, 90, 26);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 10;
+        gridBagConstraints.insets = new java.awt.Insets(400, 0, 0, 0);
+        add(btnEntrar1, gridBagConstraints);
 
         lblError.setFont(new java.awt.Font("Modern M", 0, 12)); // NOI18N
-        add(lblError);
-        lblError.setBounds(120, 320, 250, 40);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipadx = 250;
+        gridBagConstraints.ipady = 40;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(320, 120, 0, 0);
+        add(lblError, gridBagConstraints);
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/logoMM512.jpg"))); // NOI18N
-        add(jLabel1);
-        jLabel1.setBounds(230, 50, 540, 301);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.gridheight = java.awt.GridBagConstraints.RELATIVE;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.insets = new java.awt.Insets(-300, 0, 0, 0);
+        add(jLabel1, gridBagConstraints);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtEmailLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailLoginActionPerformed

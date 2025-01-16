@@ -1,7 +1,5 @@
 package peregarcias.mightymotion;
 
-
-
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -37,7 +35,7 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
         this.pantallaPrincipal = pantallaPrincipal;
         this.da = da;
         lstWorkouts.setModel(new DefaultListModel<>());
-        lstExercicis.setModel(new DefaultListModel<>());
+        lstAddExercicis.setModel(new DefaultListModel<>());
         
         lstWorkouts.addListSelectionListener(new ListSelectionListener(){
             @Override
@@ -70,15 +68,20 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
         lstWorkouts.setModel(listModel);
     }
     private void cargarEjerciciosParaWorkout() {
-        List<Exercicis> ejercicios = da.getExercicisByWorkout(1); 
-        DefaultListModel model = (DefaultListModel) lstExercicis.getModel();
-
-
-    for (Exercicis ejercicio : ejercicios) {
-        model.addElement(ejercicio.getDescripcio());
+        String selectedWorkout = lstWorkouts.getSelectedValue();
+        if (selectedWorkout != null) {
+            Workouts workout = mapWorkouts.get(selectedWorkout);
+            
+            // Obtener todos los ejercicios para este workout
+            List<Exercicis> ejercicios = da.getExercicisByWorkout(workout.getId());  // Usamos el ID del workout
+            
+            DefaultListModel<String> model = new DefaultListModel<>();
+            for (Exercicis ejercicio : ejercicios) {
+                model.addElement(ejercicio.getDescripcio());  // Añadir la descripción del ejercicio
+            }
+            lstAddExercicis.setModel(model);
+        }
     }
-    lstExercicis.setModel(model);
-}
     
 
     /**
@@ -95,8 +98,9 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         lstWorkouts = new javax.swing.JList<>();
         jScrollPane2 = new javax.swing.JScrollPane();
-        lstExercicis = new javax.swing.JList<>();
+        lstAddExercicis = new javax.swing.JList<>();
         btnvolver = new javax.swing.JButton();
+        btnAdd = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -117,7 +121,7 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
         add(jScrollPane1);
         jScrollPane1.setBounds(20, 60, 200, 380);
 
-        jScrollPane2.setViewportView(lstExercicis);
+        jScrollPane2.setViewportView(lstAddExercicis);
 
         add(jScrollPane2);
         jScrollPane2.setBounds(290, 60, 220, 380);
@@ -131,26 +135,49 @@ public class JPanelAddWorkout extends javax.swing.JPanel {
             }
         });
         add(btnvolver);
-        btnvolver.setBounds(395, 460, 110, 22);
+        btnvolver.setBounds(20, 450, 110, 22);
+
+        btnAdd.setFont(new java.awt.Font("Modern M", 0, 14)); // NOI18N
+        btnAdd.setForeground(new java.awt.Color(0, 44, 58));
+        btnAdd.setText("AÑADIR");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
+        add(btnAdd);
+        btnAdd.setBounds(430, 450, 72, 22);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnvolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnvolverActionPerformed
         
-        Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this);
-        mainFrame.setContentPane(pantallaPrincipal);
+        Main mainFrame = (Main) SwingUtilities.getWindowAncestor(this); 
+        mainFrame.setContentPane(pantallaPrincipal); 
         mainFrame.revalidate();
         mainFrame.repaint();
        
     }//GEN-LAST:event_btnvolverActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        String selectedWorkout = lstWorkouts.getSelectedValue();
+        
+        if (selectedWorkout != null) {
+            Workouts workout = mapWorkouts.get(selectedWorkout);
+            
+            pantallaPrincipal.addWorkoutToUser(workout);
+            pantallaPrincipal.cargarEjerciciosParaWorkout(workout);
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnvolver;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> lstExercicis;
+    private javax.swing.JList<String> lstAddExercicis;
     private javax.swing.JList<String> lstWorkouts;
     // End of variables declaration//GEN-END:variables
 }

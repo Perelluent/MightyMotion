@@ -226,10 +226,7 @@ public class DataAccess {
     
     public ArrayList<Exercicis> getExercicisByWorkout (int workoutId) {
         ArrayList<Exercicis> exercicis = new ArrayList<>();
-        String sql = "SELECT ExercicisWorkouts.IdExercici, Exercicis.NomExercici, Exercicis.Descripcio\n" +
-        "FROM ExercicisWorkouts \n" +
-        "LEFT JOIN Exercicis ON ExercicisWorkouts.idExercici = Exercicis.Id\n" +
-        "WHERE ExercicisWorkouts.IdWorkout = ?;";
+        String sql = "SELECT * FROM Exercicis WHERE Id = ?";
         Connection connection = getConnection();
         try {
             PreparedStatement selectStatement = connection.prepareStatement(sql);
@@ -237,7 +234,7 @@ public class DataAccess {
             ResultSet resultset = selectStatement.executeQuery();
             while (resultset.next()) {
                 Exercicis exercici = new Exercicis();
-                exercici.setExerciciId(resultset.getInt("IdExercici"));
+                exercici.setExerciciId(resultset.getInt("Id"));
                 exercici.setNomExercici(resultset.getString("NomExercici"));
                 exercici.setDescripcio(resultset.getString("Descripcio"));
                 exercicis.add(exercici);
