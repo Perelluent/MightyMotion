@@ -59,19 +59,19 @@ public class DataAccess {
     }
     
      public Usuario getUsuario(String email){
-        Usuario user = null;
+        Usuario usuario = null;
         String sql = "SELECT * FROM Usuaris WHERE Email = ?";
         try (Connection connection = getConnection(); PreparedStatement selectStatement = connection.prepareStatement(sql);) {
             selectStatement.setString(1, email);
             ResultSet resultSet = selectStatement.executeQuery();
             
             if (resultSet.next()){
-            user = new Usuario();
-            user.setId(resultSet.getInt("Id"));
-            user.setNom(resultSet.getString("Nom"));
-            user.setEmail(resultSet.getString("Email"));
-            user.setPasswordHash(resultSet.getString("PasswordHash"));
-            user.setInstructor(resultSet.getBoolean("Instructor"));
+            usuario = new Usuario();
+            usuario.setId(resultSet.getInt("Id"));
+            usuario.setNom(resultSet.getString("Nom"));
+            usuario.setEmail(resultSet.getString("Email"));
+            usuario.setPasswordHash(resultSet.getString("PasswordHash"));
+            usuario.setInstructor(resultSet.getBoolean("Instructor"));
             } else {
                 System.out.println("No se encontró el usuario");
             }
@@ -79,7 +79,7 @@ public class DataAccess {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return user;
+        return usuario;
     }
     
     
