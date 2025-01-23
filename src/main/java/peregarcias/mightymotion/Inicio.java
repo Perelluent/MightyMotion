@@ -14,6 +14,8 @@ import java.awt.Image;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -48,6 +50,7 @@ public class Inicio extends javax.swing.JFrame {
     private final Usuario usuario;
     private final AddWorkout addWorkout;
     private final DataAccess da;
+    private boolean isClicked = false;
   
     JMenuBar mnuBar = new JMenuBar();
     JMenu mnuArchivo = new JMenu();
@@ -131,8 +134,10 @@ public class Inicio extends javax.swing.JFrame {
     private JPanel crearPanelInicio() {
         JPanel panel = new JPanel(new MigLayout("wrap 1","[grow]", "[][][]10[]10[]push[]10[][]"));
         
-        JToggleButton tglOscuro = new JToggleButton("Modo Oscuro");
-        panel.add(tglOscuro, "align right");
+        JLabel lblOscuro = new JLabel();
+        panel.add(lblOscuro, "align right");
+        ImageIcon lblOscuroIcon = new ImageIcon("src\\main\\resources\\images\\mode_dark_icon_214378.png");
+        lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 50, 50));
         JLabel lblLogo = new JLabel();
         ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
         lblLogo.setIcon(redimensionarImagen(logo, 500, 500));
@@ -156,19 +161,22 @@ public class Inicio extends javax.swing.JFrame {
         btnAltaUsuarios.setFont(new Font("Carlito", Font.PLAIN,16));
         panel.add(btnAltaUsuarios, "align center");
         
+        
+        
         JLabel lblWeb = new JLabel("www.mightymotion.com");
         lblWeb.setFont(new Font("Carlito", Font.PLAIN,16));
         panel.add(lblWeb, "align center");
         
-        tglOscuro.addActionListener(new ActionListener(){
+        lblOscuro.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                                
+            public void mouseClicked(MouseEvent e) {       
                 try {
-                    if (tglOscuro.isSelected()) {
+                    if (!isClicked) {
                         UIManager.setLookAndFeel(new FlatDarkLaf());
+                        isClicked = true;
                     } else {
                         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                        isClicked = false;
                     }
                 modoOscuro();
             } catch (UnsupportedLookAndFeelException ex) {
@@ -227,7 +235,6 @@ public class Inicio extends javax.swing.JFrame {
         SwingUtilities.updateComponentTreeUI(window);
         window.validate();
         window.repaint();
-        window.pack(); // Reorganiza los componentes para adaptarse al nuevo tema
     }
 }
 

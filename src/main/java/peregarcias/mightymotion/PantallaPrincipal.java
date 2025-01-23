@@ -5,26 +5,19 @@
 package peregarcias.mightymotion;
 
 import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobServiceClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
+import com.azure.storage.blob.BlobClientBuilder;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,6 +30,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
+import peregarcias.componenteBlobTracker.BlobTracker;
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Exercicis;
 import peregarcias.mightymotion.dto.Usuario;
@@ -55,6 +49,11 @@ public class PantallaPrincipal extends javax.swing.JPanel {
     private Map<String, Workouts> mapWorkouts = new HashMap<>();
     private Map<String, Exercicis> mapExercicis = new HashMap<>();
     private Map<String, String> ejercicioBlobMap = new HashMap<>();
+    private Map<Usuario, List<Workouts>> usuariosWorkout = new HashMap<>();
+    private Map<String, ImageIcon> cachedImages = new HashMap<>();
+    private final String connectStr = "DefaultEndpointsProtocol=https;AccountName=lluentserver;AccountKey=kHji7NlQiOz6P6BVNSFRLSgKTk1DimN0kE72W3UP84qwMM2y2yyGkHNCsn3fOVX7jY88SCi9f1Yh+AStLlewcw==;EndpointSuffix=core.windows.net";
+    private final String containerName = "lluentfotos";
+    private String tempDir = System.getProperty("java.io.tmpdir");
     
 
     JLabel lblLogo = new JLabel();
@@ -71,6 +70,8 @@ public class PantallaPrincipal extends javax.swing.JPanel {
     JButton btnAddWorkout = new JButton("AÑADIR WORKOUT");
     JButton btnDeleteWorkout = new JButton("ELIMINAR WORKOUT");
     JLabel lblWarning2 = new JLabel();
+    BlobTracker blobTracker = new BlobTracker();
+    
     
     
 
@@ -119,8 +120,14 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         lblWarning2.setFont(new Font("Carlito", Font.PLAIN,20));
         lblWarning2.setFont(new Font("Carlito", Font.PLAIN,12));
         lblWarning2.setForeground(Color.red);
-        contenido.add(lblimg, "cell 3 2, align center");
-        lblimg.setText("imagen");
+        contenido.add(lblimg, "cell 3 2 1 3, align center, grow");
+        lblimg.setPreferredSize(new Dimension(300, 300));
+        lblimg.setMinimumSize(new Dimension(300, 300));
+        lblimg.setMaximumSize(new Dimension(300, 300));
+        contenido.add(blobTracker, "cell 3 0, align right");
+        blobTracker.setRunning(true);
+        blobTracker.setPollingInterval(3000);
+        blobTracker.setVisible(false);
         
         
         JScrollPane scrollPane = new JScrollPane(contenido);
@@ -157,11 +164,9 @@ public class PantallaPrincipal extends javax.swing.JPanel {
                 if (!evt.getValueIsAdjusting()) {
                     Exercicis selectedExercise = jListExercicis.getSelectedValue();
                     if (selectedExercise != null) {
-                        try {
-                            mostrarImagenEjercicio(selectedExercise.getDemoFoto());
-                        } catch (IOException ex) {
-                            Logger.getLogger(PantallaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+                        String ejercicioNombre = selectedExercise.getNomExercici();
+                        System.out.println("Exercici sel.leccionat: " + ejercicioNombre);
+                        jListExercicisValueChanged(evt);
                     }
                 }
             }
@@ -207,6 +212,15 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         return instructorLogueado;
     }
     
+    public Usuario getSelectedUser() {
+        String alumnoSeleccionado = jListAlumnos.getSelectedValue();
+        return mapUsuarios.get(alumnoSeleccionado);
+    }
+    
+    public Map<Usuario, List<Workouts>> getUsuariosWorkout() { 
+        return usuariosWorkout; 
+    }
+    
     private void cargarUsuariosParaInstructor() { 
         if (instructorLogueado == null) { 
             lblWarning.setText("No se encontraron usuarios.");
@@ -238,6 +252,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         }
 
         DefaultListModel<Workouts> model = new DefaultListModel<>();
+        List<Workouts> workouts = usuariosWorkout.getOrDefault(usuario, new ArrayList<>());
         for (Workouts workout : da.getWorkoutsByUser(usuario.getId())) {
             model.addElement(workout);
             mapWorkouts.put(workout.getComments(), workout);
@@ -288,47 +303,12 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         }
     }
     
-    private void mostrarImagenEjercicio (String ejercicioNombre) throws IOException {
-        String conexion = "DefaultEndpointsProtocol=https;AccountName=lluentserver;AccountKey=kHji7NlQiOz6P6BVNSFRLSgKTk1DimN0kE72W3UP84qwMM2y2yyGkHNCsn3fOVX7jY88SCi9f1Yh+AStLlewcw==;EndpointSuffix=core.windows.net";
-        String containerName = "lluentfotos";
-        String blobName = ejercicioBlobMap.get(ejercicioNombre);
-        
-        if (blobName == null || blobName.isEmpty()) {
-            System.out.println("blob name is null or empty");
-            lblimg.setIcon(null);
-            lblimg.setText("Imagen no disponible");
-            return;
-        }
-        
-        BlobServiceClient bsc = new BlobServiceClientBuilder().connectionString(conexion).buildClient();
-        BlobContainerClient bcc = bsc.getBlobContainerClient(containerName);
-        BlobClient bc = bcc.getBlobClient(blobName);
-        
-        try (InputStream blobInputStream = bc.openInputStream();
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream()) {
-            
-            byte[] data = new byte[4096];
-            int bytesRead;
-            while ((bytesRead = blobInputStream.read(data, 0, data.length)) != -1) {
-                buffer.write(data, 0, bytesRead);
-            }
-            
-            ByteArrayInputStream inputStream = new ByteArrayInputStream(buffer.toByteArray());
-            BufferedImage img = ImageIO.read(inputStream);
-            ImageIcon icon = new ImageIcon(img);
-            lblimg.setIcon(icon);
-            
-        } catch (IOException e) {
-            lblimg.setIcon(null);
-            lblimg.setText("Imagen no disponible");
-        }
-    }
     private void definirMapaEjercicioBlob() {
-        ejercicioBlobMap.put("Exercici 1", "zancadas.jpg"); 
-        ejercicioBlobMap.put("Exercici 2", "dominadas.jpg");
-        ejercicioBlobMap.put("Exercici 3", "fondos.jpg"); 
-        ejercicioBlobMap.put("Exercici 4", "planchas.jpg"); 
-        ejercicioBlobMap.put("Exercici 5", "crunch_lateral.jpg"); 
+        ejercicioBlobMap.put("Exercici 1", "zancadas.png"); 
+        ejercicioBlobMap.put("Exercici 2", "dominadas.png");
+        ejercicioBlobMap.put("Exercici 3", "fondos.png"); 
+        ejercicioBlobMap.put("Exercici 4", "plancha.png"); 
+        ejercicioBlobMap.put("Exercici 5", "crunch_lateral.png"); 
     }
     
     private void btnAddWorkoutActionPerformed(java.awt.event.ActionEvent evt) {                                              
@@ -365,6 +345,58 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             lblWarning.setText("Aún no tienes alumnos.");
         }
     }
+    
+    private void jListExercicisValueChanged(javax.swing.event.ListSelectionEvent evt) { 
+        if (evt.getValueIsAdjusting()) { 
+            return;
+        }
+        Exercicis selectedExercise = jListExercicis.getSelectedValue(); 
+        String ejercicioNombre = selectedExercise.getNomExercici(); 
+        String blobName = ejercicioBlobMap.get(ejercicioNombre); 
+        if (blobName == null || blobName.isEmpty()) { 
+            lblimg.setText("nombre del ejercicio inválido");
+         return; 
+        } if (cachedImages.containsKey(blobName)) { 
+            lblimg.setBackground(Color.decode("#3c3f41"));
+            lblimg.setIcon(cachedImages.get(blobName));
+            lblimg.revalidate();
+            lblimg.repaint();
+        } else { 
+            BlobClient blobClient = new BlobClientBuilder() 
+                    .connectionString(connectStr) 
+                    .blobName(blobName) 
+                    .containerName(containerName) 
+                    .buildClient();
+        
+        boolean blobExists = blobClient.exists(); 
+        if (!blobExists) { 
+            lblimg.setText("El blob no existe");
+             return; 
+        } 
+        String downloadPath = tempDir + File.separator + blobName; 
+        File downloadedFile = new File(downloadPath); 
+        if (downloadedFile.exists()) { 
+            downloadedFile.delete();
+        } try { 
+            blobClient.downloadToFile(downloadPath);
+         
+        ImageIcon imageIcon = new ImageIcon(downloadPath); 
+        Image scaledImage = imageIcon.getImage().getScaledInstance( lblimg.getWidth(), lblimg.getHeight(), Image.SCALE_SMOOTH ); 
+        ImageIcon scaledIcon = new ImageIcon(scaledImage); 
+        cachedImages.put(blobName, scaledIcon);
+        lblimg.setOpaque(true);
+        lblimg.setBackground(Color.decode("#3c3f41"));
+        lblimg.setIcon(scaledIcon);
+        lblimg.revalidate();
+        lblimg.repaint();
+        } catch (Exception e) {
+        System.out.println("Error al descargar o procesar la imagen: " + e.getMessage()); 
+        e.printStackTrace(); 
+        lblimg.setText("Imagen no disponible"); 
+            } 
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

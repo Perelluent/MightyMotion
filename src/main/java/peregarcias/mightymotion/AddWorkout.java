@@ -9,7 +9,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +53,8 @@ public class AddWorkout extends javax.swing.JPanel {
     JList<String> lstExercicis = new JList<>();
     JButton btnAdd = new JButton("AÑADIR");
     JButton btnVolver = new JButton("VOLVER");
+    JLabel lblVolver = new JLabel();
+    ImageIcon iconoFlecha = new ImageIcon("src\\main\\resources\\images\\goprevious_103394.png");
  
     
     public AddWorkout(PantallaPrincipal pantallaPrincipal, Usuario usuario, DataAccess da) {
@@ -59,7 +64,7 @@ public class AddWorkout extends javax.swing.JPanel {
         
         initComponents();
         
-        JPanel contenido = new JPanel(new MigLayout("wrap 4, debug", "[grow][grow][grow][grow]", "[]10[]10[]10[]"));
+        JPanel contenido = new JPanel(new MigLayout("wrap 4", "[grow][grow][grow][grow]", "[]10[]10[]10[]"));
         
         lblLogo.setIcon(Inicio.redimensionarImagen(logo, 50, 50));
         contenido.add(lblLogo, "cell 0 0,align left");
@@ -71,14 +76,17 @@ public class AddWorkout extends javax.swing.JPanel {
         contenido.add(lstWorkouts, "cell 0 2, align center");
         lstExercicis.setPreferredSize(new Dimension(300,500));
         contenido.add(lstExercicis, "cell 1 2, align left");
-        contenido.add(btnVolver, "cell 0 4, align left");
-        btnVolver.setPreferredSize(new Dimension(200,40));
-        btnVolver.setHorizontalAlignment(SwingConstants.CENTER);
-        btnVolver.setFont(new Font("Carlito", Font.PLAIN,16));
+//        contenido.add(btnVolver, "cell 0 4, align left");
+//        btnVolver.setPreferredSize(new Dimension(200,40));
+//        btnVolver.setHorizontalAlignment(SwingConstants.CENTER);
+//        btnVolver.setFont(new Font("Carlito", Font.PLAIN,16));
         contenido.add(btnAdd, "cell 1 3, align left");
         btnAdd.setPreferredSize(new Dimension(200,40));
         btnAdd.setHorizontalAlignment(SwingConstants.CENTER);
         btnAdd.setFont(new Font("Carlito", Font.PLAIN,16));
+        lblVolver.setIcon(Inicio.redimensionarImagen(iconoFlecha, 70, 70));
+        lblVolver.setToolTipText("Atràs");
+        contenido.add(lblVolver, "cell 0 4,align left, gapleft 100");
         
         JScrollPane scrollPane = new JScrollPane(contenido);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -100,9 +108,9 @@ public class AddWorkout extends javax.swing.JPanel {
         
         });
         
-        btnVolver.addActionListener(new ActionListener(){
+        lblVolver.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 btnVolverActionPerformed(e); 
             }
             
@@ -150,7 +158,7 @@ public class AddWorkout extends javax.swing.JPanel {
         }
     }
     
-    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnVolverActionPerformed(java.awt.event.MouseEvent evt) {
          Inicio inicio = (Inicio) SwingUtilities.getWindowAncestor(this); 
          inicio.mostrarPantallaPrincipal(pantallaPrincipal.getInstructorLogueado());
     }
@@ -158,13 +166,18 @@ public class AddWorkout extends javax.swing.JPanel {
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {                                       
         String selectedWorkout = lstWorkouts.getSelectedValue();
         
-        if (selectedWorkout != null) {
+        if (selectedWorkout != null) { 
             Workouts workout = mapWorkouts.get(selectedWorkout);
-            
-            pantallaPrincipal.addWorkoutToUser(workout);
-            pantallaPrincipal.cargarEjerciciosParaWorkout(workout);
-        }
-    }
+         // Obtenir l'usuari seleccionat des de pantallaPrincipal 
+        Usuario selectedUser = pantallaPrincipal.getSelectedUser(); 
+        if (selectedUser != null) { 
+            List<Workouts> workouts = pantallaPrincipal.getUsuariosWorkout().getOrDefault(selectedUser, new ArrayList<>()); 
+            workouts.add(workout); pantallaPrincipal.getUsuariosWorkout().put(selectedUser, workouts); 
+            pantallaPrincipal.addWorkoutToUser(workout); 
+            pantallaPrincipal.cargarEjerciciosParaWorkout(workout); 
+        } 
+    } 
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
