@@ -5,17 +5,27 @@
 package peregarcias.mightymotion;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import net.miginfocom.swing.MigLayout;
+import static peregarcias.mightymotion.Inicio.redimensionarImagen;
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Usuario;
 
@@ -25,12 +35,15 @@ import peregarcias.mightymotion.dto.Usuario;
  */
 public class IniciarSesion extends javax.swing.JPanel {
     
-    private final Inicio inicio;
+    private Inicio inicio;
     DataAccess da = new DataAccess();
     private Usuario usuario;
+    private boolean isClicked = false;
     
     JLabel lblLogo = new JLabel();
     ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
+    JLabel lblOscuro = new JLabel();
+    ImageIcon lblOscuroIcon = new ImageIcon("src\\main\\resources\\images\\mode_dark_icon_214378.png");
     JLabel lblMarca = new JLabel();
     JLabel lblUsuario = new JLabel("Usuario");
     JTextField txtUsuario = new JTextField("a@b.c");
@@ -51,6 +64,8 @@ public class IniciarSesion extends javax.swing.JPanel {
         initComponents();
               
         setLayout(new MigLayout("wrap 1","[grow]", "[][]70[]10[]10[]10[]10[]"));
+        add(lblOscuro, "align right");
+        lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 30, 30));
         lblLogo.setIcon(inicio.redimensionarImagen(logo, 500, 500));
         add(lblLogo, "align center");
         add(lblMarca, "align center");
@@ -83,6 +98,16 @@ public class IniciarSesion extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 volverAlInicio();
             }
+        });
+        btnVolver.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
             
         });
         
@@ -90,9 +115,46 @@ public class IniciarSesion extends javax.swing.JPanel {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 btnEntrarActionPerformed(evt);
+            }            
+        });
+        btnEntrar.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             
         });
+        
+        lblOscuro.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {       
+                try {
+                    if (!isClicked) {
+                        UIManager.setLookAndFeel(new FlatDarkLaf());
+                        isClicked = true;
+                    } else {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                        isClicked = false;
+                    }
+                inicio.modoOscuro();
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+    });
         
     }
    

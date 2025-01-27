@@ -4,7 +4,10 @@
  */
 package peregarcias.mightymotion;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,6 +19,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -25,9 +30,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
+import static peregarcias.mightymotion.Inicio.redimensionarImagen;
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Exercicis;
 import peregarcias.mightymotion.dto.Usuario;
@@ -40,13 +48,17 @@ import peregarcias.mightymotion.dto.Workouts;
 public class AddWorkout extends javax.swing.JPanel {
     
     private PantallaPrincipal pantallaPrincipal; 
+    private Inicio inicio;
     private DataAccess da = new DataAccess(); 
     private Map<String, Workouts> mapWorkouts = new HashMap<>(); 
     private Map<String, Exercicis> mapEjercicios = new HashMap<>();
+    private boolean isClicked = false;
     
     
-    JLabel lblLogo = new JLabel();
-    ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
+    JLabel lblMenu = new JLabel();
+    ImageIcon menu = new ImageIcon("src\\main\\resources\\images\\menu.png");
+    JLabel lblOscuro = new JLabel();
+    ImageIcon lblOscuroIcon = new ImageIcon("src\\main\\resources\\images\\mode_dark_icon_214378.png");
     JLabel lblWorkouts = new JLabel("WORKOUTS DISPONIBLES");
     JLabel lblExercicis = new JLabel("EJERCICIOS");
     JList<String> lstWorkouts = new JList<>();
@@ -54,20 +66,23 @@ public class AddWorkout extends javax.swing.JPanel {
     JButton btnAdd = new JButton("AÑADIR");
     JButton btnVolver = new JButton("VOLVER");
     JLabel lblVolver = new JLabel();
-    ImageIcon iconoFlecha = new ImageIcon("src\\main\\resources\\images\\goprevious_103394.png");
+    ImageIcon iconoFlecha = new ImageIcon("src\\main\\resources\\images\\arrow_left.png");
  
     
-    public AddWorkout(PantallaPrincipal pantallaPrincipal, Usuario usuario, DataAccess da) {
+    public AddWorkout(Inicio inicio, PantallaPrincipal pantallaPrincipal, Usuario usuario, DataAccess da) {
         
         this.pantallaPrincipal = pantallaPrincipal;
+        this.inicio = inicio;
         this.da = da;
         
         initComponents();
         
         JPanel contenido = new JPanel(new MigLayout("wrap 4", "[grow][grow][grow][grow]", "[]10[]10[]10[]"));
         
-        lblLogo.setIcon(Inicio.redimensionarImagen(logo, 50, 50));
-        contenido.add(lblLogo, "cell 0 0,align left");
+        contenido.add(lblOscuro, "cell 4 0, align right");
+        lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 30, 30));
+        lblMenu.setIcon(Inicio.redimensionarImagen(menu, 50, 50));
+        contenido.add(lblMenu, "cell 0 0,align left");
         contenido.add(lblWorkouts, "cell 0 1, align center");
         lblWorkouts.setFont(new Font("Carlito", Font.PLAIN,20));
         contenido.add(lblExercicis, "cell 1 1, align left");
@@ -76,10 +91,6 @@ public class AddWorkout extends javax.swing.JPanel {
         contenido.add(lstWorkouts, "cell 0 2, align center");
         lstExercicis.setPreferredSize(new Dimension(300,500));
         contenido.add(lstExercicis, "cell 1 2, align left");
-//        contenido.add(btnVolver, "cell 0 4, align left");
-//        btnVolver.setPreferredSize(new Dimension(200,40));
-//        btnVolver.setHorizontalAlignment(SwingConstants.CENTER);
-//        btnVolver.setFont(new Font("Carlito", Font.PLAIN,16));
         contenido.add(btnAdd, "cell 1 3, align left");
         btnAdd.setPreferredSize(new Dimension(200,40));
         btnAdd.setHorizontalAlignment(SwingConstants.CENTER);
@@ -105,13 +116,44 @@ public class AddWorkout extends javax.swing.JPanel {
                     cargarEjerciciosParaWorkout();
                 }
             }
-        
+        });
+        lstWorkouts.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+        });
+        lstExercicis.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
         });
         
         lblVolver.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 btnVolverActionPerformed(e); 
+            }
+        });
+        lblVolver.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             
         });
@@ -121,6 +163,16 @@ public class AddWorkout extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 btnAddActionPerformed(e);
             }
+        });
+        btnAdd.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
             
         });
         try {
@@ -128,6 +180,31 @@ public class AddWorkout extends javax.swing.JPanel {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        lblOscuro.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {       
+                try {
+                    if (!isClicked) {
+                        UIManager.setLookAndFeel(new FlatDarkLaf());
+                        isClicked = true;
+                    } else {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                        isClicked = false;
+                    }
+                inicio.modoOscuro();
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+    });
     }
     
      private void cargarWorkouts() throws SQLException {

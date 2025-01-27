@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatDarkLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -26,7 +27,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -72,9 +72,9 @@ public class Inicio extends javax.swing.JFrame {
         this.iniciarSesion = new IniciarSesion(this);
         this.crearUsuario = new CrearUsuario(this);
         this.inicio = crearPanelInicio();
-        this.pantallaPrincipal = new PantallaPrincipal(usuario);
+        this.pantallaPrincipal = new PantallaPrincipal(this, usuario);
         this.da = new DataAccess();
-        this.addWorkout = new AddWorkout(pantallaPrincipal, usuario, da);
+        this.addWorkout = new AddWorkout(this, pantallaPrincipal, usuario, da);
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
@@ -134,10 +134,12 @@ public class Inicio extends javax.swing.JFrame {
     private JPanel crearPanelInicio() {
         JPanel panel = new JPanel(new MigLayout("wrap 1","[grow]", "[][][]10[]10[]push[]10[][]"));
         
+        setTitle("Mighty Motion");
+        
         JLabel lblOscuro = new JLabel();
         panel.add(lblOscuro, "align right");
         ImageIcon lblOscuroIcon = new ImageIcon("src\\main\\resources\\images\\mode_dark_icon_214378.png");
-        lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 50, 50));
+        lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 30, 30));
         JLabel lblLogo = new JLabel();
         ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
         lblLogo.setIcon(redimensionarImagen(logo, 500, 500));
@@ -175,23 +177,39 @@ public class Inicio extends javax.swing.JFrame {
                         UIManager.setLookAndFeel(new FlatDarkLaf());
                         isClicked = true;
                     } else {
-                        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                        UIManager.setLookAndFeel(new FlatLightLaf());
                         isClicked = false;
                     }
                 modoOscuro();
             } catch (UnsupportedLookAndFeelException ex) {
                 Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
     });
         
         btnIniciarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mostrarIniciarSesion();
-                
+                mostrarIniciarSesion();                
+            }           
+        });
+        btnIniciarSesion.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             
         });
@@ -200,6 +218,17 @@ public class Inicio extends javax.swing.JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 cardLayout.show(cardPanel, "CrearUsuario");
+            }
+            
+        });
+        btnAltaUsuarios.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             
         });
@@ -230,7 +259,7 @@ public class Inicio extends javax.swing.JFrame {
         cardLayout.show(cardPanel, "AddWorkout");
     }
     
-    private void modoOscuro() {
+    public void modoOscuro() {
     for (Window window : Window.getWindows()) {
         SwingUtilities.updateComponentTreeUI(window);
         window.validate();

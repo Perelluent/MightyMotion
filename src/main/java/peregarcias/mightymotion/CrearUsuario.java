@@ -7,10 +7,13 @@ package peregarcias.mightymotion;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -100,6 +103,16 @@ public class CrearUsuario extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 inicio.mostrarInicio();
+            }  
+        });
+        btnVolver.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             
         });
@@ -108,6 +121,27 @@ public class CrearUsuario extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 btnCrearUsuarioActionPerformed(e);
+            }    
+        });
+        btnCrearUsuario.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+        });
+        chkInstructor.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             
         });

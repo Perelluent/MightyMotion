@@ -6,18 +6,26 @@ package peregarcias.mightymotion;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobClientBuilder;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,10 +35,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import net.miginfocom.swing.MigLayout;
 import peregarcias.componenteBlobTracker.BlobTracker;
+import static peregarcias.mightymotion.Inicio.redimensionarImagen;
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Exercicis;
 import peregarcias.mightymotion.dto.Usuario;
@@ -45,19 +56,23 @@ public class PantallaPrincipal extends javax.swing.JPanel {
     DataAccess da = new DataAccess();
     private Inicio inicio;
     private Usuario instructorLogueado;
-    private Map<String, Usuario> mapUsuarios = new HashMap<>();
-    private Map<String, Workouts> mapWorkouts = new HashMap<>();
-    private Map<String, Exercicis> mapExercicis = new HashMap<>();
-    private Map<String, String> ejercicioBlobMap = new HashMap<>();
-    private Map<Usuario, List<Workouts>> usuariosWorkout = new HashMap<>();
-    private Map<String, ImageIcon> cachedImages = new HashMap<>();
+    private SideBarMenu sideBarMenu;
+    private final Map<String, Usuario> mapUsuarios = new HashMap<>();
+    private final Map<String, Workouts> mapWorkouts = new HashMap<>();
+    private final Map<String, Exercicis> mapExercicis = new HashMap<>();
+    private final Map<String, String> ejercicioBlobMap = new HashMap<>();
+    private final Map<Usuario, List<Workouts>> usuariosWorkout = new HashMap<>();
+    private final Map<String, ImageIcon> cachedImages = new HashMap<>();
     private final String connectStr = "DefaultEndpointsProtocol=https;AccountName=lluentserver;AccountKey=kHji7NlQiOz6P6BVNSFRLSgKTk1DimN0kE72W3UP84qwMM2y2yyGkHNCsn3fOVX7jY88SCi9f1Yh+AStLlewcw==;EndpointSuffix=core.windows.net";
     private final String containerName = "lluentfotos";
-    private String tempDir = System.getProperty("java.io.tmpdir");
+    private final String tempDir = System.getProperty("java.io.tmpdir");
+    private boolean isClicked = false;
     
 
-    JLabel lblLogo = new JLabel();
-    ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
+    JLabel lblmenu = new JLabel();
+    ImageIcon menu = new ImageIcon("src\\main\\resources\\images\\menu.png");
+    JLabel lblOscuro = new JLabel();
+    ImageIcon lblOscuroIcon = new ImageIcon("src\\main\\resources\\images\\mode_dark_icon_214378.png");
     JLabel lblBienvenida = new JLabel();
     JButton btnAlumnos = new JButton("ALUMNOS");
     JLabel lblWorkouts = new JLabel("WORKOUTS");
@@ -72,12 +87,12 @@ public class PantallaPrincipal extends javax.swing.JPanel {
     JLabel lblWarning2 = new JLabel();
     BlobTracker blobTracker = new BlobTracker();
     
-    
-    
 
-    public PantallaPrincipal(Usuario instructorLogueado) {
+    public PantallaPrincipal(Inicio inicio, Usuario instructorLogueado) {
         
+        sideBarMenu = new SideBarMenu();
         this.instructorLogueado = instructorLogueado;
+        this.inicio = inicio;
               
         initComponents();
         
@@ -90,8 +105,10 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         
         JPanel contenido = new JPanel(new MigLayout("wrap 5", "[grow][grow][grow][grow][grow]", "[]10[][]10[]30[]"));
         
-        lblLogo.setIcon(Inicio.redimensionarImagen(logo, 50, 50));
-        contenido.add(lblLogo, "cell 0 0,align left");
+        contenido.add(lblOscuro, "cell 5 0, align right");
+        lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 30, 30));
+        lblmenu.setIcon(Inicio.redimensionarImagen(menu, 50, 50));
+        contenido.add(lblmenu, "cell 0 0,align left");
         contenido.add(lblBienvenida, "cell 0 0, align right");
         lblBienvenida.setFont(new Font("Carlito", Font.PLAIN,20));
         contenido. add(btnAlumnos, "cell 0 1, align center");
@@ -137,6 +154,25 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         contenido.setVisible(true);
+        this.add(sideBarMenu, BorderLayout.WEST);
+        
+        lblmenu.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                sideBarMenu.toggleSidebar();
+                contenido.revalidate();
+                contenido.repaint();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+        });
         
         
         jListAlumnos.addListSelectionListener(new ListSelectionListener() {
@@ -179,12 +215,32 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent evt) {
                 cargarUsuariosParaInstructor();
             }
+        });
+        btnAlumnos.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
             
         });
         btnAddWorkout.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 btnAddWorkoutActionPerformed(e);
+            }
+        });
+        btnAddWorkout.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
             
         });
@@ -193,8 +249,44 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 btnDeleteWorkoutActionPerformed(e);
             }
+        });
+        btnDeleteWorkout.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
             
         });
+        lblOscuro.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {       
+                try {
+                    if (!isClicked) {
+                        UIManager.setLookAndFeel(new FlatDarkLaf());
+                        isClicked = true;
+                    } else {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                        isClicked = false;
+                    }
+                inicio.modoOscuro();
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+    });
     }
     
     public void setInstructorLogueado(Usuario instructorLogueado) { 
@@ -226,10 +318,8 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             lblWarning.setText("No se encontraron usuarios.");
     return; 
     } 
-    System.out.println("ID de l'instructor en cargarUsuariosParaInstructor: " + instructorLogueado.getId()); 
-    System.out.println("Nom de l'instructor en cargarUsuariosParaInstructor: " + instructorLogueado.getNom()); 
+
     List<Usuario> usuarios = da.getUsuariosByInstructor(instructorLogueado.getId()); 
-    System.out.println("Nombre d'usuaris trobats per l'instructor amb ID " + instructorLogueado.getId() + ": " + usuarios.size()); 
     DefaultListModel<String> model = new DefaultListModel<>(); 
     mapUsuarios.clear(); 
     for (Usuario alumno : usuarios) { 
@@ -278,7 +368,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         if (!jListAlumnos.isSelectionEmpty()) {
         String nombreUsuario = jListAlumnos.getSelectedValue();
         Usuario usuarioSeleccionado = mapUsuarios.get(nombreUsuario);
-        AddWorkout addworkout = new AddWorkout(this, user, da);
+        AddWorkout addworkout = new AddWorkout(inicio, this, user, da);
         
         revalidate();
         repaint();
@@ -396,7 +486,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             } 
         }
     }
-    
+      
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
