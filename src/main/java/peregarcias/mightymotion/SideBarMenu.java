@@ -5,15 +5,19 @@
 package peregarcias.mightymotion;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import net.miginfocom.swing.MigLayout;
+import static peregarcias.mightymotion.Inicio.redimensionarImagen;
 
 /**
  *
@@ -21,36 +25,53 @@ import net.miginfocom.swing.MigLayout;
  */
 public class SideBarMenu extends javax.swing.JPanel {
     
-    private JPanel sidebarMenu = new JPanel();
+    private Inicio inicio;
+    
+    private final JPanel sidebarMenu = new JPanel();
     private boolean isSideBarVisible;
-    private int sidebarWidth = 200;
-    private Timer timer;
-    private int animStep = 10;
-    JLabel lblLogo = new JLabel();
-    ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
-    private JLabel lblHome = new JLabel("Home");
-    private JLabel lblIniciarSesion = new JLabel("Inciar Sesión");
-    private JLabel lblMarca = new JLabel("MIGHTY MOTION");
+    private final int sidebarWidth = 200;
+    private final Timer timer;
+    private final int animStep = 10;
+    private final JLabel lblBienvenida = new JLabel();
+    private final JLabel lblLogo = new JLabel();
+    private final ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
+    private final JLabel lblHome = new JLabel("Home");
+    private final JLabel lblIniciarSesion = new JLabel("Inciar Sesión");
+    private final JLabel lblAddWorkout = new JLabel("Añadir Workout");
+    private final JLabel lblMarca = new JLabel("MIGHTY MOTION");
+    private final JLabel lblHomeIcon = new JLabel();
+    private final ImageIcon homeIcon = new ImageIcon("src\\main\\resources\\images\\house.png");
+    JLabel lblCerrarSesion = new JLabel();
+    ImageIcon cerrarSesionIcon = new ImageIcon("src\\main\\resources\\images\\interruptor.png");
 
     /**
      * Creates new form SideBarMenu
      */
-    public SideBarMenu() {
+    public SideBarMenu(Inicio inicio) {
+        this.inicio = inicio;
         this.isSideBarVisible = false;
         
         initComponents();
-        sidebarMenu.setLayout(new MigLayout("wrap 1", "[grow]", "[]10[]10[]10[]"));
+        sidebarMenu.setLayout(new MigLayout("wrap 2", "[grow]", "[]10[]10[]10[]10[]"));
         sidebarMenu.setSize(new Dimension(0,600));
         sidebarMenu.setVisible(false);
+        sidebarMenu.add(lblBienvenida, "cell 0 0, align center, grow");
         
-        sidebarMenu.add(lblLogo, "align center, grow");
-        sidebarMenu.add(lblMarca, "align center, grow");
+        sidebarMenu.add(lblLogo, "cell 0 0, align center, grow");
+        sidebarMenu.add(lblMarca, "cell 0 1, align center, wrap 30");
         lblMarca.setFont(new Font("Modern M", Font.BOLD, 20));
         lblLogo.setIcon(Inicio.redimensionarImagen(logo, 50, 50));
         sidebarMenu.add(lblHome, "grow");
+        lblHome.setIcon(Inicio.redimensionarImagen(homeIcon, 15, 15));
+        sidebarMenu.add(lblHomeIcon, "align left");
         lblHome.setFont(new Font("Carlito", Font.PLAIN, 14));
-        sidebarMenu.add(lblIniciarSesion, "grow");
+        sidebarMenu.add(lblIniciarSesion, "grow, span");
         lblIniciarSesion.setFont(new Font("Carlito", Font.PLAIN, 14));
+        sidebarMenu.add(lblAddWorkout, "grow, span");
+        lblAddWorkout.setFont(new Font("Carlito", Font.PLAIN, 14));
+        sidebarMenu.add(lblCerrarSesion, "wrap, push, aligny bottom");
+        lblCerrarSesion.setIcon(redimensionarImagen(cerrarSesionIcon, 50, 50));
+        lblCerrarSesion.setToolTipText("Cerrar Sesión");
         
         this.setLayout(new BorderLayout());
         this.add(sidebarMenu, BorderLayout.WEST);
@@ -60,6 +81,37 @@ public class SideBarMenu extends javax.swing.JPanel {
             public void actionPerformed(ActionEvent e) {
                 animateSidebar();
             }
+        });
+        
+        lblCerrarSesion.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                inicio.mostrarInicio();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+        });
+        lblAddWorkout.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                inicio.mostrarAddWorkout();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
         });
     }
     public void toggleSidebar() {
@@ -91,6 +143,7 @@ public class SideBarMenu extends javax.swing.JPanel {
         sidebarMenu.revalidate();
         sidebarMenu.repaint();
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

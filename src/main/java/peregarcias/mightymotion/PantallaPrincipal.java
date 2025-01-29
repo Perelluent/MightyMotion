@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -90,7 +89,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
 
     public PantallaPrincipal(Inicio inicio, Usuario instructorLogueado) {
         
-        sideBarMenu = new SideBarMenu();
+        sideBarMenu = new SideBarMenu(inicio);
         this.instructorLogueado = instructorLogueado;
         this.inicio = inicio;
               
@@ -107,6 +106,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         
         contenido.add(lblOscuro, "cell 5 0, align right");
         lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 30, 30));
+        lblOscuro.setToolTipText("Modo Claro/Oscuro");
         lblmenu.setIcon(Inicio.redimensionarImagen(menu, 50, 50));
         contenido.add(lblmenu, "cell 0 0,align left");
         contenido.add(lblBienvenida, "cell 0 0, align right");
@@ -287,6 +287,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             }
             
     });
+        
     }
     
     public void setInstructorLogueado(Usuario instructorLogueado) { 

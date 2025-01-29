@@ -49,6 +49,7 @@ public class AddWorkout extends javax.swing.JPanel {
     
     private PantallaPrincipal pantallaPrincipal; 
     private Inicio inicio;
+    private SideBarMenu sideBarMenu;
     private DataAccess da = new DataAccess(); 
     private Map<String, Workouts> mapWorkouts = new HashMap<>(); 
     private Map<String, Exercicis> mapEjercicios = new HashMap<>();
@@ -73,6 +74,7 @@ public class AddWorkout extends javax.swing.JPanel {
         
         this.pantallaPrincipal = pantallaPrincipal;
         this.inicio = inicio;
+        sideBarMenu = new SideBarMenu(inicio);
         this.da = da;
         
         initComponents();
@@ -106,7 +108,7 @@ public class AddWorkout extends javax.swing.JPanel {
         setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
         contenido.setVisible(true);
-        
+        this.add(sideBarMenu, BorderLayout.WEST);
         
      
         lstWorkouts.addListSelectionListener(new ListSelectionListener(){
@@ -205,6 +207,23 @@ public class AddWorkout extends javax.swing.JPanel {
                 setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
             }
     });
+        lblMenu.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                sideBarMenu.toggleSidebar();
+                contenido.revalidate();
+                contenido.repaint();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+        });
     }
     
      private void cargarWorkouts() throws SQLException {

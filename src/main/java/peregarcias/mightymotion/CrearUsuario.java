@@ -5,6 +5,8 @@
 package peregarcias.mightymotion;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -14,6 +16,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,7 +27,10 @@ import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import net.miginfocom.swing.MigLayout;
+import static peregarcias.mightymotion.Inicio.redimensionarImagen;
 import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Usuario;
 
@@ -34,7 +41,9 @@ import peregarcias.mightymotion.dto.Usuario;
 public class CrearUsuario extends JPanel {
     
     private final Inicio inicio;
+    private boolean isClicked = false;
     
+    JLabel lblOscuro = new JLabel();
     JLabel lblLogo = new JLabel();
     ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
     JLabel lblMarca = new JLabel();
@@ -58,7 +67,11 @@ public class CrearUsuario extends JPanel {
         this.inicio = inicio;
         initComponents();
         
-        JPanel contenido = new JPanel(new MigLayout("wrap 2", "[grow, right]10[grow]", "[][]30[][][]30[]70[][][]"));
+        JPanel contenido = new JPanel(new MigLayout("wrap 2", "[grow, right]10[grow]", "[][]30[][][][]70[][][][]"));
+        
+        contenido.add(lblOscuro, "align right, span");
+        ImageIcon lblOscuroIcon = new ImageIcon("src\\main\\resources\\images\\mode_dark_icon_214378.png");
+        lblOscuro.setIcon(redimensionarImagen(lblOscuroIcon, 30, 30));
         
         lblLogo.setIcon(Inicio.redimensionarImagen(logo, 500, 500));
         contenido.add(lblLogo, "span, align center, wrap");
@@ -88,8 +101,9 @@ public class CrearUsuario extends JPanel {
         btnVolver.setPreferredSize(new Dimension(200,40));
         btnVolver.setHorizontalAlignment(SwingConstants.CENTER);
         btnVolver.setFont(new Font("Carlito", Font.PLAIN,16));
-        contenido.add(lblMensaje, "align center");
+        contenido.add(lblMensaje, "align center, span");
         lblMensaje.setFont(new Font("Carlito", Font.PLAIN,14));
+        lblMensaje.setForeground(Color.red);
         
          JScrollPane scrollPane = new JScrollPane(contenido);
          scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -98,6 +112,33 @@ public class CrearUsuario extends JPanel {
          setLayout(new BorderLayout());
          add(scrollPane, BorderLayout.CENTER);
          contenido.setVisible(true);
+         
+         lblOscuro.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {       
+                try {
+                    if (!isClicked) {
+                        UIManager.setLookAndFeel(new FlatDarkLaf());
+                        isClicked = true;
+                    } else {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                        isClicked = false;
+                    }
+                inicio.modoOscuro();
+            } catch (UnsupportedLookAndFeelException ex) {
+                Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+    });
         
         btnVolver.addActionListener(new ActionListener(){
             @Override
@@ -148,7 +189,20 @@ public class CrearUsuario extends JPanel {
         
     }
     
-    private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {                                                
+    private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {  
+        
+        if (txtNombre.getText().trim().isEmpty() || txtEmail.getText().trim().isEmpty() || txtContrasena.getPassword().length == 0) {
+        lblMensaje.setText("Primero rellena todos los campos.");
+        return;
+    }
+
+   String email = txtEmail.getText().trim();
+    String emailRegex = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"; 
+
+    if (!email.matches(emailRegex)) {
+        lblMensaje.setText("Ingrese un email válido.");
+        return;
+    }
         Usuario nuevoUsuario = new Usuario();
         nuevoUsuario.setNom(txtNombre.getText());
         nuevoUsuario.setEmail(txtEmail.getText());

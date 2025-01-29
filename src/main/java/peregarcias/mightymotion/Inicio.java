@@ -132,7 +132,7 @@ public class Inicio extends javax.swing.JFrame {
     }
     
     private JPanel crearPanelInicio() {
-        JPanel panel = new JPanel(new MigLayout("wrap 1","[grow]", "[][][]10[]10[]push[]10[][]"));
+        JPanel panel = new JPanel(new MigLayout("wrap 1","[grow]", "[][][][]10[]10[]push[]10[][]"));
         
         setTitle("Mighty Motion");
         
