@@ -36,6 +36,7 @@ peregarcias\mightymotion\dto\Exercicis.class
 peregarcias\mightymotion\IniciarSesion$2.class
 peregarcias\mightymotion\PantallaPrincipal$1.class
 peregarcias\mightymotion\PantallaPrincipal$9.class
+peregarcias\mightymotion\SideBarMenu$5.class
 peregarcias\mightymotion\AddWorkout$7.class
 peregarcias\mightymotion\CrearUsuario$4.class
 peregarcias\mightymotion\IniciarSesion$3.class
@@ -49,6 +50,7 @@ peregarcias\mightymotion\Inicio$5.class
 peregarcias\mightymotion\PantallaPrincipal$10.class
 peregarcias\mightymotion\AddWorkout$8.class
 peregarcias\mightymotion\Inicio.class
+peregarcias\mightymotion\SideBarMenu$4.class
 peregarcias\mightymotion\CrearUsuario$1.class
 peregarcias\mightymotion\PantallaPrincipal$3.class
 peregarcias\mightymotion\dataaccess\DataAccess.class

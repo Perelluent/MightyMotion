@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import net.miginfocom.swing.MigLayout;
 import static peregarcias.mightymotion.Inicio.redimensionarImagen;
+import peregarcias.mightymotion.dto.Usuario;
 
 /**
  *
@@ -26,6 +27,7 @@ import static peregarcias.mightymotion.Inicio.redimensionarImagen;
 public class SideBarMenu extends javax.swing.JPanel {
     
     private Inicio inicio;
+    private Usuario usuarioLogueado;
     
     private final JPanel sidebarMenu = new JPanel();
     private boolean isSideBarVisible;
@@ -82,7 +84,36 @@ public class SideBarMenu extends javax.swing.JPanel {
                 animateSidebar();
             }
         });
-        
+        lblHome.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                inicio.mostrarPantallaPrincipal(usuarioLogueado);
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+        });
+        lblIniciarSesion.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                inicio.mostrarInicio();
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                setCursor(new Cursor(Cursor.HAND_CURSOR));
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+            }
+            
+        });
         lblCerrarSesion.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -98,6 +129,8 @@ public class SideBarMenu extends javax.swing.JPanel {
             }
             
         });
+        
+        
         lblAddWorkout.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e) {

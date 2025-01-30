@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
@@ -94,7 +95,7 @@ public class Inicio extends javax.swing.JFrame {
         mniIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                mostrarIniciarSesion();
             }
         });
             
@@ -102,7 +103,7 @@ public class Inicio extends javax.swing.JFrame {
         mniAltaUsuarios.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                cardLayout.show(cardPanel, "CrearUsuario");;
             }
         
         });
@@ -123,7 +124,7 @@ public class Inicio extends javax.swing.JFrame {
         mniAbout.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                
+                JOptionPane.showMessageDialog(null, "www.mightymotion.com");
             }
         });
         mnuHelp.add(mniAbout);
