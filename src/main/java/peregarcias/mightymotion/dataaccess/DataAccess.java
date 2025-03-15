@@ -24,8 +24,7 @@ public class DataAccess {
     
         Connection connection = null;
     
-        String connectionString = "jdbc:sqlserver://localhost;database=simulabdb"
-                + ";user=sa;password=lluent3105;";
+        String connectionString = "jdbc:sqlserver://simulapsqlserver.database.windows.net:1433;database=simulapdb25;user=simulapdbadmin@simulapsqlserver;password=Pwd1234.;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
         try {
             connection = DriverManager.getConnection(connectionString);
         } catch (SQLException ex) {
