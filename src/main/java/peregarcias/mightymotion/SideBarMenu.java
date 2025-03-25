@@ -21,8 +21,16 @@ import static peregarcias.mightymotion.Inicio.redimensionarImagen;
 import peregarcias.mightymotion.dto.Usuario;
 
 /**
- *
- * @author morda
+ * <p><b>Clase SideBarMenu</b></p>
+ * <p>Representa el menú lateral animado de la aplicación; permite la navegación entre diferentes pantallas.</p>
+ * <ul>
+ *  <li><b>Incluye opciones como Home, Iniciar Sesión, Añadir Workout y Cerrar Sesión.</b></li>
+ *  <li><b>Implementa animaciones para mostrar y ocultar el menú lateral.</b></li>
+ * </ul>
+ * <p><i>Nota:</i> El menú lateral puede alternar entre visible y oculto mediante animaciones.</p>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class SideBarMenu extends javax.swing.JPanel {
     
@@ -47,7 +55,10 @@ public class SideBarMenu extends javax.swing.JPanel {
     ImageIcon cerrarSesionIcon = new ImageIcon("src\\main\\resources\\images\\interruptor.png");
 
     /**
-     * Creates new form SideBarMenu
+     * <p><b>Constructor de SideBarMenu</b></p>
+     * <p>Inicializa el menú lateral con los componentes y eventos necesarios.</p>
+     * 
+     * @param inicio Instancia de la pantalla Inicio
      */
     public SideBarMenu(Inicio inicio) {
         this.inicio = inicio;
@@ -147,14 +158,33 @@ public class SideBarMenu extends javax.swing.JPanel {
             
         });
     }
+     /**
+     * <p><b>Alterna la visibilidad del menú lateral</b></p>
+     * <p>Muestra u oculta el menú lateral con una animación utilizando un timer.</p>
+     */
     public void toggleSidebar() {
         isSideBarVisible = !isSideBarVisible;
         sidebarMenu.setVisible(true);
         timer.start();
     }
+    
+    /**
+     * <p><b>Verifica si el menú lateral está visible</b></p>
+     * 
+     * @return <code>true</code> si el menú lateral está visible; <code>false</code> en caso contrario.
+     */
     public boolean isSideBarVisible() {
         return isSideBarVisible;
     }
+    
+     /**
+     * <p><b>Ejecuta la animación del menú lateral</b></p>
+     * <p>Expande o contrae el menú lateral en función de si está visible o no.</p>
+     * <ul>
+     *  <li><b>Expande el menú lateral hasta el ancho definido.</b></li>
+     *  <li><b>Contrae el menú lateral hasta que desaparece.</b></li>
+     * </ul>
+     */
     private void animateSidebar() {
         int currentWidth = sidebarMenu.getPreferredSize().width;
         if (isSideBarVisible) {

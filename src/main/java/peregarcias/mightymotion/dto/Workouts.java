@@ -9,8 +9,17 @@ import java.time.LocalDate;
 
 
 /**
- *
- * @author morda
+ * <p><b>Clase Workouts</b></p>
+ * <p>Representa un registro de workout asociado a un usuario en la aplicación Mighty Motion.</p>
+ * <ul>
+ *  <li><b>Id:</b> Identificador único del workout.</li>
+ *  <li><b>forDate:</b> Fecha en la que se realiza el workout.</li>
+ *  <li><b>UserId:</b> Identificador del usuario al que pertenece el workout.</li>
+ *  <li><b>Comments:</b> Detalles o notas relacionados con el workout.</li>
+ * </ul>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class Workouts {
     

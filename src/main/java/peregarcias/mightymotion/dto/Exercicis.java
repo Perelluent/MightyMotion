@@ -5,8 +5,17 @@
 package peregarcias.mightymotion.dto;
 
 /**
- *
- * @author morda
+ * <p><b>Clase Exercicis</b></p>
+ * <p>Representa un ejercicio en la aplicación Mighty Motion.</p>
+ * <ul>
+ *  <li><b>Identificador único:</b> Cada ejercicio tiene un ID único para su identificación.</li>
+ *  <li><b>Nombre del ejercicio:</b> Describe el nombre del ejercicio.</li>
+ *  <li><b>Descripción:</b> Proporciona detalles adicionales sobre el ejercicio.</li>
+ *  <li><b>Demo Foto:</b> Contiene la ruta o referencia de la imagen de demostración del ejercicio.</li>
+ * </ul>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class Exercicis {
     

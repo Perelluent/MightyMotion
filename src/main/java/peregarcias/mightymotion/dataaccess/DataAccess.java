@@ -15,11 +15,26 @@ import peregarcias.mightymotion.dto.Usuario;
 import peregarcias.mightymotion.dto.Workouts;
 
 /**
- *
- * @author morda
+ * <p><b>Clase DataAccess</b></p>
+ * <p>Proporciona acceso a la base de datos de la aplicación.</p>
+ * <ul>
+ *  <li><b>Gestión de conexiones:</b> Se encarga de establecer y cerrar conexiones con la base de datos.</li>
+ *  <li><b>Consultas de usuarios:</b> Permite obtener, insertar y actualizar datos relacionados con los usuarios.</li>
+ *  <li><b>Consultas de workouts:</b> Proporciona acceso a los datos de los workouts asociados a usuarios.</li>
+ *  <li><b>Consultas de ejercicios:</b> Facilita la obtención de datos sobre ejercicios y su asociación con workouts.</li>
+ * </ul>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class DataAccess {
     
+     /**
+     * <p><b>Obtiene una conexión con la base de datos</b></p>
+     * <p>Establece una conexión utilizando la cadena de conexión especificada.</p>
+     * 
+     * @return La conexión establecida, o <code>null</code> si no se puede conectar.
+     */
     private Connection getConnection(){
     
         Connection connection = null;
@@ -32,6 +47,14 @@ public class DataAccess {
         }
         return connection;
     }
+    
+    /**
+     * <p><b>Obtiene una lista de todos los usuarios</b></p>
+     * <p>Recupera todos los registros de la tabla "Usuaris".</p>
+     * 
+     * @return Una lista de usuarios registrados en la base de datos.
+     * @throws SQLException Si ocurre un error en la consulta SQL.
+     */
     public ArrayList<Usuario> getUsuarios() throws SQLException{
         ArrayList<Usuario> usuarios = new ArrayList<>();
         String sql = "SELECT * FROM Usuaris";
@@ -57,6 +80,13 @@ public class DataAccess {
         return usuarios;
     }
     
+    /**
+     * <p><b>Obtiene un usuario por su correo electrónico</b></p>
+     * <p>Busca un usuario en la tabla "Usuaris" utilizando su dirección de correo electrónico.</p>
+     * 
+     * @param email Dirección de correo del usuario a buscar.
+     * @return El objeto usuario encontrado, o <code>null</code> si no existe.
+     */
      public Usuario getUsuario(String email){
         Usuario usuario = null;
         String sql = "SELECT * FROM Usuaris WHERE Email = ?";
@@ -81,8 +111,13 @@ public class DataAccess {
         return usuario;
     }
     
-    
-    
+    /**
+     * <p><b>Registra un nuevo usuario</b></p>
+     * <p>Inserta un nuevo usuario en la tabla "Usuaris".</p>
+     * 
+     * @param u Objeto usuario con los datos a insertar.
+     * @return El número de filas afectadas en la base de datos.
+     */
     public int registrarUsuario(Usuario u) {
         
         int nuevoUsuarioId = 0;
@@ -107,7 +142,12 @@ public class DataAccess {
     return nuevoUsuarioId;
                
     }
-    
+   
+    /**
+     * <p><b>Obtiene el último ID registrado en la tabla "Usuaris"</b></p>
+     * 
+     * @return El último identificador registrado, o <code>0</code> si no se encuentra ninguno.
+     */
     public int getUltimoIdRegistrado() {
         String sql = "SELECT * FROM Usuaris";
         int usuarioId=0;
@@ -127,6 +167,13 @@ public class DataAccess {
         return usuarioId;
     }
     
+    /**
+     * <p><b>Obtiene una lista de workouts</b></p>
+     * <p>Recupera todos los registros de la tabla "Workouts".</p>
+     * 
+     * @return Una lista de workouts registrados.
+     * @throws SQLException Si ocurre un error en la consulta SQL.
+     */
     public ArrayList<Workouts> getWorkouts() throws SQLException{
         ArrayList<Workouts> workouts = new ArrayList<>();
         String sql = "SELECT * FROM Workouts";
@@ -150,6 +197,14 @@ public class DataAccess {
         }
         return workouts;
     }
+    
+    /**
+     * <p><b>Obtiene usuarios asignados a un instructor</b></p>
+     * <p>Recupera una lista de usuarios que están asignados a un instructor específico.</p>
+     * 
+     * @param idInstructor Identificador del instructor.
+     * @return Una lista de usuarios asignados al instructor.
+     */
     public  ArrayList<Usuario> getUsuariosByInstructor(int idInstructor) {
          ArrayList<Usuario> usuaris = new ArrayList<>();
         String sql = "SELECT * FROM Usuaris WHERE AssignedInstructor=?";
@@ -177,6 +232,13 @@ public class DataAccess {
         return usuaris;
     }
     
+    /**
+     * <p><b>Obtiene workouts asociados a un usuario</b></p>
+     * <p>Recupera todos los workouts pertenecientes al usuario con el ID especificado.</p>
+     * 
+     * @param userId Identificador del usuario.
+     * @return Una lista de workouts asociados al usuario.
+     */
     public ArrayList<Workouts> getWorkoutsByUser(int userId) {
         ArrayList<Workouts> workouts = new ArrayList<>();
         String sql = "SELECT * FROM Workouts WHERE userId = ?";
@@ -201,6 +263,12 @@ public class DataAccess {
         return workouts;
     }
     
+    /**
+     * <p><b>Obtiene una lista de ejercicios</b></p>
+     * <p>Recupera todos los registros de la tabla "Exercicis".</p>
+     * 
+     * @return Una lista de ejercicios registrados en la base de datos.
+     */
     public ArrayList<Exercicis> getExercicis() {
         ArrayList<Exercicis> exercicis = new ArrayList<>();
         String sql = "SELECT Id, Exercicis.NomExercici, Exercicis.Descripcio, Exercicis.DemoFoto"
@@ -223,6 +291,13 @@ public class DataAccess {
         return exercicis;
     }
     
+    /**
+     * <p><b>Obtiene los ejercicios asociados a un workout</b></p>
+     * <p>Recupera los ejercicios que están vinculados a un workout en concreto</p>
+     * 
+     * @param workoutId Identificador del workout.
+     * @return Una lista de ejercicios asociados al workout.
+     */
     public ArrayList<Exercicis> getExercicisByWorkout (int workoutId) {
         ArrayList<Exercicis> exercicis = new ArrayList<>();
         String sql = "SELECT * FROM Exercicis WHERE Id = ?";

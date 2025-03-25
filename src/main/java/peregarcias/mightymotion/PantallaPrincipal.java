@@ -47,8 +47,19 @@ import peregarcias.mightymotion.dto.Usuario;
 import peregarcias.mightymotion.dto.Workouts;
 
 /**
- *
- * @author morda
+ * <p><b>Clase PantallaPrincipal</b></p>
+ * <p>Panel principal de la aplicación una vez iniciada la sesión.</p>
+ * <ul>
+ *  <li><b>Muestra un menú lateral (SideBarMenu) {@link peregarcias.mightymotion.SideBarMenu} con las diferentes opciones disponibles.</b></li>
+ *  <li><b>Incluye listas de alumnos, workouts y ejercicios para facilitar la gestión de contenidos.</b></li>
+ *  <li><b>Ofrece botones para añadir y eliminar workouts.</b></li>
+ *  <li><b>Permite al usuario alternar entre modos claro y oscuro.</b></li>
+ * </ul>
+ * <p><i>Nota:</i> Requiere un usuario instructor previamente logueado para operar.</p>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
+ * 
  */
 public class PantallaPrincipal extends javax.swing.JPanel {
     
@@ -86,7 +97,13 @@ public class PantallaPrincipal extends javax.swing.JPanel {
     JLabel lblWarning2 = new JLabel();
     BlobTracker blobTracker = new BlobTracker();
     
-
+    /**
+     * <p><b>Constructor de la clase PantallaPrincipal</b></p>
+     * <p>Inicializa el panel principal con los componentes gráficos y configura el menú lateral.</p>
+     * 
+     * @param inicio Instancia de Inicio para manejar la navegación entre pantallas.
+     * @param instructorLogueado Usuario instructor actualmente logueado.
+     */
     public PantallaPrincipal(Inicio inicio, Usuario instructorLogueado) {
         
         sideBarMenu = new SideBarMenu(inicio);
@@ -156,6 +173,13 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         contenido.setVisible(true);
         this.add(sideBarMenu, BorderLayout.WEST);
         
+     /**
+     * <p><b>Gestión del menú lateral (SideBarMenu)</b></p>
+     * <p>Permite alternar la visibilidad del menú lateral al hacer clic en el icono del menú.</p>
+     * <ul>
+     *  <li><b>Revalida y repinta el contenido de la pantalla al cambiar el estado del menú.</b></li>
+     * </ul>
+     */
         lblmenu.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -174,7 +198,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             
         });
         
-        
+       // Listeners para la selección de cada elemento de las listas
         jListAlumnos.addListSelectionListener(new ListSelectionListener() {
               
           @Override
@@ -210,6 +234,7 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         });
         definirMapaEjercicioBlob();
         
+         // Listeners para cada tipo de botón
         btnAlumnos.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -261,6 +286,14 @@ public class PantallaPrincipal extends javax.swing.JPanel {
             }
             
         });
+        
+     /**
+     * <p><b>Modo oscuro/claro</b></p>
+     * <p>Permite alternar entre los modos claro y oscuro de la interfaz.</p>
+     * <ul>
+     *  <li><b>Aplica el modo oscuro o claro al hacer clic en el icono.</b></li>
+     * </ul>
+     */
         lblOscuro.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {       
@@ -289,7 +322,16 @@ public class PantallaPrincipal extends javax.swing.JPanel {
     });
         
     }
-    
+    /**
+     * <p><b>Set del instructor logueado</b></p>
+     * <p>Asigna un instructor logueado a la pantalla principal y actualiza el mensaje de bienvenida.</p>
+     * <ul>
+     *  <li><b>Si el instructor es válido, muestra su nombre e ID en consola.</b></li>
+     *  <li><b>Actualiza el texto del componente de bienvenida (lblBienvenida) con el nombre del instructor.</b></li>
+     * </ul>
+     * 
+     * @param instructorLogueado Usuario instructor actualmente logueado.
+     */
     public void setInstructorLogueado(Usuario instructorLogueado) { 
         this.instructorLogueado = instructorLogueado; 
         if (instructorLogueado != null) { 
@@ -313,7 +355,14 @@ public class PantallaPrincipal extends javax.swing.JPanel {
     public Map<Usuario, List<Workouts>> getUsuariosWorkout() { 
         return usuariosWorkout; 
     }
-    
+    /**
+     * <p><b>Carga los usuarios asignados al instructor y los muestra en un JList</b></p>
+     * <p>Recupera y muestra los usuarios asociados al instructor logueado.</p>
+     * <ul>
+     *  <li><b>Actualiza la lista de alumnos (jListAlumnos).</b></li>
+     *  <li><b>Muestra un mensaje si no hay alumnos asignados.</b></li>
+     * </ul>
+     */
     private void cargarUsuariosParaInstructor() { 
         if (instructorLogueado == null) { 
             lblWarning.setText("No se encontraron usuarios.");
@@ -335,7 +384,12 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         }
     }
 
-    // Método para cargar workouts asociados a un usuario en la tabla
+    /**
+     * <p><b>Carga workouts asociados a un usuario</b></p>
+     * <p>Rellena la lista de workouts (jListWorkouts) del usuario seleccionado.</p>
+     * 
+     * @param usuario Usuario cuyo listado de workouts se cargará.
+     */
     private void cargarWorkoutsParaUsuario(Usuario usuario) {
         if (usuario == null) {
             lblWarning.setText("Usuario no válido.");
@@ -351,7 +405,12 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         jListWorkouts.setModel(model);
     }
 
-    // Método para cargar ejercicios asociados a un workout en la tabla
+    /**
+     * <p><b>Carga ejercicios asociados a un workout</b></p>
+     * <p>Rellena la lista de ejercicios (jListExercicis) asociados al workout seleccionado.</p>
+     * 
+     * @param workout El workout cuyos ejercicios se cargarán.
+     */
     public void cargarEjerciciosParaWorkout(Workouts workout) {
         if (workout == null) {
             lblWarning2.setText("Workout no válido.");
@@ -365,6 +424,17 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         }
         jListExercicis.setModel(model);
     }
+    /**
+     * <p><b>Muestra el panel para añadir workouts</b></p>
+     * <p>Abre una ventana para añadir un nuevo workout al usuario seleccionado.</p>
+     * <ul>
+     *  <li><b>Rellena la lista de workouts después de añadir uno nuevo.</b></li>
+     * </ul>
+     * <p><i>Nota:</i> Muestra un mensaje de advertencia si no se ha seleccionado un usuario.</p>
+     * 
+     * @param user Usuario seleccionado en la lista.
+     * @param da Instancia de DataAccess para interactuar con la base de datos.
+     */
     private void mostrarListAddWorkout (Usuario user, DataAccess da) {
         if (!jListAlumnos.isSelectionEmpty()) {
         String nombreUsuario = jListAlumnos.getSelectedValue();
@@ -380,11 +450,21 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         lblWarning2.setText("Por favor, selecciona un usuario primero.");
         }
     }
+    /**
+     * <p><b>Añade un workout al usuario</b></p>
+     * <p>Inserta un nuevo workout en la lista de workouts del usuario seleccionado.</p>
+     * 
+     * @param workout Workout que se desea agregar.
+     */
     public void addWorkoutToUser(Workouts workout) {
         DefaultListModel<Workouts> model = (DefaultListModel<Workouts>) jListWorkouts.getModel();
         model.addElement(workout);
         mapWorkouts.put(workout.toString(), workout);
     }
+    /**
+     * <p><b>Elimina un workout y sus ejercicios asociados</b></p>
+     * <p>Borra el workout seleccionado de la lista y limpia los ejercicios asociados.</p>
+     */
     public void eliminarWorkoutYExercicis() {
         int selectedIndex = jListWorkouts.getSelectedIndex();
         if(selectedIndex != -1) {
@@ -394,6 +474,10 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * <p><b>Define el mapa de blobs, albergados en un blob de Azure, para mostrar una imagen de los ejercicios</b></p>
+     * <p>Asocia los nombres de los ejercicios con archivos de imagen.</p>
+     */
     private void definirMapaEjercicioBlob() {
         ejercicioBlobMap.put("Exercici 1", "zancadas.png"); 
         ejercicioBlobMap.put("Exercici 2", "dominadas.png");
@@ -402,12 +486,27 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         ejercicioBlobMap.put("Exercici 5", "crunch_lateral.png"); 
     }
     
+    /**
+     * <p><b>Acción para añadir un workout</b></p>
+     * <p>Abre la ventana de añadir workout.</p>
+     * 
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnAddWorkoutActionPerformed(java.awt.event.ActionEvent evt) {                                              
 
         Inicio inicio = (Inicio) SwingUtilities.getWindowAncestor(this); 
         inicio.mostrarAddWorkout();
     }                                             
 
+    /**
+     * <p><b>Acción para eliminar un workout</b></p>
+     * <p>Elimina el workout seleccionado de la lista.</p>
+     * <ul>
+     *  <li><b>Si no se selecciona un workout, muestra un mensaje de advertencia.</b></li>
+     * </ul>
+     * 
+     * @param evt Evento de acción generado por el botón.
+     */
     private void btnDeleteWorkoutActionPerformed(java.awt.event.ActionEvent evt) {                                                 
         int selectedIndex = jListWorkouts.getSelectedIndex();
         if(selectedIndex != -1) {
@@ -437,6 +536,16 @@ public class PantallaPrincipal extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * <p><b>Cambio de selección en la lista de ejercicios</b></p>
+     * <p>Carga una imagen del ejercicio seleccionado utilizando Azure Blob Storage.</p>
+     * <ul>
+     *  <li><b>Muestra mensajes si la imagen no está disponible.</b></li>
+     *  <li><b>Descarga y escala la imagen para mostrarla en el panel.</b></li>
+     * </ul>
+     * 
+     * @param evt Evento generado al cambiar la selección en la lista.
+     */
     private void jListExercicisValueChanged(javax.swing.event.ListSelectionEvent evt) { 
         if (evt.getValueIsAdjusting()) { 
             return;

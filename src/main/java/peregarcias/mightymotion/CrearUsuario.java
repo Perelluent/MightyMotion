@@ -35,8 +35,17 @@ import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Usuario;
 
 /**
- *
- * @author morda
+ * <p><b>Clase CrearUsuario</b></p>
+ * <p>Representa el panel de registro de nuevos usuarios.</p>
+ * <ul>
+ *  <li><b>Permite al usuario ingresar su nombre, correo electrónico y contraseña.</b></li>
+ *  <li><b>Incluye la opción de registrarse como instructor.</b></li>
+ *  <li><b>Valida los datos ingresados antes de registrar al usuario.</b></li>
+ *  <li><b>Ofrece la posibilidad de alternar entre los modos claro y oscuro.</b></li>
+ * </ul>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class CrearUsuario extends JPanel {
     
@@ -59,8 +68,10 @@ public class CrearUsuario extends JPanel {
     JLabel lblMensaje = new JLabel();
   
     /**
-     * Creates new form CrearUsuario
-     * @param inicio
+     * <p><b>Constructor de CrearUsuario</b></p>
+     * <p>Inicializa el panel con los componentes gráficos necesarios para registrar un usuario.</p>
+     * 
+     * @param inicio Instancia de la pantalla inicio.
      */
     public CrearUsuario(Inicio inicio) {
         
@@ -189,6 +200,19 @@ public class CrearUsuario extends JPanel {
         
     }
     
+     /**
+     * <p><b>Acción para registrar un nuevo usuario</b></p>
+     * <p>Valida los datos ingresados por el usuario, genera un hash de la contraseña 
+     * y registra al usuario en la base de datos.</p>
+     * <ul>
+     *  <li><b>Valida que los campos no estén vacíos.</b></li>
+     *  <li><b>Comprueba que el correo electrónico tenga un formato válido.</b></li>
+     *  <li><b>Registra al usuario y muestra un mensaje de confirmación.</b></li>
+     * </ul>
+     * <p><i>Nota:</i> Si los datos son inválidos, muestra mensajes de error.</p>
+     * 
+     * @param evt Evento generado al hacer clic en el botón "CREAR USUARIO".
+     */
     private void btnCrearUsuarioActionPerformed(java.awt.event.ActionEvent evt) {  
         
         if (txtNombre.getText().trim().isEmpty() || txtEmail.getText().trim().isEmpty() || txtContrasena.getPassword().length == 0) {

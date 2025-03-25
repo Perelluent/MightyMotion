@@ -37,8 +37,16 @@ import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Usuario;
 
 /**
- *
- * @author morda
+ * <p><b>Clase Inicio</b></p>
+ * <p>Representa la ventana principal de la aplicación Mighty Motion.</p>
+ * <ul>
+ *  <li><b>Control de navegación:</b> Utiliza un sistema de tarjetas (CardLayout) para alternar entre diferentes paneles.</li>
+ *  <li><b>Gestión de componentes:</b> Incluye menús, botones y un sistema de barra de herramientas.</li>
+ *  <li><b>Paneles asociados:</b> Contiene paneles como Inicio, Iniciar Sesión, Crear Usuario, Pantalla Principal y Añadir Workout.</li>
+ * </ul>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class Inicio extends javax.swing.JFrame {
     
@@ -63,7 +71,8 @@ public class Inicio extends javax.swing.JFrame {
     JSeparator separador = new JSeparator();
     
     /**
-     * Creates new form Inicio
+     * <p><b>Constructor de Inicio</b></p>
+     * <p>Inicializa la ventana principal con todos los componentes gráficos.</p>
      */
     public Inicio() {
 
@@ -132,6 +141,17 @@ public class Inicio extends javax.swing.JFrame {
         setJMenuBar(mnuBar);
     }
     
+    /**
+     * <p><b>Crea el panel inicial de la aplicación</b></p>
+     * <p>Genera el panel de bienvenida con opciones para iniciar sesión, registrar usuarios y cambiar el modo de apariencia.</p>
+     * <ul>
+     *  <li><b>Incluye un logotipo:</b> Representa visualmente la marca "Mighty Motion".</li>
+     *  <li><b>Opciones de usuario:</b> Permite iniciar sesión o registrar nuevos usuarios.</li>
+     *  <li><b>Modo oscuro/claro:</b> Opción interactiva para alternar entre modos de apariencia.</li>
+     * </ul>
+     * 
+     * @return Un objeto JPanel configurado como el panel inicial.
+     */
     private JPanel crearPanelInicio() {
         JPanel panel = new JPanel(new MigLayout("wrap 1","[grow]", "[][][][]10[]10[]push[]10[][]"));
         
@@ -237,18 +257,41 @@ public class Inicio extends javax.swing.JFrame {
         return panel;
     }
     
+    /**
+     * <p><b>Redimensiona una imagen</b></p>
+     * <p>Escala una imagen al tamaño especificado.</p>
+     * 
+     * @param icono La imagen que se desea redimensionar.
+     * @param ancho Ancho deseado para la imagen redimensionada.
+     * @param alto Alto deseado para la imagen redimensionada.
+     * @return Un nuevo objeto ImageIcon con la imagen escalada.
+     */
     public static ImageIcon redimensionarImagen(ImageIcon icono, int ancho, int alto) {
         Image imagenOriginal = icono.getImage();
         Image imagenEscalada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
         return new ImageIcon(imagenEscalada);
     }
     
+    /**
+     * <p><b>Alterna entre paneles usando CardLayout</b></p>
+     * <p>Muestra el panel correspondiente según la opción seleccionada.</p>
+     */
     public void mostrarIniciarSesion(){
         cardLayout.show(cardPanel, "IniciarSesion");
     }
+    /**
+     * <p><b>Alterna entre paneles usando CardLayout</b></p>
+     * <p>Muestra el panel correspondiente según la opción seleccionada.</p>
+     */
     public void mostrarInicio(){
        cardLayout.show(cardPanel, "Inicio");
     }
+    /**
+     * <p><b>Alterna entre paneles usando CardLayout</b></p>
+     * <p>Muestra el panel correspondiente según la opción seleccionada.</p>
+     * 
+     * @param usuarioLogueado usuario que se ha logueado.
+     */
     public void mostrarPantallaPrincipal(Usuario usuarioLogueado) { 
         if (usuarioLogueado != null) { 
             System.out.println("Passant l'usuari a PantallaPrincipal: " + usuarioLogueado.getNom() + ", ID: " + usuarioLogueado.getId()); 
@@ -256,10 +299,21 @@ public class Inicio extends javax.swing.JFrame {
         pantallaPrincipal.setInstructorLogueado(usuarioLogueado); 
         cardLayout.show(cardPanel, "PantallaPrincipal"); 
     }
+    /**
+     * <p><b>Alterna entre paneles usando CardLayout</b></p>
+     * <p>Muestra el panel correspondiente según la opción seleccionada.</p>
+     */
     public void mostrarAddWorkout() {
         cardLayout.show(cardPanel, "AddWorkout");
     }
     
+    /**
+     * <p><b>Aplica el modo oscuro a la interfaz</b></p>
+     * <p>Actualiza todos los componentes gráficos de la interfaz para reflejar el modo oscuro o claro.</p>
+     * <ul>
+     *  <li><b>Recorre todas las ventanas abiertas:</b> Actualiza y repinta la interfaz.</li>
+     * </ul>
+     */
     public void modoOscuro() {
     for (Window window : Window.getWindows()) {
         SwingUtilities.updateComponentTreeUI(window);

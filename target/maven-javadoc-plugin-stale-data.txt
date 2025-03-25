@@ -1,0 +1,145 @@
+-J-Duser.language=
+-J-Duser.country=
+@options
+@packages
+-classpath
+'C:/Users/morda/.m2/repository/org/netbeans/external/AbsoluteLayout/RELEASE230/AbsoluteLayout-RELEASE230.jar;C:/Users/morda/.m2/repository/com/microsoft/sqlserver/mssql-jdbc/9.4.1.jre8/mssql-jdbc-9.4.1.jre8.jar;C:/Users/morda/.m2/repository/at/favre/lib/bcrypt/0.10.2/bcrypt-0.10.2.jar;C:/Users/morda/.m2/repository/at/favre/lib/bytes/1.5.0/bytes-1.5.0.jar;C:/Users/morda/.m2/repository/com/azure/azure-storage-blob/12.14.2/azure-storage-blob-12.14.2.jar;C:/Users/morda/.m2/repository/com/azure/azure-core/1.22.0/azure-core-1.22.0.jar;C:/Users/morda/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.12.5/jackson-annotations-2.12.5.jar;C:/Users/morda/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.12.5/jackson-core-2.12.5.jar;C:/Users/morda/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.12.5/jackson-databind-2.12.5.jar;C:/Users/morda/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.12.5/jackson-datatype-jsr310-2.12.5.jar;C:/Users/morda/.m2/repository/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.12.5/jackson-dataformat-xml-2.12.5.jar;C:/Users/morda/.m2/repository/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.12.5/jackson-module-jaxb-annotations-2.12.5.jar;C:/Users/morda/.m2/repository/jakarta/xml/bind/jakarta.xml.bind-api/2.3.2/jakarta.xml.bind-api-2.3.2.jar;C:/Users/morda/.m2/repository/jakarta/activation/jakarta.activation-api/1.2.1/jakarta.activation-api-1.2.1.jar;C:/Users/morda/.m2/repository/org/codehaus/woodstox/stax2-api/4.2.1/stax2-api-4.2.1.jar;C:/Users/morda/.m2/repository/com/fasterxml/woodstox/woodstox-core/6.2.4/woodstox-core-6.2.4.jar;C:/Users/morda/.m2/repository/io/projectreactor/reactor-core/3.4.10/reactor-core-3.4.10.jar;C:/Users/morda/.m2/repository/org/reactivestreams/reactive-streams/1.0.3/reactive-streams-1.0.3.jar;C:/Users/morda/.m2/repository/io/netty/netty-tcnative-boringssl-static/2.0.43.Final/netty-tcnative-boringssl-static-2.0.43.Final.jar;C:/Users/morda/.m2/repository/com/azure/azure-core-http-netty/1.11.2/azure-core-http-netty-1.11.2.jar;C:/Users/morda/.m2/repository/io/netty/netty-handler/4.1.68.Final/netty-handler-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-common/4.1.68.Final/netty-common-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-resolver/4.1.68.Final/netty-resolver-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-transport/4.1.68.Final/netty-transport-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-codec/4.1.68.Final/netty-codec-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-handler-proxy/4.1.68.Final/netty-handler-proxy-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-codec-socks/4.1.68.Final/netty-codec-socks-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-buffer/4.1.68.Final/netty-buffer-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-codec-http/4.1.68.Final/netty-codec-http-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-codec-http2/4.1.68.Final/netty-codec-http2-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-transport-native-unix-common/4.1.68.Final/netty-transport-native-unix-common-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-transport-native-epoll/4.1.68.Final/netty-transport-native-epoll-4.1.68.Final-linux-x86_64.jar;C:/Users/morda/.m2/repository/io/netty/netty-transport-native-kqueue/4.1.68.Final/netty-transport-native-kqueue-4.1.68.Final-osx-x86_64.jar;C:/Users/morda/.m2/repository/io/projectreactor/netty/reactor-netty-http/1.0.11/reactor-netty-http-1.0.11.jar;C:/Users/morda/.m2/repository/io/netty/netty-resolver-dns/4.1.68.Final/netty-resolver-dns-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-codec-dns/4.1.68.Final/netty-codec-dns-4.1.68.Final.jar;C:/Users/morda/.m2/repository/io/netty/netty-resolver-dns-native-macos/4.1.68.Final/netty-resolver-dns-native-macos-4.1.68.Final-osx-x86_64.jar;C:/Users/morda/.m2/repository/io/projectreactor/netty/reactor-netty-core/1.0.11/reactor-netty-core-1.0.11.jar;C:/Users/morda/.m2/repository/com/azure/azure-storage-common/12.14.1/azure-storage-common-12.14.1.jar;C:/Users/morda/.m2/repository/com/azure/azure-storage-internal-avro/12.1.2/azure-storage-internal-avro-12.1.2.jar;C:/Users/morda/.m2/repository/com/miglayout/miglayout/3.7.4/miglayout-3.7.4.jar;C:/Users/morda/.m2/repository/com/formdev/flatlaf/3.5.4/flatlaf-3.5.4.jar;C:/Users/morda/.m2/repository/org/slf4j/slf4j-simple/2.0.9/slf4j-simple-2.0.9.jar;C:/Users/morda/.m2/repository/org/slf4j/slf4j-api/2.0.9/slf4j-api-2.0.9.jar;C:/Users/morda/.m2/repository/peregarcias/miComponente/1.0-SNAPSHOT/miComponente-1.0-SNAPSHOT.jar;C:/Users/morda/.m2/repository/org/apache/maven/plugins/maven-javadoc-plugin/3.11.2/maven-javadoc-plugin-3.11.2.jar;C:/Users/morda/.m2/repository/org/apache/maven/resolver/maven-resolver-util/1.4.1/maven-resolver-util-1.4.1.jar;C:/Users/morda/.m2/repository/org/apache/maven/resolver/maven-resolver-api/1.4.1/maven-resolver-api-1.4.1.jar;C:/Users/morda/.m2/repository/javax/inject/javax.inject/1/javax.inject-1.jar;C:/Users/morda/.m2/repository/org/apache/maven/reporting/maven-reporting-api/4.0.0/maven-reporting-api-4.0.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/maven-archiver/3.6.2/maven-archiver-3.6.2.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-interpolation/1.27/plexus-interpolation-1.27.jar;C:/Users/morda/.m2/repository/org/apache/maven/shared/maven-invoker/3.3.0/maven-invoker-3.3.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/shared/maven-shared-utils/3.4.2/maven-shared-utils-3.4.2.jar;C:/Users/morda/.m2/repository/org/apache/maven/shared/maven-common-artifact-filters/3.4.0/maven-common-artifact-filters-3.4.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/doxia/doxia-sink-api/2.0.0/doxia-sink-api-2.0.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/doxia/doxia-site-renderer/2.0.0/doxia-site-renderer-2.0.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/doxia/doxia-core/2.0.0/doxia-core-2.0.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/doxia/doxia-site-model/2.0.0/doxia-site-model-2.0.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/doxia/doxia-skin-model/2.0.0/doxia-skin-model-2.0.0.jar;C:/Users/morda/.m2/repository/org/apache/maven/doxia/doxia-module-xhtml5/2.0.0/doxia-module-xhtml5-2.0.0.jar;C:/Users/morda/.m2/repository/org/eclipse/sisu/org.eclipse.sisu.plexus/0.9.0.M3/org.eclipse.sisu.plexus-0.9.0.M3.jar;C:/Users/morda/.m2/repository/org/eclipse/sisu/org.eclipse.sisu.inject/0.9.0.M3/org.eclipse.sisu.inject-0.9.0.M3.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-component-annotations/2.1.0/plexus-component-annotations-2.1.0.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-classworlds/2.6.0/plexus-classworlds-2.6.0.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-velocity/2.2.0/plexus-velocity-2.2.0.jar;C:/Users/morda/.m2/repository/org/apache/velocity/velocity-engine-core/2.4/velocity-engine-core-2.4.jar;C:/Users/morda/.m2/repository/org/apache/velocity/tools/velocity-tools-generic/3.1/velocity-tools-generic-3.1.jar;C:/Users/morda/.m2/repository/commons-beanutils/commons-beanutils/1.9.4/commons-beanutils-1.9.4.jar;C:/Users/morda/.m2/repository/commons-collections/commons-collections/3.2.2/commons-collections-3.2.2.jar;C:/Users/morda/.m2/repository/org/apache/commons/commons-digester3/3.2/commons-digester3-3.2.jar;C:/Users/morda/.m2/repository/com/github/cliftonlabs/json-simple/3.0.2/json-simple-3.0.2.jar;C:/Users/morda/.m2/repository/org/apache/maven/doxia/doxia-integration-tools/2.0.0/doxia-integration-tools-2.0.0.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-i18n/1.0-beta-10/plexus-i18n-1.0-beta-10.jar;C:/Users/morda/.m2/repository/org/apache/maven/wagon/wagon-provider-api/3.5.3/wagon-provider-api-3.5.3.jar;C:/Users/morda/.m2/repository/org/apache/commons/commons-lang3/3.17.0/commons-lang3-3.17.0.jar;C:/Users/morda/.m2/repository/org/apache/commons/commons-text/1.12.0/commons-text-1.12.0.jar;C:/Users/morda/.m2/repository/org/apache/httpcomponents/httpclient/4.5.14/httpclient-4.5.14.jar;C:/Users/morda/.m2/repository/commons-logging/commons-logging/1.2/commons-logging-1.2.jar;C:/Users/morda/.m2/repository/commons-codec/commons-codec/1.11/commons-codec-1.11.jar;C:/Users/morda/.m2/repository/org/apache/httpcomponents/httpcore/4.4.16/httpcore-4.4.16.jar;C:/Users/morda/.m2/repository/com/thoughtworks/qdox/qdox/2.2.0/qdox-2.2.0.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-java/1.3.0/plexus-java-1.3.0.jar;C:/Users/morda/.m2/repository/org/ow2/asm/asm/9.7/asm-9.7.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-utils/4.0.2/plexus-utils-4.0.2.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-xml/3.0.1/plexus-xml-3.0.1.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-io/3.5.1/plexus-io-3.5.1.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-archiver/4.10.0/plexus-archiver-4.10.0.jar;C:/Users/morda/.m2/repository/org/apache/commons/commons-compress/1.26.2/commons-compress-1.26.2.jar;C:/Users/morda/.m2/repository/io/airlift/aircompressor/0.27/aircompressor-0.27.jar;C:/Users/morda/.m2/repository/commons-io/commons-io/2.18.0/commons-io-2.18.0.jar;C:/Users/morda/.m2/repository/org/codehaus/plexus/plexus-interactivity-api/1.3/plexus-interactivity-api-1.3.jar'
+-encoding
+'UTF-8'
+-protected
+--release
+21
+-sourcepath
+'C:/Users/morda/OneDrive/Documentos/Tasques_FP_DAM/SEGON_CURS/DESENVOLUPAMENT_INTERFICIES/TEMA 1 DI01/MightyMotion/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2025. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'C:/Users/morda/OneDrive/Documentos/Tasques_FP_DAM/SEGON_CURS/DESENVOLUPAMENT_INTERFICIES/TEMA 1 DI01/MightyMotion/target/reports/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'MightyMotion 1.0-SNAPSHOT API'
+-use
+-version
+-windowtitle
+'MightyMotion 1.0-SNAPSHOT API'
+peregarcias.mightymotion
+peregarcias.mightymotion.dataaccess
+peregarcias.mightymotion.dto
+C:\Users\morda\.m2\repository\org\netbeans\external\AbsoluteLayout\RELEASE230\AbsoluteLayout-RELEASE230.jar = 1729692255879
+C:\Users\morda\.m2\repository\com\microsoft\sqlserver\mssql-jdbc\9.4.1.jre8\mssql-jdbc-9.4.1.jre8.jar = 1730912680385
+C:\Users\morda\.m2\repository\at\favre\lib\bcrypt\0.10.2\bcrypt-0.10.2.jar = 1731341825056
+C:\Users\morda\.m2\repository\at\favre\lib\bytes\1.5.0\bytes-1.5.0.jar = 1731341825102
+C:\Users\morda\.m2\repository\com\azure\azure-storage-blob\12.14.2\azure-storage-blob-12.14.2.jar = 1733911956617
+C:\Users\morda\.m2\repository\com\azure\azure-core\1.22.0\azure-core-1.22.0.jar = 1733911956698
+C:\Users\morda\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.12.5\jackson-annotations-2.12.5.jar = 1733911956786
+C:\Users\morda\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.12.5\jackson-core-2.12.5.jar = 1733911956839
+C:\Users\morda\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.12.5\jackson-databind-2.12.5.jar = 1733911957175
+C:\Users\morda\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.12.5\jackson-datatype-jsr310-2.12.5.jar = 1733911956767
+C:\Users\morda\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-xml\2.12.5\jackson-dataformat-xml-2.12.5.jar = 1733911956748
+C:\Users\morda\.m2\repository\com\fasterxml\jackson\module\jackson-module-jaxb-annotations\2.12.5\jackson-module-jaxb-annotations-2.12.5.jar = 1733911956790
+C:\Users\morda\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\2.3.2\jakarta.xml.bind-api-2.3.2.jar = 1733911956895
+C:\Users\morda\.m2\repository\jakarta\activation\jakarta.activation-api\1.2.1\jakarta.activation-api-1.2.1.jar = 1733911956838
+C:\Users\morda\.m2\repository\org\codehaus\woodstox\stax2-api\4.2.1\stax2-api-4.2.1.jar = 1733911956893
+C:\Users\morda\.m2\repository\com\fasterxml\woodstox\woodstox-core\6.2.4\woodstox-core-6.2.4.jar = 1733911957288
+C:\Users\morda\.m2\repository\io\projectreactor\reactor-core\3.4.10\reactor-core-3.4.10.jar = 1733911957360
+C:\Users\morda\.m2\repository\org\reactivestreams\reactive-streams\1.0.3\reactive-streams-1.0.3.jar = 1733911956933
+C:\Users\morda\.m2\repository\io\netty\netty-tcnative-boringssl-static\2.0.43.Final\netty-tcnative-boringssl-static-2.0.43.Final.jar = 1733911958097
+C:\Users\morda\.m2\repository\com\azure\azure-core-http-netty\1.11.2\azure-core-http-netty-1.11.2.jar = 1733911957034
+C:\Users\morda\.m2\repository\io\netty\netty-handler\4.1.68.Final\netty-handler-4.1.68.Final.jar = 1733911957363
+C:\Users\morda\.m2\repository\io\netty\netty-common\4.1.68.Final\netty-common-4.1.68.Final.jar = 1733911957380
+C:\Users\morda\.m2\repository\io\netty\netty-resolver\4.1.68.Final\netty-resolver-4.1.68.Final.jar = 1733911957379
+C:\Users\morda\.m2\repository\io\netty\netty-transport\4.1.68.Final\netty-transport-4.1.68.Final.jar = 1733911957575
+C:\Users\morda\.m2\repository\io\netty\netty-codec\4.1.68.Final\netty-codec-4.1.68.Final.jar = 1733911957491
+C:\Users\morda\.m2\repository\io\netty\netty-handler-proxy\4.1.68.Final\netty-handler-proxy-4.1.68.Final.jar = 1733911957433
+C:\Users\morda\.m2\repository\io\netty\netty-codec-socks\4.1.68.Final\netty-codec-socks-4.1.68.Final.jar = 1733911957543
+C:\Users\morda\.m2\repository\io\netty\netty-buffer\4.1.68.Final\netty-buffer-4.1.68.Final.jar = 1733911957576
+C:\Users\morda\.m2\repository\io\netty\netty-codec-http\4.1.68.Final\netty-codec-http-4.1.68.Final.jar = 1733911957660
+C:\Users\morda\.m2\repository\io\netty\netty-codec-http2\4.1.68.Final\netty-codec-http2-4.1.68.Final.jar = 1733911957707
+C:\Users\morda\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.68.Final\netty-transport-native-unix-common-4.1.68.Final.jar = 1733911957643
+C:\Users\morda\.m2\repository\io\netty\netty-transport-native-epoll\4.1.68.Final\netty-transport-native-epoll-4.1.68.Final-linux-x86_64.jar = 1733911957671
+C:\Users\morda\.m2\repository\io\netty\netty-transport-native-kqueue\4.1.68.Final\netty-transport-native-kqueue-4.1.68.Final-osx-x86_64.jar = 1733911957769
+C:\Users\morda\.m2\repository\io\projectreactor\netty\reactor-netty-http\1.0.11\reactor-netty-http-1.0.11.jar = 1733911957778
+C:\Users\morda\.m2\repository\io\netty\netty-resolver-dns\4.1.68.Final\netty-resolver-dns-4.1.68.Final.jar = 1733911957778
+C:\Users\morda\.m2\repository\io\netty\netty-codec-dns\4.1.68.Final\netty-codec-dns-4.1.68.Final.jar = 1733911957803
+C:\Users\morda\.m2\repository\io\netty\netty-resolver-dns-native-macos\4.1.68.Final\netty-resolver-dns-native-macos-4.1.68.Final-osx-x86_64.jar = 1733911957803
+C:\Users\morda\.m2\repository\io\projectreactor\netty\reactor-netty-core\1.0.11\reactor-netty-core-1.0.11.jar = 1733911957875
+C:\Users\morda\.m2\repository\com\azure\azure-storage-common\12.14.1\azure-storage-common-12.14.1.jar = 1733911957843
+C:\Users\morda\.m2\repository\com\azure\azure-storage-internal-avro\12.1.2\azure-storage-internal-avro-12.1.2.jar = 1733911957874
+C:\Users\morda\.m2\repository\com\miglayout\miglayout\3.7.4\miglayout-3.7.4.jar = 1737132532297
+C:\Users\morda\.m2\repository\com\formdev\flatlaf\3.5.4\flatlaf-3.5.4.jar = 1737450587920
+C:\Users\morda\.m2\repository\org\slf4j\slf4j-simple\2.0.9\slf4j-simple-2.0.9.jar = 1737564543334
+C:\Users\morda\.m2\repository\org\slf4j\slf4j-api\2.0.9\slf4j-api-2.0.9.jar = 1737564543395
+C:\Users\morda\.m2\repository\peregarcias\miComponente\1.0-SNAPSHOT\miComponente-1.0-SNAPSHOT.jar = 1734343533086
+C:\Users\morda\.m2\repository\org\apache\maven\plugins\maven-javadoc-plugin\3.11.2\maven-javadoc-plugin-3.11.2.jar = 1733909277385
+C:\Users\morda\.m2\repository\org\apache\maven\resolver\maven-resolver-util\1.4.1\maven-resolver-util-1.4.1.jar = 1742835044986
+C:\Users\morda\.m2\repository\org\apache\maven\resolver\maven-resolver-api\1.4.1\maven-resolver-api-1.4.1.jar = 1742835045036
+C:\Users\morda\.m2\repository\javax\inject\javax.inject\1\javax.inject-1.jar = 1697616804483
+C:\Users\morda\.m2\repository\org\apache\maven\reporting\maven-reporting-api\4.0.0\maven-reporting-api-4.0.0.jar = 1742835045099
+C:\Users\morda\.m2\repository\org\apache\maven\maven-archiver\3.6.2\maven-archiver-3.6.2.jar = 1729682080391
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-interpolation\1.27\plexus-interpolation-1.27.jar = 1729682080480
+C:\Users\morda\.m2\repository\org\apache\maven\shared\maven-invoker\3.3.0\maven-invoker-3.3.0.jar = 1742835045102
+C:\Users\morda\.m2\repository\org\apache\maven\shared\maven-shared-utils\3.4.2\maven-shared-utils-3.4.2.jar = 1728923588580
+C:\Users\morda\.m2\repository\org\apache\maven\shared\maven-common-artifact-filters\3.4.0\maven-common-artifact-filters-3.4.0.jar = 1742835045130
+C:\Users\morda\.m2\repository\org\apache\maven\doxia\doxia-sink-api\2.0.0\doxia-sink-api-2.0.0.jar = 1742835045033
+C:\Users\morda\.m2\repository\org\apache\maven\doxia\doxia-site-renderer\2.0.0\doxia-site-renderer-2.0.0.jar = 1742835045083
+C:\Users\morda\.m2\repository\org\apache\maven\doxia\doxia-core\2.0.0\doxia-core-2.0.0.jar = 1742835045095
+C:\Users\morda\.m2\repository\org\apache\maven\doxia\doxia-site-model\2.0.0\doxia-site-model-2.0.0.jar = 1742835045127
+C:\Users\morda\.m2\repository\org\apache\maven\doxia\doxia-skin-model\2.0.0\doxia-skin-model-2.0.0.jar = 1742835045127
+C:\Users\morda\.m2\repository\org\apache\maven\doxia\doxia-module-xhtml5\2.0.0\doxia-module-xhtml5-2.0.0.jar = 1742835045130
+C:\Users\morda\.m2\repository\org\eclipse\sisu\org.eclipse.sisu.plexus\0.9.0.M3\org.eclipse.sisu.plexus-0.9.0.M3.jar = 1742835045198
+C:\Users\morda\.m2\repository\org\eclipse\sisu\org.eclipse.sisu.inject\0.9.0.M3\org.eclipse.sisu.inject-0.9.0.M3.jar = 1742835045463
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-component-annotations\2.1.0\plexus-component-annotations-2.1.0.jar = 1742835045154
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-classworlds\2.6.0\plexus-classworlds-2.6.0.jar = 1742835045180
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-velocity\2.2.0\plexus-velocity-2.2.0.jar = 1742835045180
+C:\Users\morda\.m2\repository\org\apache\velocity\velocity-engine-core\2.4\velocity-engine-core-2.4.jar = 1742835045406
+C:\Users\morda\.m2\repository\org\apache\velocity\tools\velocity-tools-generic\3.1\velocity-tools-generic-3.1.jar = 1742835045280
+C:\Users\morda\.m2\repository\commons-beanutils\commons-beanutils\1.9.4\commons-beanutils-1.9.4.jar = 1742835045281
+C:\Users\morda\.m2\repository\commons-collections\commons-collections\3.2.2\commons-collections-3.2.2.jar = 1700756859486
+C:\Users\morda\.m2\repository\org\apache\commons\commons-digester3\3.2\commons-digester3-3.2.jar = 1742835045322
+C:\Users\morda\.m2\repository\com\github\cliftonlabs\json-simple\3.0.2\json-simple-3.0.2.jar = 1742835045352
+C:\Users\morda\.m2\repository\org\apache\maven\doxia\doxia-integration-tools\2.0.0\doxia-integration-tools-2.0.0.jar = 1742835045363
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-i18n\1.0-beta-10\plexus-i18n-1.0-beta-10.jar = 1700756858682
+C:\Users\morda\.m2\repository\org\apache\maven\wagon\wagon-provider-api\3.5.3\wagon-provider-api-3.5.3.jar = 1742835045366
+C:\Users\morda\.m2\repository\org\apache\commons\commons-lang3\3.17.0\commons-lang3-3.17.0.jar = 1742835045627
+C:\Users\morda\.m2\repository\org\apache\commons\commons-text\1.12.0\commons-text-1.12.0.jar = 1742835045462
+C:\Users\morda\.m2\repository\org\apache\httpcomponents\httpclient\4.5.14\httpclient-4.5.14.jar = 1742835045676
+C:\Users\morda\.m2\repository\commons-logging\commons-logging\1.2\commons-logging-1.2.jar = 1700756858831
+C:\Users\morda\.m2\repository\commons-codec\commons-codec\1.11\commons-codec-1.11.jar = 1700756858882
+C:\Users\morda\.m2\repository\org\apache\httpcomponents\httpcore\4.4.16\httpcore-4.4.16.jar = 1742835045681
+C:\Users\morda\.m2\repository\com\thoughtworks\qdox\qdox\2.2.0\qdox-2.2.0.jar = 1742835045766
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-java\1.3.0\plexus-java-1.3.0.jar = 1742835045568
+C:\Users\morda\.m2\repository\org\ow2\asm\asm\9.7\asm-9.7.jar = 1742835045681
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-utils\4.0.2\plexus-utils-4.0.2.jar = 1742835045697
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-xml\3.0.1\plexus-xml-3.0.1.jar = 1742835045762
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-io\3.5.1\plexus-io-3.5.1.jar = 1742835045771
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-archiver\4.10.0\plexus-archiver-4.10.0.jar = 1742835045784
+C:\Users\morda\.m2\repository\org\apache\commons\commons-compress\1.26.2\commons-compress-1.26.2.jar = 1742835045905
+C:\Users\morda\.m2\repository\io\airlift\aircompressor\0.27\aircompressor-0.27.jar = 1742835045981
+C:\Users\morda\.m2\repository\commons-io\commons-io\2.18.0\commons-io-2.18.0.jar = 1742835046027
+C:\Users\morda\.m2\repository\org\codehaus\plexus\plexus-interactivity-api\1.3\plexus-interactivity-api-1.3.jar = 1742835045841
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\src\main\java = 1734280847867
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\allclasses-index.html = 1742920401076
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\allpackages-index.html = 1742920401079
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\copy.svg = 1742920401118
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\element-list = 1742920400852
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\help-doc.html = 1742920401112
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\index-all.html = 1742920401099
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\index.html = 1742920401046
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\link.svg = 1742920401119
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\member-search-index.js = 1742920401084
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\module-search-index.js = 1742920401081
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\overview-summary.html = 1742920401105
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\overview-tree.html = 1742920401038
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\package-search-index.js = 1742920401082
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\script.js = 1742920401116
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\search-page.js = 1742920401124
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\search.html = 1742920401102
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\search.js = 1742920401122
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\serialized-form.html = 1742920400963
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\stylesheet.css = 1742920401115
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\tag-search-index.js = 1742920401085
+C:\Users\morda\OneDrive\Documentos\Tasques_FP_DAM\SEGON_CURS\DESENVOLUPAMENT_INTERFICIES\TEMA 1 DI01\MightyMotion\target\reports\apidocs\type-search-index.js = 1742920401082

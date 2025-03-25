@@ -30,16 +30,26 @@ import peregarcias.mightymotion.dataaccess.DataAccess;
 import peregarcias.mightymotion.dto.Usuario;
 
 /**
- *
- * @author morda
+ * <p><b>Clase IniciarSesion</b></p>
+ * <p>Panel que representa la pantalla de inicio de sesión en la aplicación gráfica Mighty Motion.</p>
+ * <ul>
+ *  <li><b>Permite al usuario introducir sus credenciales para iniciar sesión.</b></li>
+ *  <li><b>Ofrece la opción de alternar entre los modos de apariencia: oscuro y claro.</b></li>
+ * </ul>
+ * <p><i>Nota:</i> Sólo los instructores pueden iniciar sesión en la aplicación.</p>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class IniciarSesion extends javax.swing.JPanel {
     
     private Inicio inicio;
     DataAccess da = new DataAccess();
-    private Usuario usuario;
-    private boolean isClicked = false;
     
+    private Usuario usuario;
+    private boolean isClicked = false; // Indicador para el botón modo oscuro.
+    
+    //Componentes de la interfaz gráfica
     JLabel lblLogo = new JLabel();
     ImageIcon logo = new ImageIcon("src\\main\\resources\\images\\MMFullTrans.png");
     JLabel lblOscuro = new JLabel();
@@ -53,9 +63,11 @@ public class IniciarSesion extends javax.swing.JPanel {
     JButton btnVolver = new JButton("VOLVER");
     JLabel lblError = new JLabel();
     
-    /**
-     * Creates new form IniciarSesion
-     * @param inicio
+   /**
+     * <p><b>Constructor de la clase IniciarSesion</b></p>
+     * <p>Inicializa el panel de inicio de sesión con los componentes gráficos necesarios.</p>
+     * 
+     * @param inicio Instancia de Inicio para manejar la navegación entre pantallas.
      */
     public IniciarSesion(Inicio inicio) {
         
@@ -158,10 +170,25 @@ public class IniciarSesion extends javax.swing.JPanel {
         
     }
    
+    /**
+     * <p><b>Método volverAlInicio</b></p>
+     * <p>Permite regresar a la pantalla de inicio.</p>
+     */
     private void volverAlInicio() {
         inicio.mostrarInicio();
     }
     
+    /**
+     * <p><b>Método btnEntrarActionPerformed</b></p>
+     * <p>Maneja el evento generado al presionar el botón "ENTRAR".</p>
+     * <ul>
+     *  <li><b>Valida las credenciales ingresadas.</b></li>
+     *  <li><b>Muestra mensajes de error si el usuario o la contraseña son incorrectos.</b></li>
+     *  <li><b>Permite el acceso sólo a instructores con credenciales válidas.</b></li>
+     * </ul>
+     * 
+     * @param evt Evento de acción generado al presionar el botón.
+     */
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) { 
         Usuario usuario = da.getUsuario(txtUsuario.getText()); 
         if (usuario == null) { 

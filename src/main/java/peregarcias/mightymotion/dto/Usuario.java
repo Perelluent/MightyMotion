@@ -4,9 +4,22 @@
  */
 package peregarcias.mightymotion.dto;
 
+
 /**
- *
- * @author morda
+ * <p><b>Clase Usuario</b></p>
+ * <p>Representa un usuario en la aplicación Mighty Motion.</p>
+ * <ul>
+ *  <li><b>Id:</b> Identificador único de cada usuario.</li>
+ *  <li><b>Nom:</b> Nombre del usuario.</li>
+ *  <li><b>Email:</b> Dirección de correo electrónico única para identificar al usuario.</li>
+ *  <li><b>PasswordHash:</b> Hash seguro de la contraseña del usuario.</li>
+ *  <li><b>Foto:</b> Imagen asociada al usuario.</li>
+ *  <li><b>Instructor:</b> Define si el usuario tiene privilegios de instructor.</li>
+ *  <li><b>AssignedInstructor:</b> Nombre del instructor asignado.</li>
+ * </ul>
+ * 
+ * @author Perelluent
+ * @since 23/10/2024
  */
 public class Usuario {
     
@@ -22,16 +35,6 @@ public class Usuario {
     public String toString() {
         return this.Nom; //+ "//" + Email + ", Instructor=" + Instructor + ", AssignedInstructor=" + AssignedInstructor + '}';
     }
-
-//    public Usuario(int Id, String Nom, String Email, String PasswordHash, byte Foto, boolean Instructor, String AssignedInstructor) {
-//        this.Id = Id;
-//        this.Nom = Nom;
-//        this.Email = Email;
-//        this.PasswordHash = PasswordHash;
-//        this.Foto = Foto;
-//        this.Instructor = Instructor;
-//        this.AssignedInstructor = AssignedInstructor;
-//    }
 
     public int getId() {
         return Id;

@@ -42,8 +42,17 @@ import peregarcias.mightymotion.dto.Usuario;
 import peregarcias.mightymotion.dto.Workouts;
 
 /**
- *
- * @author morda
+ * <p><b>Clase AddWorkout</b></p>
+ * <p>Representa el panel para añadir workouts y visualizar los ejercicios disponibles.</p>
+ * <ul>
+ *  <li><b>Muestra una lista de workouts disponibles.</b></li>
+ *  <li><b>Permite seleccionar workouts y ver los ejercicios asociados.</b></li>
+ *  <li><b>Incluye opciones para añadir workouts y regresar al menú principal.</b></li>
+ * </ul>
+ * <p><i>Nota:</i> Integra el menú lateral y un botón para cambiar entre modos claro y oscuro.</p>
+ * 
+ * @since 23/10/2024
+ * @author Perelluent
  */
 public class AddWorkout extends javax.swing.JPanel {
     
@@ -70,6 +79,15 @@ public class AddWorkout extends javax.swing.JPanel {
     ImageIcon iconoFlecha = new ImageIcon("src\\main\\resources\\images\\arrow_left.png");
  
     
+    /**
+     * <p><b>Constructor de AddWorkout</b></p>
+     * <p>Inicializa el panel de añadir workouts con los componentes necesarios.</p>
+     * 
+     * @param inicio Instancia principal de la aplicación.
+     * @param pantallaPrincipal Panel principal desde donde se accede a este.
+     * @param usuario Usuario actual de la aplicación.
+     * @param da Instancia de DataAccess para la interacción con la base de datos.
+     */
     public AddWorkout(Inicio inicio, PantallaPrincipal pantallaPrincipal, Usuario usuario, DataAccess da) {
         
         this.pantallaPrincipal = pantallaPrincipal;
@@ -110,7 +128,7 @@ public class AddWorkout extends javax.swing.JPanel {
         contenido.setVisible(true);
         this.add(sideBarMenu, BorderLayout.WEST);
         
-     
+        
         lstWorkouts.addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent evt) {
@@ -226,6 +244,13 @@ public class AddWorkout extends javax.swing.JPanel {
         });
     }
     
+    /**
+     * <p><b>Carga los workouts disponibles</b></p>
+     * <p>Recupera y lista los workouts disponibles desde la base de datos.</p>
+     * <p><i>Nota:</i> Este método lanza excepciones SQL generadas durante la carga.</p>
+     * 
+     * @throws SQLException Si ocurre un error al consultar los workouts.
+     */
      private void cargarWorkouts() throws SQLException {
 
         List<Workouts> workouts = da.getWorkouts();
@@ -239,6 +264,12 @@ public class AddWorkout extends javax.swing.JPanel {
     }
         lstWorkouts.setModel(listModel);
     }
+     
+     /**
+      * <p><b>Carga los ejercicios de los workouts</b></p>
+      * <p>Recupera los ejercicios que hay para cada workout desde la base de datos.</p>
+      * 
+      */
     private void cargarEjerciciosParaWorkout() {
         String selectedWorkout = lstWorkouts.getSelectedValue();
         if (selectedWorkout != null) {
@@ -254,11 +285,28 @@ public class AddWorkout extends javax.swing.JPanel {
         }
     }
     
+    /**
+     * <p><b>Acción para volver a la pantalla principal</b></p>
+     * <p>Regresa a la pantalla principal y muestra los datos del instructor actualmente logueado.</p>
+     * 
+     * @param evt Evento generado al hacer clic en el botón de volver.
+     */
     private void btnVolverActionPerformed(java.awt.event.MouseEvent evt) {
          Inicio inicio = (Inicio) SwingUtilities.getWindowAncestor(this); 
          inicio.mostrarPantallaPrincipal(pantallaPrincipal.getInstructorLogueado());
     }
     
+    /**
+     * <p><b>Acción para añadir un workout al usuario seleccionado</b></p>
+     * <p>Asocia un workout seleccionado desde la lista al usuario actualmente seleccionado.</p>
+     * <ul>
+     *  <li><b>Recupera el workout seleccionado desde el mapa de workouts.</b></li>
+     *  <li><b>Añade el workout al usuario seleccionado en la pantalla principal.</b></li>
+     *  <li><b>Carga los ejercicios asociados al workout en la pantalla principal.</b></li>
+     * </ul>
+     * 
+     * @param evt Evento generado al hacer clic en el botón de añadir.
+     */
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {                                       
         String selectedWorkout = lstWorkouts.getSelectedValue();
         
