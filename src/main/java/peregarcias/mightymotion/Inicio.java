@@ -27,6 +27,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
@@ -85,14 +86,20 @@ public class Inicio extends javax.swing.JFrame {
         this.pantallaPrincipal = new PantallaPrincipal(this, usuario);
         this.da = new DataAccess();
         this.addWorkout = new AddWorkout(this, pantallaPrincipal, usuario, da);
+        
+        JScrollPane iniciarSesionScrollPane = new JScrollPane(iniciarSesion);
+        iniciarSesionScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        iniciarSesionScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
         cardLayout = new CardLayout();
         cardPanel = new JPanel(cardLayout);
         cardPanel.add(inicio, "Inicio");
-        cardPanel.add(iniciarSesion, "IniciarSesion");
+        cardPanel.add(iniciarSesionScrollPane, "IniciarSesion");
         cardPanel.add(crearUsuario, "CrearUsuario");
         cardPanel.add(pantallaPrincipal, "PantallaPrincipal");
         cardPanel.add(addWorkout, "AddWorkout");
+        
+        
         
         getContentPane().add(cardPanel);
         pack();
